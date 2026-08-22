@@ -41,7 +41,7 @@ Before using or changing a skill, read the latest repository state. Before publi
    - ChatGPT web: `web-chatgpt/<task-name>`.
 3. Make the smallest scoped edit.
 4. Update `manifests/agent-activity-log.md`.
-5. Run `python3 scripts/validate-skills.py --write-registry`.
+5. Run `python3 scripts/validate-skills.py --baseline-registry manifests/skill-registry.json --write-registry` before the registry is overwritten; for a bootstrap repository without a registry, run without `--baseline-registry`.
 6. Commit and push.
 7. Merge only after validation succeeds.
 
