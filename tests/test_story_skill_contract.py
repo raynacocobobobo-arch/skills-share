@@ -47,8 +47,8 @@ class StorySkillContractTests(unittest.TestCase):
     def test_soft_approval_and_delta_only_revision_are_locked(self):
         for token in ["好很多了", "大概意思对了", "delta-only"]:
             self.assertIn(token, self.revision_text)
-        self.assertIn("当前版本", self.revision_text)
-        self.assertIn("只重新打开", self.revision_text)
+        self.assertIn("working baseline", self.revision_text)
+        self.assertIn("reopen only the named problem", self.revision_text)
 
     def test_source_priority_and_fact_states(self):
         self.assertIn("信息源优先级", self.text)
