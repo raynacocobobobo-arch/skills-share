@@ -10,7 +10,8 @@ Record changes made by Codex, local Hermes, cloud Hermes, and ChatGPT web.
 - Confirmed RED against canonical v11.1.0: 9 Story contract failures while all 8 version-governance tests remained green.
 - Added generic `revision-control.md`, `dialogue-vo-naturalness.md`, and `commissioned-realism.md` references with no customer/private project material.
 - Promoted the candidate Story Skill to v13.1.0 with source priority, LOCKED/CONFIRMED/TENTATIVE/CONFLICT/INFERRED/DO_NOT_INVENT states, task-mode routing, minimum-diff revision discipline, optional templates, dialogue/VO checks, professional realism, and rename/renumber/delete reference propagation.
-- GREEN verification: all 17 tests passed and repository validation reported 28 skills / 0 errors; the remaining expected gate was committing the regenerated registry for v13.1.0.
+- Final GREEN verification: all 17 tests passed; repository validation reported 28 skills / 0 errors; generated registry matched the committed registry; the 11.1.0 -> 13.1.0 upgrade passed the version guard.
+- Diff/privacy review confirmed no customer project identifiers, unpublished script text, local machine paths, or unrelated business-skill edits.
 - Draft PR: `#3` (`feat: recover canonical Story Skill v13 behavior`).
 
 ## 2026-08-22 ChatGPT Web — canonical latest version guard
