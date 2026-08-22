@@ -493,7 +493,7 @@
     {
       "name": "故事片创作",
       "description": "故事片、微电影、企业剧情片的创作与修订引擎。优先保证来源、事实、因果、人物行动、人话表达和可拍性；支持原创、真实原型、行业委托与纪录剧情混合形态。",
-      "version": "13.1.0",
+      "version": "13.2.0",
       "category": "hermes-film-故事片创作",
       "skill_dir": "hermes-film-故事片创作",
       "skill_path": "plugins/hermes-skills/skills/hermes-film-故事片创作/SKILL.md",
@@ -511,7 +511,8 @@
       "references": [
         "references/commissioned-realism.md",
         "references/dialogue-vo-naturalness.md",
-        "references/revision-control.md"
+        "references/revision-control.md",
+        "references/short-form-visual-story.md"
       ],
       "missing_references": []
     },
