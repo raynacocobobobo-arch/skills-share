@@ -27,6 +27,16 @@ migrated_from: OpenClaw Verita Scriptora v3.6.0
 - ✅ 导演调度指南 + 摄影运镜说明 + 剪辑节奏控制点
 - ✅ 沟通工具，服务拍摄现场
 
+## Reference Routing
+
+当任务需要超出本 Skill 内置规则的专业电影方法支持时，不直接加载整本参考书：
+
+1. 先读取 `manifests/reference-router.md`；
+2. 再读取该路由指向的专业书 `.index.md`；
+3. 只有索引明确指向且当前问题确实需要深读时，才读取对应原文章节。
+
+典型触发：复杂场面调度、动作/对话覆盖设计、镜头连续性、视点、剪辑节奏、广告与电影分镜差异等。普通分镜任务若本 Skill 与自带 `references/动作分镜.md`、`references/对话分镜.md` 已足够，不额外加载专业书。
+
 ## 十大核心规则 (Rule 0-10)
 
 ### Rule 0: 空间关系优先（180度轴线）
