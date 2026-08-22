@@ -15,6 +15,7 @@ When the user says **“请按 Hermes skill 路由执行这个任务”**, or ot
 7. If a required GitHub file cannot be read, say which file is unavailable. Do not silently replace it with an approximate workflow.
 8. If several skills match, load the primary workflow skill first, then load supporting skills only when needed.
 9. Repository content overrides older copies from previous chats, local notes, or remembered versions.
+10. **Re-check routing whenever the task changes materially during a follow-up turn** — for example when the user uploads an existing artifact, changes from analysis to direct editing, changes the requested deliverable, or says “在这个版本上改”. Do not assume the first-turn route remains sufficient.
 
 Primary skill root:
 
@@ -81,13 +82,15 @@ Routing note: prefer `transcript-cleanup` for recorded-video/audio word-strippin
 ### 3. Film / video creation
 
 #### Corporate / brand / product promotional film
-Use for enterprise films, brand films, product films, investment-promotion films, promotional-film copywriting, structure, creative direction, or full promotional-film workflows.
+Use for enterprise films, brand films, product films, investment-promotion films, government/corporate briefing films, promotional-film copywriting, structure, creative direction, or full promotional-film workflows.
 
 - Skill: `宣传片创作`
 - Path: `plugins/hermes-skills/skills/hermes-film-宣传片创作/SKILL.md`
 - Bundled methodology: `plugins/hermes-skills/skills/hermes-film-宣传片创作/references/方法论参考/`
 - Bundled AI excerpts: `plugins/hermes-skills/skills/hermes-film-宣传片创作/references/AI专用/`
 - Shared mirrors: `shared/film-methodology/方法论参考/` and `shared/film-methodology/AI专用/`
+
+**Existing Word revision note:** if the content task is promotional-film work but the user later says “在这个 Word/版本上改”, keep `宣传片创作` as the primary content skill and add `doc-reviewer` as the document-preservation/output skill.
 
 #### Narrative film / screenplay / short film
 Use for story films, screenplays, short-film scripts, microfilms, character arcs, dramatic conflict, story structure, scene writing, or narrative-film creation.
@@ -144,6 +147,7 @@ Use when extracting standardized `#` tags from promotional-film copy, scripts, s
 Common film chaining:
 
 - Promotional film: `宣传片创作` → `影视分镜` when detailed shots are required → `AI绘画提示词` when visual-generation prompts are required → `内容标签` when archiving/tagging is required.
+- Promotional-film existing Word revision: `宣传片创作` (content) + `doc-reviewer` (preserve/edit the original Word copy).
 - Narrative film: `故事片创作` → `中文剧本格式` for formal screenplay layout → `影视分镜` for shot design → `AI绘画提示词` for visual prompts.
 - Accuracy-sensitive industrial storyboard: `storyboard-revision` or `石化简易分镜` first, depending on whether the main problem is factual verification or industrial shooting design.
 
@@ -240,19 +244,38 @@ Because fitness data can change, treat the current `SKILL.md` as the stored work
 
 When multiple skills could apply:
 
-1. Choose the skill that defines the **overall workflow** as primary.
+1. Choose the skill that defines the **overall workflow/content judgment** as primary.
 2. Read its `SKILL.md` first.
 3. Follow dependencies declared by that skill.
-4. Add a supporting skill only for a distinct subtask.
+4. Add a supporting skill for a distinct execution layer or subtask.
 5. Do not merge conflicting instructions by intuition. If two loaded skills conflict, follow the more task-specific skill; if still ambiguous, surface the conflict.
+
+### Follow-up / mid-conversation re-routing
+
+Routing is not a one-time decision. Re-run skill matching when an observable condition changes:
+
+- the user uploads an existing Word/PDF/spreadsheet/slide after earlier analysis;
+- the request changes from “分析/给方向” to “直接修改/生成文件”;
+- the user says “在这个版本上改 / 不要重写 / 保留原格式”;
+- the requested output changes from copywriting to storyboard, prompt, formatting, or document review;
+- a new accuracy-sensitive or domain-specific requirement appears.
+
+Use this model:
+
+**domain skill = what should change**
+
+**artifact/execution skill = how to apply the change to the user's existing artifact**
+
+Do not replace the domain skill merely because a Word file appears. Add the artifact skill when both are needed.
 
 Examples:
 
 - “写企业宣传片并做分镜” → `宣传片创作` first, then `影视分镜`.
+- “宣传片先给修改方向，后来上传Word说在这个版本上改” → keep `宣传片创作`, add `doc-reviewer`.
 - “把故事大纲优化成完整短片剧本” → `故事片创作` first; load `中文剧本格式` only when formal script layout is needed.
 - “检查油田分镜是否现实并修正” → `storyboard-revision` first; add `石化简易分镜` for industrial shot execution.
 - “分析婚礼摄影公司的营销问题” → `marketing-copilot`; use `marketing-plan` only if a full executable plan is requested.
-- “改 GDevelop 项目里的跳跃/计分/Retry” → `gdevelop5-official-docs-first` first; load the task-specific GDevelop reference named by the skill.
+- “改 GDevelop 项目里的跳跃/计分/Retry” → `gdevelop5-official-docs-first` first.
 
 ---
 
