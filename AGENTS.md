@@ -39,6 +39,8 @@ Before using or changing a skill, read the latest repository state. Before publi
    - Local Hermes: `local-hermes/<task-name>`.
    - Cloud Hermes: `cloud-hermes/<task-name>`.
    - ChatGPT web: `web-chatgpt/<task-name>`.
+   - ChatGPT web sessions with write-capable GitHub tools may create the `web-chatgpt/<task-name>` branch directly and use those tools to commit, push, and open a PR.
+   - ChatGPT web sessions with read-only GitHub tools must not claim to have committed or pushed; they must prepare a patch or hand the write step to Codex/local Hermes unless the fallback exception below applies.
 3. Make the smallest scoped edit.
 4. Update `manifests/agent-activity-log.md`.
 5. Run `python3 scripts/validate-skills.py --baseline-registry manifests/skill-registry.json --write-registry` before the registry is overwritten; for a bootstrap repository without a registry, run without `--baseline-registry`.
