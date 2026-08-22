@@ -329,3 +329,20 @@ For a specific skill:
 For strict file-grounded execution:
 
 > 请按 Hermes skill 路由执行。先从 GitHub 读取路由文件和匹配的 `SKILL.md`，不要凭记忆模拟。
+
+---
+
+## Repository coordination
+
+For repository edits, ChatGPT Web should also read:
+
+- `AGENTS.md` for the shared-agent protocol.
+- `manifests/skill-registry.json` for the generated skill inventory.
+- `manifests/agent-activity-log.md` for recent changes.
+
+When ChatGPT Web proposes edits:
+
+1. Work on a branch named `web-chatgpt/<task-name>`.
+2. Update `manifests/agent-activity-log.md`.
+3. Do not add secrets, cookies, tokens, or machine-specific absolute paths.
+4. If a change touches skill metadata, ensure `python3 scripts/validate-skills.py --write-registry` and PR validation complete before merge.
