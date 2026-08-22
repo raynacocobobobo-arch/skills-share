@@ -18,9 +18,11 @@ class StorySkillContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.text = SKILL_PATH.read_text(encoding="utf-8")
+        cls.revision_text = (SKILL_DIR / "references/revision-control.md").read_text(encoding="utf-8")
+        cls.short_text = (SKILL_DIR / "references/short-form-visual-story.md").read_text(encoding="utf-8")
 
     def test_recovered_version(self):
-        self.assertGreaterEqual(parse_version(self.text), (13, 1, 0))
+        self.assertGreaterEqual(parse_version(self.text), (13, 2, 0))
 
     def test_no_machine_specific_project_path(self):
         self.assertNotIn("~/Desktop/", self.text)
@@ -31,6 +33,7 @@ class StorySkillContractTests(unittest.TestCase):
             "references/revision-control.md",
             "references/dialogue-vo-naturalness.md",
             "references/commissioned-realism.md",
+            "references/short-form-visual-story.md",
         ]
         for rel in required:
             self.assertIn(rel, self.text)
@@ -40,6 +43,12 @@ class StorySkillContractTests(unittest.TestCase):
         for token in ["新写", "大改", "局部改", "诊断", "格式化", "最小改动"]:
             self.assertIn(token, self.text)
         self.assertRegex(self.text, r"用户.*修改.*默认.*不是.*重写")
+
+    def test_soft_approval_and_delta_only_revision_are_locked(self):
+        for token in ["好很多了", "大概意思对了", "delta-only"]:
+            self.assertIn(token, self.revision_text)
+        self.assertIn("当前版本", self.revision_text)
+        self.assertIn("只重新打开", self.revision_text)
 
     def test_source_priority_and_fact_states(self):
         self.assertIn("信息源优先级", self.text)
@@ -68,6 +77,37 @@ class StorySkillContractTests(unittest.TestCase):
         self.assertIn("DO_NOT_INVENT", self.text)
         self.assertIn("权限", self.text)
         self.assertIn("非职业演员", self.text)
+
+    def test_general_causality_and_hard_flaw_rules(self):
+        self.assertIn("But / Therefore", self.text)
+        self.assertIn("硬伤先删后解释", self.text)
+        self.assertIn("不可逆困境六问", self.text)
+        for token in ["为什么偏偏是这个人", "为什么别人不能解决", "第三方案"]:
+            self.assertIn(token, self.text)
+
+    def test_reference_work_is_abstracted_not_reskinned(self):
+        self.assertIn("参考作品只抽元模型", self.text)
+        self.assertIn("角色换皮", self.text)
+        self.assertIn("欲望与阻力", self.text)
+        self.assertIn("信息差", self.text)
+
+    def test_action_water_filter_and_meaning_shift(self):
+        self.assertIn("动作删水器", self.text)
+        self.assertIn("意义变化", self.text)
+        self.assertIn("setup/payoff", self.text)
+
+    def test_short_form_visual_story_contract(self):
+        for token in [
+            "1–5 minute",
+            "charged situation",
+            "Information budget",
+            "Montage must create a third meaning",
+            "Repetition and meaning shift",
+            "Visual action filter",
+            "Large background must participate in the story",
+        ]:
+            self.assertIn(token, self.short_text)
+        self.assertIn("references/short-form-visual-story.md", self.text)
 
 
 if __name__ == "__main__":
