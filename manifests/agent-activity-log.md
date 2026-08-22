@@ -2,6 +2,13 @@
 
 Record changes made by Codex, local Hermes, cloud Hermes, and ChatGPT web.
 
+## 2026-08-23 Codex — ChatGPT Web main fallback exception
+
+- Branch: `codex/allow-chatgpt-web-main-fallback-exception`.
+- Added a controlled fallback exception because some ChatGPT Web GitHub connectors can edit repository files but cannot create branches.
+- Scope: collaboration rules only. Updated `AGENTS.md` to require explicit user authorization, small scoped changes, activity-log updates, validation, unchanged sensitive-data handling, and continued prohibition on direct `main` edits without explicit authorization.
+- No skill content was modified.
+
 ## 2026-08-22 ChatGPT Web — Story Skill short-form visual upgrade
 
 - Branch: `web-chatgpt/story-short-form-visual-v13-2`.

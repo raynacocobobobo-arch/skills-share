@@ -45,6 +45,17 @@ Before using or changing a skill, read the latest repository state. Before publi
 6. Commit and push.
 7. Merge only after validation succeeds.
 
+## ChatGPT Web fallback exception
+
+When ChatGPT web cannot create a branch because the connected GitHub tool lacks branch creation capability:
+
+- The user must explicitly authorize the fallback.
+- Only small scoped changes are allowed.
+- The change must still update `manifests/agent-activity-log.md`.
+- Validation must still run.
+- Sensitive data rules remain unchanged.
+- Direct `main` edits without explicit user authorization remain forbidden.
+
 ## Main Branch Rules
 
 - `main` contains the shared accepted skill set.
