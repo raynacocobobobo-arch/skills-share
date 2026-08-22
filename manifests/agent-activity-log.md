@@ -2,6 +2,19 @@
 
 Record changes made by Codex, local Hermes, cloud Hermes, and ChatGPT web.
 
+## 2026-08-22 ChatGPT Web — canonical latest version guard
+
+- Branch: `web-chatgpt/canonical-latest-version-guard`.
+- Added Canonical Latest policy: GitHub `main` is the only runtime authority; Library/local/archive/feature-branch copies remain candidates until validated merge.
+- Updated `manifests/web-chatgpt-router.md` so routed tasks resolve the registry entry, read the canonical `SKILL.md` from `main`, and stop on declared-version mismatch instead of falling back to remembered or candidate copies.
+- Updated `scripts/validate-skills.py` so generated registry records include declared skill versions and an accepted baseline can reject version removal or downgrade; emergency rollback requires explicit `--allow-version-downgrade`.
+- Added `tests/test_validate_skills.py` covering version field generation, downgrade, upgrade, equality, new skill, malformed version, version removal, and explicit rollback override.
+- Added `.github/workflows/validate-skills.yml` to run regression tests, validate against the pull-request base registry, regenerate the registry, and require the committed registry to match generated output.
+- Updated `AGENTS.md` with canonical promotion/version rules.
+- Added Superpowers design and implementation plan under `docs/superpowers/`.
+- Draft PR: `#2` (`feat: guard canonical Hermes skill versions`).
+- CI run #1: regression tests passed; validator/regeneration passed; the run failed only at the intentional committed-registry consistency gate. The generated registry artifact was retrieved and committed to the branch for the next CI run.
+
 ## 2026-08-22 ChatGPT Web
 
 - Branch: `web-chatgpt/promo-skill-layered-correction`.
