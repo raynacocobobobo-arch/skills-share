@@ -492,8 +492,8 @@
     },
     {
       "name": "故事片创作",
-      "description": "故事片/电影创作全流程引擎（含微型短片10页三幕式规范），6阶段（需求确认→素材整理→创意方向→大纲构建→剧本生成→汇报文档）",
-      "version": "11.1.0",
+      "description": "故事片、微电影、企业剧情片的创作与修订引擎。优先保证来源、事实、因果、人物行动、人话表达和可拍性；支持原创、真实原型、行业委托与纪录剧情混合形态。",
+      "version": "13.1.0",
       "category": "hermes-film-故事片创作",
       "skill_dir": "hermes-film-故事片创作",
       "skill_path": "plugins/hermes-skills/skills/hermes-film-故事片创作/SKILL.md",
@@ -501,13 +501,17 @@
         "故事片",
         "电影剧本",
         "写剧本",
+        "改剧本",
         "短片剧本",
         "微电影",
+        "企业微电影",
+        "剧情短片",
         "电影创作"
       ],
       "references": [
-        "references/AI专用/",
-        "references/方法论参考/"
+        "references/commissioned-realism.md",
+        "references/dialogue-vo-naturalness.md",
+        "references/revision-control.md"
       ],
       "missing_references": []
     },
