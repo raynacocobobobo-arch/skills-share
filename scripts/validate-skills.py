@@ -55,6 +55,68 @@ def parse_frontmatter(text: str) -> tuple[dict[str, object], str]:
     return meta, body
 
 
+def parse_version(value: object) -> tuple[int, ...]:
+    """Parse a simple numeric skill version such as 13.0.0 or v13.0.0."""
+    text = str(value or "").strip()
+    if text.startswith(("v", "V")):
+        text = text[1:]
+    if not re.fullmatch(r"\d+(?:\.\d+)*", text):
+        raise ValueError(f"invalid skill version: {value!r}")
+    return tuple(int(part) for part in text.split("."))
+
+
+def compare_registry_versions(
+    baseline: dict[str, object],
+    candidate: dict[str, object],
+    allow_downgrade: bool = False,
+) -> list[str]:
+    """Reject a candidate registry that removes or lowers an existing version."""
+    errors: list[str] = []
+    baseline_skills = baseline.get("skills")
+    candidate_skills = candidate.get("skills")
+    if not isinstance(baseline_skills, list) or not isinstance(candidate_skills, list):
+        return ["baseline/candidate registry must contain a skills list"]
+
+    baseline_by_path: dict[str, dict[str, object]] = {}
+    for item in baseline_skills:
+        if isinstance(item, dict) and item.get("skill_path"):
+            baseline_by_path[str(item["skill_path"])] = item
+
+    for item in candidate_skills:
+        if not isinstance(item, dict) or not item.get("skill_path"):
+            continue
+        path = str(item["skill_path"])
+        previous = baseline_by_path.get(path)
+        if not previous:
+            continue
+
+        old_version = str(previous.get("version") or "").strip()
+        new_version = str(item.get("version") or "").strip()
+
+        # Legacy skills may not yet declare a version. Once a canonical version
+        # exists, however, a later change may not silently remove it.
+        if not old_version:
+            continue
+        if not new_version:
+            errors.append(f"{path}: version removed; baseline is {old_version}")
+            continue
+
+        try:
+            old_parts = parse_version(old_version)
+            new_parts = parse_version(new_version)
+        except ValueError as exc:
+            errors.append(f"{path}: {exc}")
+            continue
+
+        width = max(len(old_parts), len(new_parts))
+        old_key = old_parts + (0,) * (width - len(old_parts))
+        new_key = new_parts + (0,) * (width - len(new_parts))
+        if new_key < old_key and not allow_downgrade:
+            errors.append(f"{path}: version downgrade {old_version} -> {new_version}")
+
+    return errors
+
+
 def find_reference_mentions(text: str) -> list[str]:
     mentions = set()
     for match in re.findall(r"`([^`]+)`", text):
@@ -71,6 +133,7 @@ def validate_skill(skill_md: Path) -> tuple[dict[str, object], list[str]]:
 
     name = str(meta.get("name") or skill_md.parent.name)
     description = str(meta.get("description") or "")
+    version = str(meta.get("version") or "").strip()
     triggers = meta.get("triggers")
     if not isinstance(triggers, list):
         triggers = []
@@ -79,6 +142,11 @@ def validate_skill(skill_md: Path) -> tuple[dict[str, object], list[str]]:
         errors.append(f"{skill_md}: missing frontmatter name")
     if not description:
         errors.append(f"{skill_md}: missing frontmatter description")
+    if version:
+        try:
+            parse_version(version)
+        except ValueError as exc:
+            errors.append(f"{skill_md}: {exc}")
 
     for pattern in LOCAL_PATH_PATTERNS:
         if pattern in text:
@@ -99,6 +167,7 @@ def validate_skill(skill_md: Path) -> tuple[dict[str, object], list[str]]:
     record = {
         "name": name,
         "description": description,
+        "version": version,
         "category": rel_dir.split("/", 1)[0],
         "skill_dir": rel_dir,
         "skill_path": skill_md.relative_to(ROOT).as_posix(),
@@ -133,9 +202,31 @@ def validate_repo_text() -> list[str]:
     return errors
 
 
+def load_registry(path: Path) -> dict[str, object]:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise ValueError(f"baseline registry not found: {path}") from exc
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"invalid baseline registry JSON: {path}: {exc}") from exc
+    if not isinstance(data, dict):
+        raise ValueError(f"baseline registry must be a JSON object: {path}")
+    return data
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--write-registry", action="store_true")
+    parser.add_argument(
+        "--baseline-registry",
+        type=Path,
+        help="Compare skill versions against this previously accepted registry.",
+    )
+    parser.add_argument(
+        "--allow-version-downgrade",
+        action="store_true",
+        help="Explicit emergency override for a documented version rollback.",
+    )
     args = parser.parse_args()
 
     if not SKILLS_ROOT.exists():
@@ -158,7 +249,23 @@ def main() -> int:
         "skills": records,
     }
 
-    if args.write_registry:
+    if args.baseline_registry:
+        try:
+            baseline = load_registry(args.baseline_registry)
+        except ValueError as exc:
+            errors.append(str(exc))
+        else:
+            if args.allow_version_downgrade:
+                print("WARNING: version downgrade override enabled", file=sys.stderr)
+            errors.extend(
+                compare_registry_versions(
+                    baseline,
+                    registry,
+                    allow_downgrade=args.allow_version_downgrade,
+                )
+            )
+
+    if args.write_registry and not errors:
         REGISTRY_PATH.parent.mkdir(parents=True, exist_ok=True)
         REGISTRY_PATH.write_text(
             json.dumps(registry, ensure_ascii=False, indent=2) + "\n",

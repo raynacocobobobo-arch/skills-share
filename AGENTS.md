@@ -13,6 +13,14 @@ This repository is the shared source of truth for Hermes-derived skills and meth
 
 Before using or changing a skill, read the latest repository state. Before publishing a change, validate it, commit it, and push it.
 
+## Canonical latest and version promotion
+
+- GitHub `main` is the only runtime authority for accepted Hermes skills.
+- Library copies, local copies, archives, and feature branches are candidates only; a higher version outside `main` is not automatically authoritative.
+- Promotion happens by validated merge to `main`, not by copying a file into a workspace.
+- `manifests/skill-registry.json` records declared skill versions. Once an accepted skill declares a version, a later candidate must not remove or lower it silently.
+- A lower-version rollback requires an explicit documented override and must remain visible in validation logs/review history.
+
 ## Read Workflow
 
 1. Read `manifests/web-chatgpt-router.md` or `manifests/skill-registry.json`.
@@ -33,7 +41,7 @@ Before using or changing a skill, read the latest repository state. Before publi
    - ChatGPT web: `web-chatgpt/<task-name>`.
 3. Make the smallest scoped edit.
 4. Update `manifests/agent-activity-log.md`.
-5. Run `python3 scripts/validate-skills.py --write-registry`.
+5. Run `python3 scripts/validate-skills.py --baseline-registry manifests/skill-registry.json --write-registry` before the registry is overwritten; for a bootstrap repository without a registry, run without `--baseline-registry`.
 6. Commit and push.
 7. Merge only after validation succeeds.
 

@@ -8,14 +8,26 @@ When the user says **“请按 Hermes skill 路由执行这个任务”**, or ot
 
 1. Read this file first.
 2. Match the task to one or more skills below.
-3. **Before answering or executing the task, read the matched skill's `SKILL.md` from GitHub.**
-4. Follow that `SKILL.md` as the authoritative workflow.
-5. If the skill requires files under `references/`, `shared/`, or another skill, read those files before continuing.
-6. **Do not simulate a skill from memory, prior chat history, model knowledge, or the route summary below.** The GitHub file is the source of truth.
-7. If a required GitHub file cannot be read, say which file is unavailable. Do not silently replace it with an approximate workflow.
-8. If several skills match, load the primary workflow skill first, then load supporting skills only when needed.
-9. Repository content overrides older copies from previous chats, local notes, or remembered versions.
-10. **Re-check routing whenever the task changes materially during a follow-up turn** — for example when the user uploads an existing artifact, changes from analysis to direct editing, changes the requested deliverable, or says “在这个版本上改”. Do not assume the first-turn route remains sufficient.
+3. Read `manifests/skill-registry.json` from GitHub `main` and resolve the matched skill's canonical `skill_path` and declared `version`.
+4. **Before answering or executing the task, read that canonical `SKILL.md` from GitHub `main`.**
+5. If the registry and `SKILL.md` both declare a version, they must match exactly. If one side declares a version and the other does not, or the values differ, stop and report a repository consistency error instead of executing the skill.
+6. A legacy skill with no declared version may still run from GitHub `main`; `main` remains authoritative until that skill adopts versioned governance.
+7. Follow the canonical `SKILL.md` as the authoritative workflow.
+8. If the skill requires files under `references/`, `shared/`, or another skill, read those files before continuing.
+9. **Do not simulate a skill from memory, prior chat history, model knowledge, Library copies, local copies, archives, or feature branches.** GitHub `main` is the runtime source of truth.
+10. If a required GitHub file cannot be read, say which file is unavailable. Do not silently replace it with an approximate workflow.
+11. If several skills match, load the primary workflow skill first, then load supporting skills only when needed.
+12. Repository `main` content overrides older copies from previous chats, local notes, remembered versions, and numerically higher but unmerged candidates.
+13. **Re-check routing whenever the task changes materially during a follow-up turn** — for example when the user uploads an existing artifact, changes from analysis to direct editing, changes the requested deliverable, or says “在这个版本上改”. Do not assume the first-turn route remains sufficient.
+
+### Canonical latest definition
+
+For Hermes runtime purposes, **latest** means the latest approved canonical content merged to GitHub `main`.
+
+- A Library/local/feature-branch copy with a higher version is a candidate, not runtime authority.
+- Promotion happens only after validation/review and merge to `main`.
+- Once a canonical skill declares a version, repository validation must reject silent version removal or downgrade.
+- An explicit documented rollback may use the validator's downgrade override, but normal routing never opts into that override automatically.
 
 Primary skill root:
 
@@ -333,4 +345,4 @@ When ChatGPT Web proposes edits:
 1. Work on a branch named `web-chatgpt/<task-name>`.
 2. Update `manifests/agent-activity-log.md`.
 3. Do not add secrets, cookies, tokens, or machine-specific absolute paths.
-4. If a change touches skill metadata, ask Codex or a local agent to run `python3 scripts/validate-skills.py --write-registry`.
+4. If a change touches skill metadata, ensure `python3 scripts/validate-skills.py --write-registry` and PR validation complete before merge.
