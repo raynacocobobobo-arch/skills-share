@@ -2,6 +2,16 @@
 
 Record changes made by Codex, local Hermes, cloud Hermes, and ChatGPT web.
 
+## 2026-08-22 ChatGPT Web — Story Skill short-form visual upgrade
+
+- Branch: `web-chatgpt/story-short-form-visual-v13-2`.
+- Upgraded `故事片创作` candidate from v13.1.0 to v13.2.0 with general-purpose But/Therefore causality checks, delete-before-explain hard-flaw handling, irreversible-dilemma six-question validation, reference-work abstraction instead of role reskinning, setup/payoff meaning-shift checks, and an action water-cut filter.
+- Strengthened revision control with soft-approval baseline locking and delta-only local revisions so narrow follow-up changes do not accidentally redesign already accepted story elements.
+- Added `references/short-form-visual-story.md` for 1–5 minute / three-minute / image-led stories: charged openings, information budget, visual rule-setting, montage third meaning, repetition/meaning shift, rhythm contrast, and making large backgrounds participate in the drama.
+- Extended `tests/test_story_skill_contract.py` to lock the new v13.2 behavior.
+- No customer/private project story text or identifying project examples were copied into the skill; only generic reusable rules were distilled.
+- Validation note: ChatGPT Web cannot execute the repository validator directly. Open a PR to trigger CI; use the generated registry output to synchronize `manifests/skill-registry.json` before merge.
+
 ## 2026-08-22 ChatGPT Web — reference hygiene locks
 
 - Branch: `web-chatgpt/reference-hygiene-locks`.

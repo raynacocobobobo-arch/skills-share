@@ -14,6 +14,27 @@ Classify the request before editing:
 
 If an existing artifact is present, the artifact itself is the baseline. A clean copy is still a revision of that baseline, not permission to recreate a similar document from scratch.
 
+### 1.1 Soft-approval baseline lock
+
+Treat phrases such as these as a new baseline signal, not casual praise:
+
+- “好很多了”
+- “大概意思对了”
+- “我喜欢这个故事/这个方向”
+- “这个逻辑可以”
+- “就这样，只是……”
+- “这部分对，只改……”
+
+When a soft approval appears:
+
+1. promote the accepted current version to the working baseline;
+2. close issues the user did not reopen;
+3. reopen only the named problem after “只是 / 但是 / 把 X 改成 Y / 这一处”; 
+4. default to **delta-only revision**: change only that variable and unavoidable immediate dependencies;
+5. do not redesign space, character relationships, plot mechanism, ending, or tone unless the user explicitly reopens them.
+
+A later narrow clarification such as “他是在舱外操作”“两个人不能通话”“这个角色能被看见” normally changes only that property. It is not permission to regenerate the scene around it.
+
 ## 2. Information-source priority
 
 When sources conflict, use this precedence:
@@ -55,6 +76,8 @@ Do not:
 - use a new idea to overwrite accepted assets without comparison;
 - expand a local request into a full rewrite because a full rewrite is easier for the agent.
 
+For a local request, prefer returning only the changed passage or a concise delta description when the unchanged baseline is already visible in context. Reprinting a whole rewritten version increases accidental drift.
+
 ## 5. Scope lock
 
 Treat these phrases as permission boundaries, not casual preferences:
@@ -95,12 +118,14 @@ User feedback is often symptom language. Diagnose before rewriting:
 | 偏了 | theme hierarchy and locked brief | inventing a new theme |
 | 太复杂 | information load and execution cost | more explanation |
 | 不合理 | fact/time/role/permission | narration that explains it away |
+| “这处不对/不是我要改的地方” | last delta and scope drift | another full rewrite |
 
 ## 8. Completion check
 
 Before handing back a revision:
 - Did the requested problem actually change?
 - Did anything outside scope change unintentionally?
+- Did any soft-approved baseline element drift?
 - Did any LOCKED item drift?
 - Did any TENTATIVE/CONFLICT item become falsely definite?
 - Did rename/renumber/delete changes propagate to every reference?
