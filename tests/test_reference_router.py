@@ -84,9 +84,9 @@ def test_router_does_not_encourage_full_library_loading():
 
 
 def test_route_contract_cases_have_registered_targets():
-    router_content = ROUTER.read_text(encoding="utf-8")
-    index_names = [p.stem.replace(".index", "") for p in SOURCE_DIR.glob("*.index.md")]
+    index_names = [p.stem for p in SOURCE_DIR.glob("*.index.md")]
+    registered_text = "\n".join(index_names) + "\n" + ROUTER.read_text(encoding="utf-8")
 
     for _, targets in ROUTE_CASES.items():
         for target in targets:
-            assert any(target in name or target in router_content for name in index_names), target
+            assert target in registered_text, target
