@@ -297,10 +297,12 @@ The route table is an index, not a replacement for skill instructions.
 
 After opening a matched `SKILL.md`:
 
-- If it says **must / 强制 / required / 必须加载** a reference, read that reference before continuing.
+- If the skill indicates that a professional source book is needed, read `manifests/reference-router.md` first, then read the matching `shared/source-library/专业书/*.index.md`, and read only the relevant original-source section if the index says deep reading is necessary.
+- Never load the whole professional source library by default. Route by task, then by book index, then by chapter/section.
+- If it says **must / 强制 / required / 必须加载** a bundled reference, read that reference before continuing.
 - If it gives a task-to-reference map, select the reference based on the current task and read it.
 - If it depends on another skill, read that skill only when the dependency is relevant to the requested output.
-- Prefer the copy bundled inside the skill folder. Use `shared/` as a methodology mirror or fallback index, not as a substitute for reading the actual skill.
+- Prefer the copy bundled inside the skill folder for skill-owned methodology. Use `shared/` as a methodology mirror or fallback index, and use `shared/source-library/专业书/` only through the professional reference-routing chain above.
 - Use `manifests/dependency-manifest.json` to verify migrated dependency locations when uncertain.
 
 ---
