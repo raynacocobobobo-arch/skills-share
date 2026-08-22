@@ -2,6 +2,17 @@
 
 Record changes made by Codex, local Hermes, cloud Hermes, and ChatGPT web.
 
+## 2026-08-22 ChatGPT Web — professional reference routing phases 2-3
+
+- Branch: `web-chatgpt/reference-router-source-library`.
+- Added short `Reference Routing` sections to the six requested skills: `宣传片创作`, `故事片创作`, `影视分镜`, `石化简易分镜`, `marketing-copilot`, and `marketing-plan`.
+- Each skill now only defines when shared professional-source routing should be used; book selection and chapter selection remain centralized in `manifests/reference-router.md` and the per-book `.index.md` files.
+- Preserved skill-owned/bundled references and existing workflows; the shared source library is an additional task-driven deep-reference layer, not a replacement for each skill's own methodology.
+- Updated `manifests/web-chatgpt-router.md` so ChatGPT Web follows the professional-source chain: canonical `SKILL.md` → `manifests/reference-router.md` → matching `shared/source-library/专业书/*.index.md` → relevant original-source section only when needed.
+- Added an explicit prohibition on loading the whole professional source library by default.
+- No skill version metadata or `manifests/skill-registry.json` was changed.
+- Validation note: ChatGPT Web cannot execute repository scripts. Before merge, Codex/local agent must run `python3 scripts/validate-skills.py --baseline-registry manifests/skill-registry.json --write-registry`, run plugin validation, and commit any generated registry changes.
+
 ## 2026-08-22 ChatGPT Web — professional reference routing phase 1
 
 - Branch: `web-chatgpt/reference-router-source-library`.
