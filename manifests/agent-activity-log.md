@@ -15,6 +15,14 @@ Record changes made by Codex, local Hermes, cloud Hermes, and ChatGPT web.
 - Added Superpowers implementation plan at `docs/superpowers/plans/2026-08-22-promotional-film-skill-layered-correction.md`.
 - Validation note: ChatGPT Web GitHub connector cannot execute repository scripts. Before merge, Codex/local agent must run `python3 scripts/validate-skills.py --write-registry` and commit any generated registry changes.
 
+## 2026-08-22 Codex validation
+
+- Branch: `web-chatgpt/promo-skill-layered-correction`.
+- Ran `python3 scripts/validate-skills.py --write-registry`: 28 skills, 0 errors.
+- Ran Codex plugin validation: passed.
+- Ran local path and secret scan: no issues.
+- Committed generated `manifests/skill-registry.json` update back to the PR branch.
+
 ## 2026-08-22 Codex
 
 - Created shared GitHub repository package for Hermes-derived skills.

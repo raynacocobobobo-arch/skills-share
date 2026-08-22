@@ -5,7 +5,7 @@
   "skills": [
     {
       "name": "doc-reviewer",
-      "description": "文档审阅器——AI直接在Word原文件里加批注、删除线和修订标记，不生成新文档。适用于合同审查、方案评审、脚本改稿、简历优化、报告批注等场景。灵感来自花叔\"花书doc reviewer\"。",
+      "description": "文档审阅器——AI直接在Word原文件副本里加批注、删除线、修订或净稿修改。适用于合同审查、方案评审、脚本改稿、简历优化、报告批注等既有文档任务。",
       "category": "hermes-business-doc-reviewer",
       "skill_dir": "hermes-business-doc-reviewer",
       "skill_path": "plugins/hermes-skills/skills/hermes-business-doc-reviewer/SKILL.md",
@@ -30,7 +30,9 @@
         "加修订",
         "改稿子",
         "加审阅",
-        "帮我改"
+        "帮我改",
+        "在这个Word上改",
+        "在这个版本上改"
       ],
       "references": [],
       "missing_references": []
@@ -420,7 +422,7 @@
     },
     {
       "name": "宣传片创作",
-      "description": "宣传片创作全流程引擎（企业/产品/品牌/招商宣传片），6阶段（需求确认→素材整理→创意方向→大纲构建→文案生成→汇报文档）",
+      "description": "宣传片创作全流程引擎，适用于企业/品牌/产品/招商/政府汇报类宣传片，以及既有宣传片文案的结构重构、改稿和解说词优化",
       "category": "hermes-film-宣传片创作",
       "skill_dir": "hermes-film-宣传片创作",
       "skill_path": "plugins/hermes-skills/skills/hermes-film-宣传片创作/SKILL.md",
@@ -430,12 +432,18 @@
         "产品宣传片",
         "品牌片",
         "招商宣传片",
+        "政府汇报片",
         "写宣传片文案",
-        "宣传片创作"
+        "宣传片创作",
+        "改宣传片",
+        "修改解说词"
       ],
       "references": [
-        "references/AI专用/",
-        "references/方法论参考/"
+        "references/AI专用/宣传片创作-受众适配与改稿模式.md",
+        "references/AI专用/宣传片创作-叙述结构与开场.md",
+        "references/AI专用/宣传片创作-文学技法与评估.md",
+        "references/AI专用/宣传片创作-解说词写作精要.md",
+        "references/AI专用/影视创作方法论体系.md"
       ],
       "missing_references": []
     },
