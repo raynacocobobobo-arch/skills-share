@@ -2,6 +2,17 @@
 
 Record changes made by Codex, local Hermes, cloud Hermes, and ChatGPT web.
 
+## 2026-08-22 ChatGPT Web — professional reference routing phase 1
+
+- Branch: `web-chatgpt/reference-router-source-library`.
+- Added lightweight `.index.md` files beside all seven professional source books under `shared/source-library/专业书/`.
+- Each index records applicable skills, when to read the book, a chapter / functional topic map, task-to-section routing, deep-read triggers, and usage boundaries without copying large portions of source text.
+- Added `manifests/reference-router.md` implementing the layered read order: canonical skill first, then reference router, then the matching book index, and only then the relevant original-source section when needed.
+- Added task routing for promotional films, government / SOE briefing films, narrative shorts / story films, storyboards, narration / VO, documentary / nonfiction expression, and marketing strategy / plans.
+- Kept specialty references ahead of broad compilations: storyboard tasks prefer `影视综合技巧-分镜完整整理.index.md`; nonfiction narration prefers `电视解说词写作.index.md`; `影视综合技巧.index.md` remains a cross-discipline supplement rather than a default dependency.
+- No `SKILL.md`, `manifests/web-chatgpt-router.md`, or `manifests/skill-registry.json` changes were made in this phase.
+- Validation note: ChatGPT Web cannot execute repository scripts. Before merge, Codex/local agent must run `python3 scripts/validate-skills.py --baseline-registry manifests/skill-registry.json --write-registry` and commit any generated registry changes.
+
 ## 2026-08-22 ChatGPT Web — Story Skill short-form visual upgrade
 
 - Branch: `web-chatgpt/story-short-form-visual-v13-2`.
