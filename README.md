@@ -25,11 +25,30 @@ Private knowledge and skill repository for Hermes-derived Codex skills.
 - `plugins/hermes-skills/` - local Codex plugin package.
 - `plugins/hermes-skills/skills/` - bundled skills copied from the curated Hermes migration set.
 - `shared/` - Obsidian-readable methodology mirrors.
-- `manifests/` - generated migration, dependency, and redaction reports.
+- `manifests/` - generated registries, dependency reports, redaction reports, and agent coordination notes.
+- `scripts/` - validation and sync helpers.
 
 The plugin currently contains 23 primary migrated skills plus 5 nested perspective example skills from `huashu-nuwa`.
 
-## Usage
+## Shared-Agent Usage
+
+This repository is the shared host for four agents:
+
+- Codex on Rayna's Mac.
+- Local Hermes on Rayna's Mac.
+- Cloud Hermes.
+- ChatGPT web with GitHub repository access.
+
+Before using or changing a skill, every agent should read the latest repository state, then follow `AGENTS.md`.
+
+Recommended entry points:
+
+- General coordination: `AGENTS.md`
+- Machine-readable skill list: `manifests/skill-registry.json`
+- ChatGPT web routing guide: `manifests/web-chatgpt-router.md`
+- Change log: `manifests/agent-activity-log.md`
+
+## Local Usage
 
 Open this repository as an Obsidian vault to browse and edit the methodology notes. Use the `hermes-skills` plugin folder for Codex plugin packaging.
 
@@ -38,8 +57,23 @@ Important paths:
 - Web ChatGPT router: `manifests/web-chatgpt-router.md`
 - Plugin root: `plugins/hermes-skills/`
 - Skill directory: `plugins/hermes-skills/skills/`
+- Skill registry: `manifests/skill-registry.json`
 - Dependency manifest: `manifests/dependency-manifest.json`
 - Redaction report: `manifests/redaction-report.md`
+
+## Validation
+
+Run this before committing skill changes:
+
+```bash
+python3 scripts/validate-skills.py --write-registry
+```
+
+Local agents can sync the latest accepted version with:
+
+```bash
+scripts/sync-hermes-knowledge.sh
+```
 
 ## Security
 
