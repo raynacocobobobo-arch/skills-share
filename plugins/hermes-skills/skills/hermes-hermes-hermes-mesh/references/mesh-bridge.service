@@ -1,0 +1,17 @@
+[Unit]
+Description=Hermes Mesh Bridge v2
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/.hermes/scripts
+ExecStart=/usr/bin/python3 /home/ubuntu/.hermes/scripts/mesh-bridge.py 9000
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=mesh-bridge
+
+[Install]
+WantedBy=multi-user.target

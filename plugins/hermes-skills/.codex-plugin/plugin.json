@@ -1,0 +1,18 @@
+{
+  "name": "hermes-skills",
+  "version": "0.1.0",
+  "description": "Private Hermes-derived skills and bundled methodology references for Codex.",
+  "author": {
+    "name": "Rayna"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Hermes Skills",
+    "shortDescription": "Use private Hermes-derived skills in Codex.",
+    "longDescription": "Hermes Skills packages selected Hermes skills with bundled, sanitized methodology references so they can be versioned and installed as a Codex plugin.",
+    "developerName": "Rayna",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Help me use Hermes Skills."
+  }
+}
