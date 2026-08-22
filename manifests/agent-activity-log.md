@@ -2,6 +2,14 @@
 
 Record changes made by Codex, local Hermes, cloud Hermes, and ChatGPT web.
 
+## 2026-08-22 ChatGPT Web — reference hygiene locks
+
+- Branch: `web-chatgpt/reference-hygiene-locks`.
+- Removed clearly misplaced GDevelop and promotional-film reference files from the Story Skill reference bundle, plus the misplaced GDevelop cache from `shared/film-methodology`.
+- Added `tests/test_promotional_skill_contract.py` to lock the already-accepted promotional-film rules for revision modes, minimum change, LOCKED facts, spoken core numbers, time/information budget, and existing-Word + doc-reviewer behavior.
+- Added `tests/test_reference_hygiene.py` to prevent GDevelop cache files from leaking into film references and promotional-film reference bundles from leaking into Story references.
+- No Story/Promo methodology rules were changed; this branch only removes obvious reference pollution and adds cheap CI regression locks.
+
 ## 2026-08-22 ChatGPT Web — Story Skill canonical recovery
 
 - Branch: `web-chatgpt/story-skill-canonical-recovery`.
