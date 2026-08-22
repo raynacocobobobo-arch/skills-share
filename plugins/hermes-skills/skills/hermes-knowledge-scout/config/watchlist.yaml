@@ -1,22 +1,28 @@
 # Hermes Knowledge Scout Watchlist
-# High-signal sources only. Focus on reusable workflows and methodologies.
+# Focus: reusable workflows, not tool advertisements.
 
-version: 1.2
+version: 1.3
 
 sources:
 
   youtube:
 
-    # Core: ChatGPT / Agent / AI workflow
     - name: OpenAI
       role:
         - primary_capability_tracking
         - chatgpt_workflow
+        - image_workflow
+      knowledge_type:
+        - workflow
+        - prompt_method
+        - capability_update
       topics:
         - ChatGPT
+        - ChatGPT Image
         - Agents
         - Codex
         - automation workflow
+        - prompt iteration
       priority: high
       collector: youtube
       frequency: weekly
@@ -25,6 +31,9 @@ sources:
     - name: Andrej Karpathy
       role:
         - ai_engineering_methodology
+      knowledge_type:
+        - methodology
+        - workflow
       topics:
         - LLM workflow
         - vibe coding
@@ -38,6 +47,9 @@ sources:
     - name: Anthropic
       role:
         - coding_agent_tracking
+      knowledge_type:
+        - workflow
+        - methodology
       topics:
         - Claude Code
         - agent workflow
@@ -47,27 +59,47 @@ sources:
       frequency: weekly
       language: en
 
-    # AI image / prompt engineering
-    - name: Midjourney
+    - name: The AI Advantage
       role:
-        - image_generation_methodology
+        - ai_workflow_methodology
+      knowledge_type:
+        - workflow
+        - prompt_method
       topics:
-        - prompt engineering
-        - style control
-        - image consistency
-        - visual storytelling
+        - ChatGPT workflow
+        - AI productivity
+        - automation
+        - prompt systems
       priority: high
       collector: youtube
       frequency: weekly
       language: en
 
-    - name: Matt Wolfe
+    - name: Futurepedia
       role:
-        - ai_ecosystem_filter
+        - ai_workflow_research
+      knowledge_type:
+        - workflow
+        - tool_evaluation
       topics:
-        - AI tools
-        - model comparison
-        - workflow changes
+        - ChatGPT workflow
+        - AI automation
+        - creative workflow
+      priority: medium
+      collector: youtube
+      frequency: weekly
+      language: en
+
+    - name: Matthew Berman
+      role:
+        - prompt_engineering_tracking
+      knowledge_type:
+        - prompt_method
+        - capability_update
+      topics:
+        - ChatGPT
+        - prompt engineering
+        - AI models
       priority: medium
       collector: youtube
       frequency: weekly
@@ -76,6 +108,9 @@ sources:
     - name: Curious Refuge
       role:
         - ai_filmmaking_methodology
+      knowledge_type:
+        - filmmaking_workflow
+        - methodology
       topics:
         - AI filmmaking
         - AI video workflow
@@ -86,18 +121,6 @@ sources:
       frequency: weekly
       language: en
 
-    - name: Corridor Crew
-      role:
-        - vfx_methodology
-      topics:
-        - VFX workflow
-        - AI video
-        - filmmaking techniques
-      priority: medium
-      collector: youtube
-      frequency: monthly
-      language: en
-
 model_watch:
 
   - name: OpenAI
@@ -106,6 +129,7 @@ model_watch:
       - ChatGPT
       - Agent
       - multimodal
+      - image generation
 
   - name: MiniMax
     priority: high
@@ -113,12 +137,6 @@ model_watch:
       - H3
       - video generation
       - multimodal model
-
-  - name: Google DeepMind
-    priority: medium
-    topics:
-      - Gemini
-      - Veo
 
 skill_targets:
 
