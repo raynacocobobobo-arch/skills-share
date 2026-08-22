@@ -35,6 +35,15 @@ REQUIRED_SKILLS = [
 ]
 
 
+ROUTE_CASES = {
+    "企业宣传片解说词": ["电视解说词写作", "导演创作手册"],
+    "三分钟故事短片结构": ["故事片创作", "电影编剧创作指南"],
+    "电影分镜设计": ["影视综合技巧-分镜完整整理"],
+    "品牌营销策略": ["市场营销"],
+    "纪录片叙事优化": ["导演创作手册", "电视解说词写作"],
+}
+
+
 def test_reference_router_exists_and_covers_domains():
     assert ROUTER.exists()
     content = ROUTER.read_text(encoding="utf-8")
@@ -72,3 +81,12 @@ def test_router_does_not_encourage_full_library_loading():
 
     for phrase in forbidden:
         assert phrase not in content
+
+
+def test_route_contract_cases_have_registered_targets():
+    router_content = ROUTER.read_text(encoding="utf-8")
+    index_names = [p.stem.replace(".index", "") for p in SOURCE_DIR.glob("*.index.md")]
+
+    for _, targets in ROUTE_CASES.items():
+        for target in targets:
+            assert any(target in name or target in router_content for name in index_names), target
