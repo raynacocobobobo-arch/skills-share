@@ -1,0 +1,140 @@
+# Hermes Knowledge Scout Watchlist
+# High-signal sources only. Focus on reusable workflows and methodologies.
+
+version: 1.2
+
+sources:
+
+  youtube:
+
+    # Core: ChatGPT / Agent / AI workflow
+    - name: OpenAI
+      role:
+        - primary_capability_tracking
+        - chatgpt_workflow
+      topics:
+        - ChatGPT
+        - Agents
+        - Codex
+        - automation workflow
+      priority: high
+      collector: youtube
+      frequency: weekly
+      language: en
+
+    - name: Andrej Karpathy
+      role:
+        - ai_engineering_methodology
+      topics:
+        - LLM workflow
+        - vibe coding
+        - AI-native development
+        - agents
+      priority: high
+      collector: youtube
+      frequency: weekly
+      language: en
+
+    - name: Anthropic
+      role:
+        - coding_agent_tracking
+      topics:
+        - Claude Code
+        - agent workflow
+        - context engineering
+      priority: high
+      collector: youtube
+      frequency: weekly
+      language: en
+
+    # AI image / prompt engineering
+    - name: Midjourney
+      role:
+        - image_generation_methodology
+      topics:
+        - prompt engineering
+        - style control
+        - image consistency
+        - visual storytelling
+      priority: high
+      collector: youtube
+      frequency: weekly
+      language: en
+
+    - name: Matt Wolfe
+      role:
+        - ai_ecosystem_filter
+      topics:
+        - AI tools
+        - model comparison
+        - workflow changes
+      priority: medium
+      collector: youtube
+      frequency: weekly
+      language: en
+
+    - name: Curious Refuge
+      role:
+        - ai_filmmaking_methodology
+      topics:
+        - AI filmmaking
+        - AI video workflow
+        - storytelling
+        - production pipeline
+      priority: high
+      collector: youtube
+      frequency: weekly
+      language: en
+
+    - name: Corridor Crew
+      role:
+        - vfx_methodology
+      topics:
+        - VFX workflow
+        - AI video
+        - filmmaking techniques
+      priority: medium
+      collector: youtube
+      frequency: monthly
+      language: en
+
+model_watch:
+
+  - name: OpenAI
+    priority: high
+    topics:
+      - ChatGPT
+      - Agent
+      - multimodal
+
+  - name: MiniMax
+    priority: high
+    topics:
+      - H3
+      - video generation
+      - multimodal model
+
+  - name: Google DeepMind
+    priority: medium
+    topics:
+      - Gemini
+      - Veo
+
+skill_targets:
+
+  chatgpt:
+    - hermes-knowledge-scout
+    - research-report-style
+
+  ai_image:
+    - AI绘画提示词
+    - 影视分镜
+    - 故事片创作
+
+  ai_video:
+    - AI绘画提示词
+    - 影视分镜
+    - 宣传片创作
+
+  vibe_coding:
+    - hermes-knowledge-scout
