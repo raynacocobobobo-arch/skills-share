@@ -18,6 +18,10 @@ from urllib.parse import urlencode
 
 import requests
 
+# B站是国内站点，必须直连；清除代理环境变量防止 requests 走海外代理
+for _k in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"):
+    os.environ.pop(_k, None)
+
 try:
     from bilibili_api import user, sync
     HAS_BILIBILI_API = True

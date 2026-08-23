@@ -23,6 +23,9 @@ export HTTP_PROXY=http://127.0.0.1:7890
 export ALL_PROXY=http://127.0.0.1:7890
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/knowledge-collector/cli.py --cookies "$COOKIES"
 
+echo "[$NOW] Running Bilibili collector..."
+/usr/bin/python3 scripts/knowledge-collector/bilibili_collect.py
+
 echo "[$NOW] Generating research input..."
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/generate-research-input.py
 
@@ -34,10 +37,14 @@ SUBTITLE_DIR="subtitles/$TODAY"
 mkdir -p "$SUBTITLE_DIR" data/latest
 
 # Sync raw transcripts as flat .txt files matching existing schema
-RAW_DIR="$SKILLS_SHARE/shared/knowledge-library/raw/youtube"
+RAW_DIRS=(
+  "$SKILLS_SHARE/shared/knowledge-library/raw/youtube"
+  "$SKILLS_SHARE/shared/knowledge-library/raw/bilibili"
+)
 INDEX_ENTRIES=()
 SUB_ADDED=0
 
+for RAW_DIR in "${RAW_DIRS[@]}"; do
 if [[ -d "$RAW_DIR" ]]; then
   for metadata_file in "$RAW_DIR"/*/*/metadata.json; do
     [[ -f "$metadata_file" ]] || continue
@@ -91,6 +98,7 @@ if [[ -d "$RAW_DIR" ]]; then
     echo "  + $txt_filename"
   done
 fi
+done
 
 # Generate index.json
 if [[ ${#INDEX_ENTRIES[@]} -gt 0 ]]; then
@@ -125,7 +133,7 @@ cp "$SKILLS_SHARE"/data/latest/research-input.md data/latest/research-input.md
 # Commit + push
 if ! git diff --quiet -- subtitles data/latest; then
   git add subtitles data/latest
-  git commit -m "同步 $TODAY (YouTube:$SUB_ADDED)"
+  git commit -m "同步 $TODAY (YT+BL:$SUB_ADDED)"
   git push
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] Push done."
 else

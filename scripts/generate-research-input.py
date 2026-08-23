@@ -9,7 +9,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-RAW_YOUTUBE_DIR = Path("shared/knowledge-library/raw/youtube")
+RAW_DIRS = [
+    Path("shared/knowledge-library/raw/youtube"),
+    Path("shared/knowledge-library/raw/bilibili"),
+]
 ANALYSIS_QUEUE = Path("shared/knowledge-library/analysis-queue.jsonl")
 OUTPUT_DIR = Path("data/latest")
 OUTPUT_FILE = OUTPUT_DIR / "research-input.md"
@@ -18,28 +21,29 @@ CHINA_TZ = timezone(datetime.now().astimezone().utcoffset() or __import__("datet
 
 
 def load_assets():
-    """Load all collected assets from raw youtube directory."""
+    """Load all collected assets from raw youtube + bilibili directories."""
     assets = []
-    if not RAW_YOUTUBE_DIR.exists():
-        return assets
-
-    for metadata_path in sorted(RAW_YOUTUBE_DIR.glob("*/*/metadata.json")):
-        try:
-            metadata = json.loads(metadata_path.read_text())
-        except json.JSONDecodeError:
+    for raw_dir in RAW_DIRS:
+        if not raw_dir.exists():
             continue
 
-        asset_dir = metadata_path.parent
-        transcript_path = asset_dir / "transcript.md"
-        transcript = ""
-        if transcript_path.exists():
-            transcript = transcript_path.read_text().strip()
+        for metadata_path in sorted(raw_dir.glob("*/*/metadata.json")):
+            try:
+                metadata = json.loads(metadata_path.read_text())
+            except json.JSONDecodeError:
+                continue
 
-        assets.append({
-            "metadata": metadata,
-            "transcript": transcript,
-            "directory": str(asset_dir),
-        })
+            asset_dir = metadata_path.parent
+            transcript_path = asset_dir / "transcript.md"
+            transcript = ""
+            if transcript_path.exists():
+                transcript = transcript_path.read_text().strip()
+
+            assets.append({
+                "metadata": metadata,
+                "transcript": transcript,
+                "directory": str(asset_dir),
+            })
 
     return assets
 
@@ -138,9 +142,13 @@ def generate():
     # Data sources
     lines.append("## 数据来源")
     lines.append("")
-    channels = sorted(set(a["metadata"]["channel"] for a in all_assets))
-    for channel in channels:
-        lines.append(f"- YouTube: {channel}")
+    sources = sorted(set(
+        (a["metadata"].get("platform", "youtube"), a["metadata"]["channel"])
+        for a in all_assets
+    ))
+    for platform, channel in sources:
+        label = "Bilibili" if platform == "bilibili" else "YouTube"
+        lines.append(f"- {label}: {channel}")
     lines.append("")
 
     # Today's new content
