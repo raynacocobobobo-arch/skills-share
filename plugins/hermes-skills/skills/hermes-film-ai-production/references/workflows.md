@@ -33,6 +33,58 @@ AI影视生产不要直接从文字进入视频。
 - 视频阶段重点描述动作变化、镜头运动和时间关系。
 - 发现问题时优先回到对应阶段修改，不要重复堆 Prompt。
 
+## Shot Production Workflow
+
+不要使用一个 Prompt 直接生成完整影片。
+
+推荐：
+
+```text
+影片需求
+↓
+镜头拆解
+↓
+单镜头设计
+↓
+Shot Reference Pack
+↓
+视频生成
+↓
+剪辑组合
+```
+
+## Generation Review Loop
+
+生成不是结束，而是进入导演审核循环。
+
+```text
+Generate
+↓
+Review
+↓
+Identify Issue
+↓
+Adjust
+↓
+Regenerate
+↓
+Lock Shot
+```
+
+检查：
+
+- 人物是否一致。
+- 动作是否符合逻辑。
+- 空间关系是否正确。
+- 摄影机运动是否符合设计。
+- 时间变化是否连续。
+
+修改优先级：
+
+- 资产问题 → 修改 Asset。
+- 镜头问题 → 修改 Shot Design。
+- 描述问题 → 修改 Prompt。
+
 ## 镜头设计
 
 每个镜头需要：
