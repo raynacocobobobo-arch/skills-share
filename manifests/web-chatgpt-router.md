@@ -90,7 +90,7 @@ Use when the user wants to make an AI story short, AI microfilm, AI film experim
 - Supporting checkpoints: `plugins/hermes-workflows/workflows/ai-short-film-production/checkpoints.md`
 - Templates: `plugins/hermes-workflows/workflows/ai-short-film-production/templates/`
 
-Routing note: load this workflow before individual film skills when the request is an end-to-end AI short-film pipeline. It should orchestrate `故事片创作`, `hermes-film-ai-production`, `影视分镜`, and `AI绘画提示词`. Do not generate prompts before Story Lock.
+Routing note: load this workflow before individual film skills when the request is an end-to-end AI short-film pipeline. It should orchestrate `故事片创作`, `hermes-film-ai-production`, and `影视分镜`; use `hermes-image-prompt-design` only for still-image prompt conversion inside the production phase. Do not generate prompts before Story Lock.
 
 #### Corporate / brand / product promotional film
 Use for enterprise films, brand films, product films, investment-promotion films, government/corporate briefing films, promotional-film copywriting, structure, creative direction, or full promotional-film workflows.
@@ -143,11 +143,17 @@ Use when the task is primarily screenplay formatting, scene-heading formatting, 
 - Skill: `中文剧本格式`
 - Path: `plugins/hermes-skills/skills/hermes-film-中文剧本格式/SKILL.md`
 
-#### AI image prompt from storyboard
-Use when converting a shot/storyboard description into a Chinese AI-image prompt, including portrait and scene prompts.
+#### Single-image prompt design
+Use for single-image generation tasks such as posters, illustrations, character design sheets, architectural renders, commercial visuals, style exploration images, portraits, and scene stills. Do not use it for film workflows, continuous shots, image-to-video, or video prompts.
 
-- Skill: `AI绘画提示词`
-- Path: `plugins/hermes-skills/skills/hermes-film-AI绘画提示词/SKILL.md`
+- Skill: `hermes-image-prompt-design`
+- Path: `plugins/hermes-skills/skills/hermes-image-prompt-design/SKILL.md`
+
+#### AI film production
+Use for promotional films, narrative films, storyboard groups, continuous shots, world visual development, image-to-video, video prompts, and production review.
+
+- Skill: `hermes-film-ai-production`
+- Path: `plugins/hermes-skills/skills/hermes-film-ai-production/SKILL.md`
 
 #### Content tags for film/project knowledge base
 Use when extracting standardized `#` tags from promotional-film copy, scripts, storyboards, or project documents.
@@ -157,9 +163,9 @@ Use when extracting standardized `#` tags from promotional-film copy, scripts, s
 
 Common film chaining:
 
-- Promotional film: `宣传片创作` → `影视分镜` when detailed shots are required → `AI绘画提示词` when visual-generation prompts are required → `内容标签` when archiving/tagging is required.
+- Promotional film: `宣传片创作` → `影视分镜` when detailed shots are required → `hermes-film-ai-production` for continuous-shot/video production → `hermes-image-prompt-design` only for still-image prompts → `内容标签` when archiving/tagging is required.
 - Promotional-film existing Word revision: `宣传片创作` (content) + `doc-reviewer` (preserve/edit the original Word copy).
-- Narrative film: `故事片创作` → `中文剧本格式` for formal screenplay layout → `影视分镜` for shot design → `AI绘画提示词` for visual prompts.
+- Narrative film: `故事片创作` → `中文剧本格式` for formal screenplay layout → `影视分镜` for shot design → `hermes-film-ai-production` for AI production workflow.
 - Accuracy-sensitive industrial storyboard: `storyboard-revision` or `石化简易分镜` first, depending on whether the main problem is factual verification or industrial shooting design.
 
 ---

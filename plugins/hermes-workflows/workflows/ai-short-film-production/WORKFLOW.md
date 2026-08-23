@@ -65,8 +65,8 @@ Phase 4 Storyboard:
 
 Phase 5 AI Production:
 
-- Primary skill: `AI绘画提示词` for still-image prompts when needed.
-- Supporting skill: `hermes-film-ai-production` for prompt strategy, visual consistency, and production review.
+- Primary skill: `hermes-film-ai-production` for prompt strategy, visual consistency, image-to-video, video prompts, and production review.
+- Supporting skill: `hermes-image-prompt-design` for still-image prompts when a locked storyboard frame needs a single-image output.
 - Output: `templates/production-plan.md`
 
 ## Locks
