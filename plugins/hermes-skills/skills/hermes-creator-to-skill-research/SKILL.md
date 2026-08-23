@@ -2,67 +2,85 @@
 
 ## Purpose
 
-Convert creator materials into reusable Hermes capabilities.
+将创作者素材转化为 Hermes 可复用能力。
 
-Input:
-- YouTube subtitles
-- articles
-- GitHub projects
-- tutorials
+输入：
+- YouTube 字幕
+- 文章
+- GitHub 项目
+- 教程
 
-Output:
-- creator workflow analysis
-- reusable principles
-- skill gap analysis
-- Codex modification tasks
+输出：
+- 创作者工作流分析
+- 可复用原则
+- Hermes 能力影响
+- Codex 修改建议
 
 ## Core Rule
 
-Do not create video summaries.
-Do not collect tools.
-Do not summarize content only.
+不要生成普通视频摘要。
 
-Always answer:
+不要整理工具列表。
 
-1. What problem did the creator solve?
-2. What workflow did they use?
-3. What principle can be reused?
-4. What Hermes capability should improve?
+重点回答：
+
+1. 创作者解决了什么问题？
+2. 他实际采用了什么工作流程？
+3. 哪些经验可以迁移？
+4. Hermes 是否需要变化？
 
 ## Workflow
 
-Original material
+原始素材
 
 ↓
 
-Creator Workflow Extraction
+提取关键证据
 
 ↓
 
-Reusable Principle Extraction
+提取创作者工作流
 
 ↓
 
-Skill Gap Analysis
+提炼可复用原则
 
 ↓
 
-Codex Task Generation
+判断 Hermes 影响
 
-## Output
+↓
 
-Every analysis must contain:
+生成 Codex 修改建议
 
-- Source information
-- Workflow breakdown
-- Key methods
-- Important original excerpts
-- Reusable principles
-- Skill impact
-- Codex implementation proposal
+## Output Requirements
+
+每次分析必须包含：
+
+- 来源信息
+- 关键原文片段
+- 工作流拆解
+- 方法抽象
+- 可复用原则
+- Hermes 影响判断
+- Codex 任务建议
+
+## Evidence Rule
+
+所有重要结论必须能够追溯到原始素材。
+
+格式：
+
+原文片段：
+
+解释：
+
+提炼原则：
 
 ## Boundary
 
-This skill proposes changes.
+这个 Skill 负责研究和提出修改建议。
 
-It does not directly modify other skills.
+不直接修改其他 Skill。
+
+避免过度工程化，只输出能够帮助 Hermes 改进的内容。
