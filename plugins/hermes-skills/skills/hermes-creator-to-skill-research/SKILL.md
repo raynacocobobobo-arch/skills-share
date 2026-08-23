@@ -92,9 +92,35 @@ repository_path
 
 # Creator Distillation Tracking
 
-Creator Distillation 必须记录状态。
+Creator Distillation 状态唯一存储位置：
 
-状态以 Creator 为单位维护，不以单个字幕文件为主要单位。
+```
+hermes-daily-report/data/creators.json
+```
+
+禁止：
+
+- 在 skills-share 创建额外 Creator 状态文件
+- 创建重复 registry
+- 使用其他文件替代 creators.json
+
+Creator Distillation 状态以 Creator 为单位维护，不以单个字幕文件为主要单位。
+
+执行前：
+
+读取：
+
+```
+hermes-daily-report/data/creators.json
+```
+
+判断：
+
+```
+completed → 跳过
+pending → 执行
+processing → 继续检查状态
+```
 
 状态：
 
@@ -154,7 +180,7 @@ Creator Distillation 只有满足以下条件才算完成：
 ↓
 沉淀文件生成
 ↓
-creators.json 更新
+hermes-daily-report/data/creators.json 更新
 ```
 
 不能减少实际项目时间、错误或决策成本的内容，不进入 Hermes。
