@@ -26,6 +26,7 @@ description: AI导演工作流技能，用于AI短片、宣传片、品牌片、
 - 用户提供参考图片、海报、截图或视觉参考：读 [references/visual-analysis.md](references/visual-analysis.md)，输出视觉拆解和视觉规范，再进入资产设计或镜头设计。
 - 用户需要连续角色、连续场景、稳定世界观或多镜头一致性：读 [references/asset-bible.md](references/asset-bible.md)，先建立核心资产卡，再生成镜头。
 - 用户需要分镜、镜头组、运镜、画面转视频 Prompt：读 [references/storyboard-template.md](references/storyboard-template.md)，用统一镜头模板输出。
+- 用户需要图像/视频生成 Prompt、参考风格迁移、Negative Prompt、生成控制方式或提示词迭代：读 [references/prompt-patterns.md](references/prompt-patterns.md)，按“视觉概念 -> 结构化描述 -> 生成语言”处理。
 - 用户要完整 AI 影视方案：按 [references/workflows.md](references/workflows.md) 的「Project Start -> Concept Development -> Visual Analysis -> Asset Bible -> Shot Design -> Prompt Engineering -> Review」组织输出。
 - 用户只要局部建议时，不要加载所有 references；只读当前任务需要的文件。
 
@@ -38,4 +39,5 @@ description: AI导演工作流技能，用于AI短片、宣传片、品牌片、
 - 默认用中文输出。
 - 不输出内部验证过程。
 - 不把 Prompt 写成单句关键词堆砌；使用主体、动作、环境、视觉风格、摄影语言、情绪目标和限制条件组织。
+- 不把所有问题都交给 Prompt；需要一致性、构图控制、局部修复或运动时，要说明应使用参考图、控制图、局部重绘、图生视频等生产方式。
 - 当用户只给一个模糊想法时，先给可执行的视觉方向和实验路径；只有关键信息缺失到无法判断题材或用途时才追问。
