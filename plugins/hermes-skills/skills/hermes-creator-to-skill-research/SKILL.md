@@ -4,7 +4,7 @@
 
 将优秀创作者的真实经验转化为 Hermes 可复用能力。
 
-目标不是创建人物分身，而是提取：
+目标不是创建 Creator 分身，而是提取：
 
 - 可执行工作流
 - 方法论
@@ -26,14 +26,14 @@ Creator Distillation 是 source-grounded extraction。
 
 - 根据标题推测内容
 - 根据 Creator 印象总结
-- 根据 research-input.md 直接蒸馏
-- 根据摘要、搜索结果、历史记忆替代原文
+- 根据摘要替代原文
+- 根据历史记忆替代原始素材
 
 ---
 
 # Mandatory Source Pipeline
 
-执行 Creator Distillation 时必须严格执行：
+执行 Creator Distillation 必须：
 
 ```
 Creator Distillation 请求
@@ -62,94 +62,11 @@ GitHub API 读取完整 txt 字幕
 禁止输出蒸馏结果
 ```
 
-不得使用替代信息继续。
-
----
-
-# Source Discovery Rules
-
-字幕库存在索引时，唯一入口：
-
-```
-index.json
-↓
-entries[]
-↓
-up_name
-↓
-repository_path
-↓
-原始字幕 txt
-```
-
-禁止：
-
-- 使用 GitHub Search 作为字幕定位方式
-- 扫目录猜测 Creator
-- 根据文件名判断内容
-
----
-
-# Creator Distillation Tracking
-
-Creator Distillation 状态唯一存储位置：
-
-```
-hermes-daily-report/data/creators.json
-```
-
-禁止：
-
-- 在 skills-share 创建额外 Creator 状态文件
-- 创建重复 registry
-- 使用其他文件替代 creators.json
-
-Creator Distillation 状态以 Creator 为单位维护，不以单个字幕文件为主要单位。
-
-执行前：
-
-读取：
-
-```
-hermes-daily-report/data/creators.json
-```
-
-判断：
-
-```
-completed → 跳过
-pending → 执行
-processing → 继续检查状态
-```
-
-状态：
-
-```
-pending
-↓
-processing
-↓
-completed
-↓
-rejected
-```
-
-完成后必须记录：
-
-- creator_name
-- source_files
-- distillation_status
-- completed_date
-- target_path
-- distillation_output
-
 ---
 
 # Batch Distillation
 
-同一 Creator 必须批量分析。
-
-流程：
+同一 Creator 必须批量分析：
 
 ```
 同一 Creator 多条字幕
@@ -158,57 +75,49 @@ rejected
 ↓
 寻找重复出现的方法
 ↓
-去除新闻和一次性工具信息
+去除新闻和一次性信息
 ↓
 提取稳定工作流
 ↓
 验证迁移价值
-↓
-更新 Creator 状态
 ```
 
 ---
 
-# Skill Impact Mapping Rules
+# Capability Extraction Stage
 
-Creator Distillation 完成方法提取后，进入 Skill Impact 阶段。
+Batch Distillation 后，必须进入 Capability Extraction。
 
-禁止根据 Creator 所属领域直接映射 Skill。
+禁止直接从 Creator 方法映射 Skill。
 
-错误方式：
-
-```
-Creator 是影视作者
-↓
-直接进入影视 Skill
-```
-
-正确流程：
+强制流程：
 
 ```
-提取 Creator 方法
+Creator Methods
 ↓
-查看已有 plugins/hermes-skills/skills/
+Capability Extraction
 ↓
-识别候选 Skill
+Capability Map
 ↓
-读取候选 Skill 的 SKILL.md
+Skill Impact Mapping
 ↓
-判断是否增强已有能力
-↓
-更新对应 Skill 或 references
+Implementation
 ```
 
-强制规则：
+每个 Capability 必须记录：
 
-1. MUST inspect existing skills before creating new capability.
-2. MUST read candidate SKILL.md before deciding destination.
-3. MUST prioritize extending existing skills.
-4. 不允许仅根据名称、领域或 Creator 类型猜测目标 Skill。
-5. 新建 Skill 必须证明：
-   - 现有 Skill 无法覆盖
-   - 能力可重复调用
-   - 能产生长期复用价值
+```yaml
+capability:
+  name:
+  category:
+  problem_solved:
+  reusable_value:
+  workflow:
+  artifacts:
+  candidate_skills:
+  decision:
+    enhance_existing | create_new
+```
 
 ---
 
@@ -238,18 +147,74 @@ Creator 专属 Skill
 
 ---
 
+# Skill Impact Mapping Rules
+
+Capability Extraction 后进入 Skill Impact 阶段。
+
+正确流程：
+
+```
+Capability Map
+↓
+查看已有 plugins/hermes-skills/skills/
+↓
+读取候选 Skill 的 SKILL.md
+↓
+判断能力边界
+↓
+增强已有 Skill
+或
+创建新 Skill
+```
+
+强制：
+
+1. MUST inspect existing skills before creating new capability.
+2. MUST read candidate SKILL.md before deciding destination.
+3. MUST prioritize extending existing skills.
+4. 不允许仅根据 Creator 类型、领域或名称猜测 Skill。
+
+新建 Skill 必须证明：
+
+- 现有 Skill 无法覆盖
+- 能力可重复调用
+- 具有长期复用价值
+
+---
+
+# Creator Distillation Tracking
+
+唯一状态文件：
+
+```
+hermes-daily-report/data/creators.json
+```
+
+完成后记录：
+
+- creator_name
+- source_files
+- distillation_status
+- completed_date
+- target_path
+- distillation_output
+
+---
+
 # Completion Requirement
 
-Creator Distillation 只有满足以下条件才算完成：
+只有满足：
 
 ```
 原始字幕已读取
 ↓
 方法论已提取
 ↓
+Capability Map 已生成
+↓
 沉淀文件生成
 ↓
-hermes-daily-report/data/creators.json 更新
+creators.json 更新
 ```
 
-不能减少实际项目时间、错误或决策成本的内容，不进入 Hermes。
+才算 Creator Distillation 完成。
