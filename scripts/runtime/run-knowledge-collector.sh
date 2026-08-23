@@ -1,33 +1,47 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd "$(dirname "$0")/../.."
+SKILLS_SHARE="$HOME/skills-share"
+DAILY_REPORT="$HOME/hermes-daily-report"
+TODAY=$(date '+%Y-%m-%d')
+NOW=$(date '+%Y-%m-%d %H:%M:%S')
 
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Pulling latest..."
+cd "$SKILLS_SHARE"
+
+echo "[$NOW] Pulling skills-share..."
 git pull --ff-only
 
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Running collector..."
+echo "[$NOW] Running collector..."
 source .venv/bin/activate
 export HTTPS_PROXY=http://127.0.0.1:7890
 export HTTP_PROXY=http://127.0.0.1:7890
 export ALL_PROXY=http://127.0.0.1:7890
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/knowledge-collector/cli.py --limit-sources 1
 
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Generating research input..."
+echo "[$NOW] Generating research input..."
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/generate-research-input.py
 
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Syncing data to hermes-daily-report..."
-DAILY_REPORT_DIR="$HOME/hermes-daily-report"
-cp data/latest/research-input.md "$DAILY_REPORT_DIR/data/latest/research-input.md"
-cd "$DAILY_REPORT_DIR"
+echo "[$NOW] Syncing to hermes-daily-report..."
+cd "$DAILY_REPORT"
 git pull --ff-only
-if ! git diff --quiet -- data/latest; then
-  git add data/latest
-  git commit -m "chore: daily research input $(date '+%Y-%m-%d')"
+
+# Sync raw transcripts
+SUBTITLE_DIR="subtitles/$TODAY"
+mkdir -p "$SUBTITLE_DIR"
+cp -r "$SKILLS_SHARE"/shared/knowledge-library/raw/youtube/* "$SUBTITLE_DIR/" 2>/dev/null || true
+
+# Sync research input
+mkdir -p data/latest
+cp "$SKILLS_SHARE"/data/latest/research-input.md data/latest/research-input.md
+
+# Commit + push if changed
+if ! git diff --quiet -- subtitles data/latest; then
+  git add subtitles data/latest
+  git commit -m "chore: daily collector run $TODAY"
   git push
-  echo "[$(date '+%Y-%m-%d %H:%M:%S')] Push to hermes-daily-report done."
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] Push done."
 else
-  echo "[$(date '+%Y-%m-%d %H:%M:%S')] No new data to push."
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] No new data."
 fi
 
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Complete."
