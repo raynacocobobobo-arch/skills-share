@@ -9,7 +9,12 @@ from analysis_queue import create_analysis_task, should_analyze
 from dedup import should_collect
 from discovery import discover_sources
 from providers.youtube.transcript_fetcher import fetch_transcript
-from providers.youtube.youtube_provider import build_metadata, get_latest_videos
+from providers.youtube.youtube_provider import (
+    build_metadata,
+    format_published,
+    get_latest_videos,
+    get_video_details,
+)
 from storage import append_analysis_task, load_source_index, save_youtube_asset
 
 
@@ -36,6 +41,23 @@ def collect(watchlist, limit_sources=None, videos_per_source=5, cookie_path=None
             continue
 
         for video in videos:
+            source_id = f"youtube:{video.video_id}"
+            if not should_collect(index, source_id):
+                skipped.append({
+                    "source": source["name"],
+                    "source_id": source_id,
+                    "reason": "duplicate",
+                })
+                continue
+
+            # 只有未采集的新视频才解析完整元数据，避免每天重复请求
+            info = get_video_details(video.video_id, cookie_path)
+            if info:
+                video.title = info.get("title") or video.title
+                video.channel = info.get("channel") or info.get("uploader") or video.channel
+                video.url = info.get("webpage_url") or video.url
+                video.published = format_published(info)
+
             metadata = build_metadata(
                 video.video_id,
                 video.title,
@@ -43,14 +65,6 @@ def collect(watchlist, limit_sources=None, videos_per_source=5, cookie_path=None
                 url=video.url,
                 published=video.published,
             )
-
-            if not should_collect(index, metadata["source_id"]):
-                skipped.append({
-                    "source": source["name"],
-                    "source_id": metadata["source_id"],
-                    "reason": "duplicate",
-                })
-                continue
 
             transcript_result = fetch_transcript(
                 video.video_id,

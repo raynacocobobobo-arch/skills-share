@@ -20,12 +20,23 @@ class YouTubeAsset:
     published: Optional[str] = None
 
 
-def get_latest_videos(source, limit=5, cookie_path=None):
-    """Resolve a watchlist source to its N latest YouTube videos (most recent first)."""
+def _import_ytdlp():
     try:
         import yt_dlp
     except ImportError as exc:
         raise RuntimeError("Missing dependency: install yt-dlp to discover YouTube videos.") from exc
+    return yt_dlp
+
+
+def get_latest_videos(source, limit=5, cookie_path=None):
+    """Resolve a watchlist source to its N latest YouTube videos (flat only).
+
+    Only the channel's /videos tab is fetched (extract_flat). Full metadata is
+    NOT resolved here — callers dedup on ``video_id`` first and only call
+    :func:`get_video_details` for videos that are actually new, so a daily run
+    over an already-seen channel does not re-fetch every video.
+    """
+    yt_dlp = _import_ytdlp()
 
     channel_url = source.get("url") or source.get("channel_url")
     if not channel_url:
@@ -45,37 +56,40 @@ def get_latest_videos(source, limit=5, cookie_path=None):
         playlist = ydl.extract_info(videos_url, download=False)
 
     entries = [entry for entry in playlist.get("entries", []) if entry]
-    if not entries:
-        return []
-
     videos = []
     for flat_video in entries:
-        video_id = flat_video["id"]
-        try:
-            full_opts = {"quiet": True, "skip_download": True}
-            if cookie_path:
-                full_opts["cookiefile"] = cookie_path
-            with yt_dlp.YoutubeDL(full_opts) as ydl:
-                info = ydl.extract_info(YOUTUBE_WATCH_URL.format(video_id=video_id), download=False)
-        except Exception:
-            info = None
-
+        video_id = flat_video.get("id")
+        if not video_id:
+            continue
         videos.append(YouTubeAsset(
             video_id=video_id,
-            title=(info.get("title") if info else None) or flat_video.get("title") or "",
-            channel=(info.get("channel") if info else None)
-                    or (info.get("uploader") if info else None)
-                    or flat_video.get("channel")
-                    or flat_video.get("uploader")
-                    or source["name"],
-            url=(info.get("webpage_url") if info else None) or YOUTUBE_WATCH_URL.format(video_id=video_id),
-            published=format_published(info) if info else None,
+            title=flat_video.get("title") or "",
+            channel=flat_video.get("channel") or flat_video.get("uploader") or source["name"],
+            url=flat_video.get("url") or YOUTUBE_WATCH_URL.format(video_id=video_id),
+            published=None,
         ))
     return videos
 
 
+def get_video_details(video_id, cookie_path=None):
+    """Fetch full metadata (title/channel/published) for a single video.
+
+    Returns the raw yt-dlp info dict, or ``None`` if the page could not be
+    resolved (bot challenge, deleted video, etc.).
+    """
+    yt_dlp = _import_ytdlp()
+    opts = {"quiet": True, "skip_download": True}
+    if cookie_path:
+        opts["cookiefile"] = cookie_path
+    try:
+        with yt_dlp.YoutubeDL(opts) as ydl:
+            return ydl.extract_info(YOUTUBE_WATCH_URL.format(video_id=video_id), download=False)
+    except Exception:
+        return None
+
+
 def get_latest_video(source):
-    """Resolve a watchlist source to its latest YouTube video."""
+    """Resolve a watchlist source to its latest YouTube video (flat)."""
     videos = get_latest_videos(source, limit=1)
     return videos[0] if videos else None
 
