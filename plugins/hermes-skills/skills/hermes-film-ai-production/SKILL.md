@@ -27,7 +27,8 @@ description: AI导演工作流技能，用于AI短片、宣传片、品牌片、
 - 用户只有模糊需求，如“做一个 AI 宣传片”或“我要做一个 AI 科幻短片”：先读 [references/project-start.md](references/project-start.md)，完成需求补全后进入 [references/workflows.md](references/workflows.md) 的概念开发。
 - 用户提供参考图片、海报、截图或视觉参考：读 [references/visual-analysis.md](references/visual-analysis.md)，输出视觉拆解和视觉规范，再进入资产设计或镜头设计。
 - 用户需要连续角色、连续场景、稳定世界观或多镜头一致性：读 [references/asset-bible.md](references/asset-bible.md)，先建立核心资产卡，再生成镜头。
-- 用户需要分镜、镜头组、运镜、画面转视频 Prompt：读 [references/storyboard-template.md](references/storyboard-template.md)，用统一镜头模板输出。
+- 用户需要分镜、镜头组或单个镜头设计：读 [references/storyboard-template.md](references/storyboard-template.md)，用统一镜头模板输出。
+- 用户需要连续动作分镜、四格动作序列、图片转视频、关键帧转视频或 Motion Prompt：读 [references/sequence-storyboard.md](references/sequence-storyboard.md)，先拆 Beat Board，再做 Sequence Board，最后写 Motion Prompt。
 - 用户需要图像/视频生成 Prompt、参考风格迁移、Negative Prompt、生成控制方式或提示词迭代：读 [references/prompt-patterns.md](references/prompt-patterns.md)，按“视觉概念 -> 结构化描述 -> 生成语言”处理。
 - 用户要完整 AI 影视方案：按 [references/workflows.md](references/workflows.md) 的「Project Start -> Concept Development -> Visual Analysis -> Asset Bible -> Shot Design -> Prompt Engineering -> Review」组织输出。
 - 用户只要局部建议时，不要加载所有 references；只读当前任务需要的文件。

@@ -61,12 +61,14 @@ Phase 4 Storyboard:
 - Primary skill: `影视分镜`
 - Read: `plugins/hermes-skills/skills/hermes-film-影视分镜/SKILL.md`
 - Supporting template: `plugins/hermes-skills/skills/hermes-film-ai-production/references/storyboard-template.md`
+- For continuous action, keyframe-to-video, or motion prompts, also read: `plugins/hermes-skills/skills/hermes-film-ai-production/references/sequence-storyboard.md`
 - Output: `templates/storyboard.md`
 
 Phase 5 AI Production:
 
 - Primary skill: `hermes-film-ai-production` for prompt strategy, visual consistency, image-to-video, video prompts, and production review.
 - Supporting skill: `hermes-image-prompt-design` for still-image prompts when a locked storyboard frame needs a single-image output.
+- Use `sequence-storyboard.md` to turn approved beats or storyboard frames into sequence boards and motion prompts.
 - Output: `templates/production-plan.md`
 
 ## Locks

@@ -3,7 +3,7 @@
 整体流程：
 
 ```text
-用户需求 -> Project Start -> Concept Development -> Visual Analysis -> Asset Bible -> Shot Design -> Prompt Engineering -> Review
+用户需求 -> Project Start -> Concept Development -> Visual Analysis -> Asset Bible -> Shot Design -> Sequence Storyboard -> Prompt Engineering -> Review
 ```
 
 ## 概念开发
@@ -91,7 +91,8 @@
 1. 明确镜头目标和观众情绪。
 2. 确定主体、动作、环境和空间关系。
 3. 选择景别、构图、运镜和光影。
-4. 转成可生成的 Prompt，不只写导演术语。
+4. 多镜头或连续动作时，先按 Beat Board 拆故事功能，再用 `sequence-storyboard.md` 展开 Sequence Board。
+5. 转成可生成的 Prompt，不只写导演术语。
 
 输出：
 
@@ -101,9 +102,16 @@
 - 构图：主体位置、前中后景、视线方向、空间关系。
 - 镜头运动：推近、拉出、跟拍、环绕、固定镜头等，并说明叙事动机。
 - 光影：主光方向、明暗关系、色温、空气感。
+- 连续动作：Frame 之间继承什么、变化什么、如何接到下一帧。
 - 可生成描述：可直接转成图像或视频 Prompt 的镜头描述。
 
 避免只写“震撼”“高级”“电影感”。每个镜头要落到可拍摄或可生成的主体、动作、环境和摄影语言。
+
+连续分镜要求：
+
+- Beat Board 先回答每个叙事节点的故事功能，不直接生成漂亮画面。
+- Sequence Board 把关键 beat 展开为 3-5 个连续帧，保持角色、场景、光线、色彩和轴线稳定。
+- Motion Prompt 写清起始画面、结束画面、主体动作、镜头运动、环境运动、时长和速度。
 
 示例：
 
@@ -157,7 +165,7 @@ Prompt 输出建议包含：
 
 - 主体和环境要绑定，不写孤立物体。
 - 风格要具体到时代、材质、摄影或艺术来源，不堆通用热词。
-- 视频 Prompt 要包含镜头运动和动作连续性。
+- 视频 Prompt 要包含起始状态、结束状态、镜头运动和动作连续性。
 - 参考图要转成视觉系统，不直接复刻原图、品牌、标语、人物或构图。
 - 构图、姿态、深度、局部修复和运动幅度应交给生产控制方式，不强行塞进 Prompt。
 - Negative Prompt 不宜泛滥，只排除本项目真正会伤害一致性的内容。

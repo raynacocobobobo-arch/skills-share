@@ -80,11 +80,13 @@ Use:
 
 - `影视分镜`
 - `storyboard-template.md`
+- `sequence-storyboard.md` when a beat must become 3-5 continuous action frames or image-to-video prompts
 
 Deliverable:
 
 - completed `templates/storyboard.md`
 - shot list with story function for each shot
+- sequence board and motion prompt for key beats that need generated video continuity
 
 Do not include shots that only look cinematic but do not change information, relationship, suspense, setup/payoff, or emotional state.
 
@@ -102,6 +104,7 @@ Use:
 
 - `hermes-film-ai-production` for prompt strategy, continuous-shot/video production, and review
 - `hermes-image-prompt-design` for still-image prompt conversion when a locked storyboard frame needs a single-image output
+- `sequence-storyboard.md` for motion prompts that connect approved storyboard frames into video clips
 
 Deliverable:
 
