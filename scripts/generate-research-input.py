@@ -111,6 +111,12 @@ def extract_key_quote(transcript, max_len=200):
     return paragraphs[0][:max_len]
 
 
+def subtitle_filename(channel, title):
+    """Compute the flat .txt filename used in hermes-daily-report subtitles/."""
+    safe_title = title.replace("/", "_").replace("\n", "")[:200]
+    return f"{channel}-{safe_title}.txt"
+
+
 def generate():
     now = datetime.now(CHINA_TZ)
     output_dir = Path(OUTPUT_DIR)
@@ -182,15 +188,18 @@ def generate():
     lines.append("## 今日全部素材索引")
     lines.append("")
 
+    today_str = now.strftime("%Y-%m-%d")
     for asset in all_assets:
         meta = asset["metadata"]
-        lines.append(f"- `{asset['directory']}`")
+        filename = subtitle_filename(meta["channel"], meta["title"])
+        subtitles_path = f"subtitles/{today_str}/{filename}"
+        lines.append(f"- `{subtitles_path}`")
         lines.append(f"  - {meta['title']}")
         lines.append(f"  - {meta['url']}")
         lines.append("")
 
-    lines.append(f"文件：{len(all_assets)} 个目录")
-    lines.append(f"路径：{RAW_YOUTUBE_DIR}")
+    lines.append(f"文件：{len(all_assets)} 个素材")
+    lines.append(f"路径：subtitles/{today_str}/")
     lines.append(f"数量：{len(all_assets)} 个素材")
     lines.append("")
 
