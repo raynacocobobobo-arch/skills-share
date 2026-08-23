@@ -1,5 +1,23 @@
 # Hermes Knowledge
 
+## Canonical Repository Identity
+
+The canonical Hermes repository name must always be written exactly as:
+
+```text
+raynacocobobobo-arch/skills-share
+```
+
+Do not abbreviate, guess, or alter the owner name. Before GitHub operations, verify the full repository identifier.
+
+For Hermes daily research data repository references, use:
+
+```text
+raynacocobobobo-arch/hermes-daily-report
+```
+
+---
+
 ## For ChatGPT Web
 
 When using this private repository from ChatGPT Web through the GitHub connection, use the router as the canonical entry point:
