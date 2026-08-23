@@ -26,3 +26,27 @@ creators:
       - Content Creation Workflow remains a candidate pattern.
       - Do not create shared capability until cross-domain validation exists.
       - Workflow stages should first be evaluated against existing skills.
+
+  Andrej Karpathy:
+    status:
+      distillation: completed
+
+    skills_created: []
+
+    skills_enhanced:
+      - hermes-vibe-coding-workflow
+
+    capabilities_added:
+      - Context First
+      - Reference Before Build
+      - AI Engineering Reproduction Workflow
+      - Evaluation Driven Development
+
+    decisions:
+      ai-engineering-workflow:
+        action: enhance-existing-skill
+        reason: overlaps with vibe coding methodology
+
+    notes:
+      - Karpathy contributions strengthen AI system building methodology.
+      - No standalone skill created.
