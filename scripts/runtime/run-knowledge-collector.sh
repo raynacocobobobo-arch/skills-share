@@ -16,14 +16,18 @@ PYTHONDONTWRITEBYTECODE=1 python3 scripts/knowledge-collector/cli.py --limit-sou
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Generating research input..."
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/generate-research-input.py
 
-if ! git diff --quiet -- shared/knowledge-library data/latest; then
-  echo "[$(date '+%Y-%m-%d %H:%M:%S')] New assets found, pushing..."
-  git add shared/knowledge-library data/latest
-  git commit -m "chore: collect knowledge assets"
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Syncing data to hermes-daily-report..."
+DAILY_REPORT_DIR="$HOME/hermes-daily-report"
+cp data/latest/research-input.md "$DAILY_REPORT_DIR/data/latest/research-input.md"
+cd "$DAILY_REPORT_DIR"
+git pull --ff-only
+if ! git diff --quiet -- data/latest; then
+  git add data/latest
+  git commit -m "chore: daily research input $(date '+%Y-%m-%d')"
   git push
-  echo "[$(date '+%Y-%m-%d %H:%M:%S')] Push done."
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] Push to hermes-daily-report done."
 else
-  echo "[$(date '+%Y-%m-%d %H:%M:%S')] No new assets."
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] No new data to push."
 fi
 
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Complete."
