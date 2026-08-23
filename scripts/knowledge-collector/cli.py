@@ -20,7 +20,7 @@ def load_watchlist(path):
     return yaml.safe_load(Path(path).read_text())
 
 
-def collect(watchlist, limit_sources=None, videos_per_source=5):
+def collect(watchlist, limit_sources=None, videos_per_source=5, cookie_path=None):
     sources = discover_sources(watchlist)
     if limit_sources:
         sources = sources[:limit_sources]
@@ -30,7 +30,7 @@ def collect(watchlist, limit_sources=None, videos_per_source=5):
     skipped = []
 
     for source in sources:
-        videos = get_latest_videos(source, limit=videos_per_source)
+        videos = get_latest_videos(source, limit=videos_per_source, cookie_path=cookie_path)
         if not videos:
             skipped.append({"source": source["name"], "reason": "no_video"})
             continue
@@ -52,7 +52,11 @@ def collect(watchlist, limit_sources=None, videos_per_source=5):
                 })
                 continue
 
-            transcript_result = fetch_transcript(video.video_id, languages=(source.get("language") or "en", "en"))
+            transcript_result = fetch_transcript(
+                video.video_id,
+                languages=(source.get("language") or "en", "en"),
+                cookie_path=cookie_path,
+            )
             if transcript_result["status"] != "ok":
                 skipped.append({
                     "source": source["name"],
@@ -94,6 +98,12 @@ if __name__ == "__main__":
     parser.add_argument("--watchlist", default=DEFAULT_WATCHLIST)
     parser.add_argument("--limit-sources", type=int, default=0, help="0 = all sources")
     parser.add_argument("--videos-per-source", type=int, default=5)
+    parser.add_argument("--cookies", default=None, help="Netscape cookie file for YouTube auth")
     args = parser.parse_args()
 
-    print(collect(load_watchlist(args.watchlist), limit_sources=args.limit_sources, videos_per_source=args.videos_per_source))
+    print(collect(
+        load_watchlist(args.watchlist),
+        limit_sources=args.limit_sources,
+        videos_per_source=args.videos_per_source,
+        cookie_path=args.cookies,
+    ))

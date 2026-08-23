@@ -20,7 +20,7 @@ class YouTubeAsset:
     published: Optional[str] = None
 
 
-def get_latest_videos(source, limit=5):
+def get_latest_videos(source, limit=5, cookie_path=None):
     """Resolve a watchlist source to its N latest YouTube videos (most recent first)."""
     try:
         import yt_dlp
@@ -39,6 +39,8 @@ def get_latest_videos(source, limit=5):
         "playlistend": limit,
         "ignoreerrors": True,
     }
+    if cookie_path:
+        opts["cookiefile"] = cookie_path
     with yt_dlp.YoutubeDL(opts) as ydl:
         playlist = ydl.extract_info(videos_url, download=False)
 
@@ -50,7 +52,10 @@ def get_latest_videos(source, limit=5):
     for flat_video in entries:
         video_id = flat_video["id"]
         try:
-            with yt_dlp.YoutubeDL({"quiet": True, "skip_download": True}) as ydl:
+            full_opts = {"quiet": True, "skip_download": True}
+            if cookie_path:
+                full_opts["cookiefile"] = cookie_path
+            with yt_dlp.YoutubeDL(full_opts) as ydl:
                 info = ydl.extract_info(YOUTUBE_WATCH_URL.format(video_id=video_id), download=False)
         except Exception:
             info = None
