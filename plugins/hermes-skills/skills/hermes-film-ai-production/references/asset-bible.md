@@ -100,9 +100,46 @@ Production 进入镜头生产
 - 如果角色、场景发生重大变化，应重新生成版本，而不是覆盖旧资产。
 - 版本只用于追踪变化，不需要复杂企业资产管理。
 
+## Shot Reference Pack
+
+资产进入具体镜头前，需要根据单个 Shot 组织引用包。
+
+目的：不是保存素材，而是为生成提供明确输入。
+
+```text
+Shot:
+
+Character:
+
+Location:
+
+Props:
+
+Style Reference:
+
+Camera Reference:
+
+Reference Images:
+
+Generation Purpose:
+```
+
+流程：
+
+```text
+Asset Bible
+↓
+Shot Reference Pack
+↓
+Generation
+↓
+Review
+```
+
 ## 输出原则
 
 - 先做 1-3 个核心资产，不要一次铺开全片资产库。
 - 每个资产只保留生成时必须稳定的特征。
 - “禁止变化”只写真正影响一致性的内容。
 - 资产卡完成后，再进入分镜或 Prompt。
+- Shot Reference Pack 只保留当前镜头真正需要的资产，不要无目的堆叠参考。
