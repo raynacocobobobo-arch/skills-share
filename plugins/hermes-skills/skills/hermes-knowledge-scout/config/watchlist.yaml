@@ -105,6 +105,24 @@ sources:
       collector: youtube
       language: en
 
+    - name: Theoretically Media
+      tier: daily
+      url: https://www.youtube.com/channel/UC9Ryt3XOGYBoAJVsBHNGDzA
+      role:
+        - ai_filmmaking_workflow
+      knowledge_type:
+        - filmmaking_workflow
+        - tool_evaluation
+        - methodology
+      topics:
+        - AI filmmaking
+        - Seedance
+        - AI video workflow
+        - production pipeline
+      priority: high
+      collector: youtube
+      language: en
+
     - name: Gumvue Studio
       tier: daily
       url: https://www.youtube.com/channel/UCfJieIqrYYJImTJZGVyaiaQ

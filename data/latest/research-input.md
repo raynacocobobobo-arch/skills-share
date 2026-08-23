@@ -1,10 +1,11 @@
 # Hermes Research Input
 
 日期：2026-08-23
-生成时间：2026-08-23 14:12:39 CST
+生成时间：2026-08-23 17:28:42 CST
 
 ## 数据来源
 
+- Bilibili: Mx-Shell
 - YouTube: Andrej Karpathy
 - YouTube: Anthropic
 - YouTube: Curious Refuge
@@ -12,6 +13,7 @@
 - YouTube: Matthew Berman
 - YouTube: OpenAI
 - YouTube: The AI Advantage
+- YouTube: Theoretically Media
 
 ## 今日新增内容
 
@@ -451,6 +453,94 @@ happens d
 
 ### Curious Refuge
 
+视频/文章：SeedDance 2.5 Just Got Upstaged by Nvidia
+链接：https://www.youtube.com/watch?v=2vSqzvonRts
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- It's been a wild week for AI news.
+There's a brand new tool that allows you
+to upload a single video clip and then
+move around in 3D space. Removing
+objects and re-lighting your video clips
+has never been easier and cheaper. And
+if you thought Seed Dance was
+impressive, let me show you this new
+model coming from NVIDIA. We have all of
+that along with 20 pieces of AI news you
+probably missed. Let's get to it. So,
+we're going to kick things off by
+talking about some news that we kind of
+hinted at last week. There's a brand new
+tool that allows you to upload a single
+video clip and then navigate in 3D
+space. The new tool is called InSpatio
+4D Gaussian Splats, and you basically
+have the ability to take a single video
+clip and then upload it to create a 3D
+environment that you can actually move...
+
+涉及对象：
+股票：NVIDIA, Apple, GOOGL, Google, Amazon, ARM
+行业：AI
+主题：GPT, Gemini, RAG, prompt, workflow
+
+关键原文：
+> It's been a wild week for AI news.
+There's a brand new tool that allows you
+to upload a single video clip and then
+move around in 3D space. Removing
+objects and re-lighting your video clips
+has never 
+
+---
+
+### Curious Refuge
+
+视频/文章：We Tested Elon's New AI Video Tool... And Have Some Thoughts
+链接：https://www.youtube.com/watch?v=EbDzfeBwszM
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- The team at Grok has released a brand
+new AI video model that is positioning
+itself as a competitor to online tools
+like Seed Dance. So, in this video,
+we're going to take an honest look at
+the brand new tool Imagine 1.5. We'll be
+comparing it against other AI video
+models on the market and determine where
+it fits in in the larger creative
+ecosystem. And I want to give a hat tip
+to the user Nimbab who asked us in the
+comments, "How come nobody is covering
+Grok? Is it not serious?" Well, that's
+what this video is all about. So, the
+big news is that the team at Grok has
+updated their AI video model to allow it
+to take reference images. This is a big
+deal because so many of the online AI
+video tools are transitioning away from
+just being an image-to-video platform.
+On most platforms like Seed...
+
+涉及对象：
+股票：NET
+行业：AI
+主题：ChatGPT, GPT, Claude, LLM, prompt, workflow
+
+关键原文：
+> The team at Grok has released a brand
+new AI video model that is positioning
+itself as a competitor to online tools
+like Seed Dance. So, in this video,
+we're going to take an honest look at
+the brand 
+
+---
+
+### Curious Refuge
+
 视频/文章：16 AI Filmmaking News Updates You Missed
 链接：https://www.youtube.com/watch?v=N7zh3PoMeSk
 发布时间：None
@@ -629,6 +719,95 @@ have al
 
 ### Curious Refuge
 
+视频/文章：Is This the Best Free AI Video Generator?
+链接：https://www.youtube.com/watch?v=rUGbh6hjijc
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- Just last week, two different Chinese
+labs dropped a brand new video model.
+Now, everybody has been talking about
+and overhyping SeeDance 2.5, but there's
+a completely different video model
+that's actually much more interesting
+that we're going to be taking a look at
+today. MiniMax H3 is here and it has the
+ability to generate video clips up to
+2K. It also has the ability to take
+reference images, video, and audio
+together to generate the outputs. Plus,
+there's a completely free to download
+and use open weight version that you can
+download today. And if you live in the
+United States, the EU, the UK, or South
+Korea, we also have some really
+important information about using this
+video model. And I'd like to give a hat
+tip to the community member VFX Fan who
+left a comment in our recent vide...
+
+涉及对象：
+股票：（无）
+行业：AI
+主题：GPT, prompt, workflow
+
+关键原文：
+> Just last week, two different Chinese
+labs dropped a brand new video model.
+Now, everybody has been talking about
+and overhyping SeeDance 2.5, but there's
+a completely different video model
+that's act
+
+---
+
+### Curious Refuge
+
+视频/文章：I found the craziest AI Film Tools you need to see...
+链接：https://www.youtube.com/watch?v=uiYnWs6Wcqs
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- A new company has released brand new
+camera technology that looks like it's
+going to absolutely change the way that
+we create films. I also have a real-time
+visual effects tool that you can use
+today and impress your friends. And
+Netflix has used AI in over 300 films
+and you probably didn't even notice. We
+have all that and more in this week's
+episode of AI film news. A company
+called 4D Views has released new
+technology that absolutely looks like
+it's going to change the future of
+filmmaking. Actually, the company has
+created a digital camera array that can
+capture a scene as it unfolds in front
+of the camera. But the huge value
+proposition is it then converts that
+entire scene into a 4D Gaussian splat
+that you can go and navigate. The reason
+why that's important is you can
+essentially ca...
+
+涉及对象：
+股票：Apple, NET
+行业：AI
+主题：GPT, RAG, prompt, workflow
+
+关键原文：
+> A new company has released brand new
+camera technology that looks like it's
+going to absolutely change the way that
+we create films. I also have a real-time
+visual effects tool that you can use
+today 
+
+---
+
+### Curious Refuge
+
 视频/文章：Is Suno Still the Best AI Music Tool?
 链接：https://www.youtube.com/watch?v=wEU5yR9koeg
 发布时间：None
@@ -668,6 +847,49 @@ video, I decided to take a look at the
 top AI music tools on the market and
 give you some recommendations for the
 very best 
+
+---
+
+### Curious Refuge
+
+视频/文章：Seedance 2.5 Is Incredible... Until It Isn't
+链接：https://www.youtube.com/watch?v=xjyuNokwAPw
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- SeeDance 2.5 is finally here and so many
+people have been saying that this is the
+future of filmmaking. So, in this video,
+we're going to be taking a hands-on look
+at SeeDance 2.5. I'll talk about some of
+the new features in this AI video model.
+We'll also talk about how it stacks up,
+what it cost, and what this means for
+the future of creativity. All right,
+let's get in. In order to use SeeDance
+2.5 at this time, you have to go through
+Dreambooth, which is the official
+aggregator of ByteDance. So, we're here
+on the Dreambooth website and at the
+bottom, you can see we have our menu
+here. In order to generate a video in
+SeeDance 2.5, just make sure you're in
+the AI video section here. You can type
+in your prompt and you can bring in
+references. So, inside of SeeDance, you
+can bring up to 50...
+
+涉及对象：
+股票：GOOGL, Google
+行业：AI
+主题：prompt, workflow
+
+关键原文：
+> SeeDance 2.5 is finally here and so many
+people have been saying that this is the
+future of filmmaking. So, in this video,
+we're going to be taking a hands-on look
+at SeeDance 2.5. I'll talk about som
 
 ---
 
@@ -1526,6 +1748,565 @@ remembers
 
 ---
 
+### Theoretically Media
+
+视频/文章：The Best AI Short Film You'll See Today (Seedance 2.5)
+链接：https://www.youtube.com/watch?v=4wFBA9-KyzY
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- They said you'd be here.
+And I knew you were coming.
+Right on time. That's good.
+You aren't what I expected.
+What? The cloak? The skull?
+A little cliché, wouldn't you say?
+>> So, you know why I'm here?
+>> At 11:21 tonight, your client's daughter
+passes.
+Little Julie.
+There is no cure.
+So, he asked you to do the one noble
+thing money could buy.
+Tell me,
+were you paid well?
+>> I was.
+Really well.
+>> You should save it.
+After tonight, there won't be many jobs
+for a man in your line of work.
+>> I'm done after tonight.
+You're the last one.
+>> You stop me tonight, and she lives
+with her pain forever.
+Everyone does.
+So many mouths,
+so many bodies that never return to
+dust. Smart people will figure it out.
+>> I don't think about it.
+There's a name, I do the job, I get
+paid.
+>> You can't outsmart t...
+
+涉及对象：
+股票：（无）
+行业：AI
+主题：（无）
+
+关键原文：
+> They said you'd be here.
+And I knew you were coming.
+Right on time. That's good.
+You aren't what I expected.
+What? The cloak? The skull?
+A little cliché, wouldn't you say?
+>> So, you know why I'm here
+
+---
+
+### Theoretically Media
+
+视频/文章：Fine. Let's Talk About Higgsfield.
+链接：https://www.youtube.com/watch?v=7vGp40qEV4s
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- So, this is a video that I mean, I
+really don't want to make, but since I'm
+the guy that kind of ended up lighting
+the match on this whole thing, I guess I
+kind of should. So, let's talk about
+Higgs Field.
+So, just as a quick FYI, this is going
+to be a bit of a rough and tumble video,
+kind of more just like me talking to
+camera. You know, like the old school
+YouTube cuts where people talked, but
+the edits made everything super choppy.
+Like I said, I don't feel like making
+this video. Terms and conditions are
+really boring to me, but I do have to
+say like something kind of kind of
+important ended up happening. So, let's
+just let's recap the whole thing. So,
+this past Thursday, July 23rd, Higgs
+Field sent out one of those like fairly
+standard emails that we all get
+outlining updates to their...
+
+涉及对象：
+股票：ARM
+行业：AI
+主题：GPT, Claude, prompt
+
+关键原文：
+> So, this is a video that I mean, I
+really don't want to make, but since I'm
+the guy that kind of ended up lighting
+the match on this whole thing, I guess I
+kind of should. So, let's talk about
+Higgs F
+
+---
+
+### Theoretically Media
+
+视频/文章：Real-Time AI Video (FREE/Cheap!) & Seedance 2.5 Footage
+链接：https://www.youtube.com/watch?v=FCXz8uyPa3Y
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- Well, things are heating up in the
+creative AI space. We've got a lot to
+cover today, including a big update in
+real-time AI video, some C dance seed
+news, a quick check-in with our friends
+over at Martini going over their new
+camera control feature, and a really
+interesting new workflow that I think
+you're going to want to check out.
+Kicking off, Deckard recently dropped
+Lucy 2.5. This is the latest rev of
+their real-time video model. This one
+edits video live at 1080p 30 frames a
+second with near zero latency. Now, as a
+quick note, this language always bothers
+me. Obviously, this isn't actually
+editing the video in the traditional
+like non-linear editing sense, but
+rather it's doing the work of like the
+effects or compositing on top of the
+video. Not to say that any of this is
+any less i...
+
+涉及对象：
+股票：META, Meta
+行业：AI
+主题：GPT, Claude, prompt, workflow
+
+关键原文：
+> Well, things are heating up in the
+creative AI space. We've got a lot to
+cover today, including a big update in
+real-time AI video, some C dance seed
+news, a quick check-in with our friends
+over at Ma
+
+---
+
+### Theoretically Media
+
+视频/文章：AI Film Just Hit A Landmark & Flux 3 Video Is Here!
+链接：https://www.youtube.com/watch?v=TZ1uAQazv90
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- Grab your map, it's time to head back
+into the forest as Black Forest Labs
+have released Flux 3 and it's a video
+model with some impressive specs. Plus,
+a landmark moment for AI filmmaking. One
+film is getting a theatrical release.
+Zach London, aka Gossip Goblin, is
+headed to the silver screen. We'll talk
+about that, but more importantly, I've
+got a breakdown on his workflow that you
+will definitely learn a thing or two
+from. Okay, Gretel, get your breadcrumbs
+for the forest and your popcorn for the
+movies.
+Kicking off, Black Forest Labs returns
+with a surprise. The long-awaited video
+model that was teased at the launch of
+Flux 1 way back in August of 2024. So,
+yeah, it's been a hot minute, but never
+take a cake out of the oven early,
+especially if it's a Black Forest cake.
+I you know, I w...
+
+涉及对象：
+股票：NET
+行业：AI
+主题：Agent, RAG, prompt, workflow
+
+关键原文：
+> Grab your map, it's time to head back
+into the forest as Black Forest Labs
+have released Flux 3 and it's a video
+model with some impressive specs. Plus,
+a landmark moment for AI filmmaking. One
+film i
+
+---
+
+### Theoretically Media
+
+视频/文章：The "Secret" to AI Character Sheets
+链接：https://www.youtube.com/watch?v=X-rlr3k-2TI
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- Characters, we all love them and well,
+without them we'd be just looking at
+pretty locations with no one in them.
+That's a screensaver. And if you've been
+around the AI image and video space for
+a while, well, you'll know that
+consistent characters used to be quite a
+struggle. Thankfully, those days are
+behind us and now we've moved on to
+what's the best workflow for consistent
+characters. There are a few of them that
+have been swirling around, so I thought
+that we would take today to look at some
+of the recent techniques to find out
+what's working and what's wasting your
+credits. All right, everyone find your
+inner motivation and 3 2 1 scene.
+You know, it's funny, just a few years
+ago it was basically witchcraft to
+manage to get the same character in two
+generations. We'd have to like loc...
+
+涉及对象：
+股票：（无）
+行业：AI
+主题：GPT, Agent, RAG, prompt, workflow
+
+关键原文：
+> Characters, we all love them and well,
+without them we'd be just looking at
+pretty locations with no one in them.
+That's a screensaver. And if you've been
+around the AI image and video space for
+a whi
+
+---
+
+### Theoretically Media
+
+视频/文章：Two NEW Mystery AI Video Models & A FREE Cinematic Library!
+链接：https://www.youtube.com/watch?v=YQTduCzNoqw
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- And I'm back. And today we've got to
+look at two new mystery video models
+that will be releasing shortly. One of
+them is probably Meta, but it also could
+be anything from like Kling 4 to a new
+VO model or a dark horse that we're not
+even aware of yet. Plus, get your
+bookmarks ready because I've got a
+really handy resource for anyone that's
+making AI films. This one is for sure
+worth your time and has a hidden
+superpower I have not seen anywhere
+else.
+Kicking off, it looks like Meta is back
+on the menu. Again, maybe. But
+considering we've seen a flurry of
+activity from Zuck and Co, I am highly
+leaning towards one of these mystery
+models being from Meta. You know, most
+recently Meta's superintelligence labs,
+of course led by Alexander Wang,
+launched Muse Image. I took a look at
+that a few vi...
+
+涉及对象：
+股票：META, Meta, NET
+行业：AI
+主题：GPT, LLM, Agent, RAG, prompt
+
+关键原文：
+> And I'm back. And today we've got to
+look at two new mystery video models
+that will be releasing shortly. One of
+them is probably Meta, but it also could
+be anything from like Kling 4 to a new
+VO mode
+
+---
+
+### Theoretically Media
+
+视频/文章：Seedance 2.5 Masterclass & Early Review
+链接：https://www.youtube.com/watch?v=b5F81eip5BM
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- So, a few days ago I released a short
+film using C-Dance 2.5. Uh released via
+the normal social channels and you guys
+seem to enjoy it. So, I thank you for
+that. So, today as promised we're going
+to take an extended behind-the-scenes
+look at how it was all put together.
+Kind of a mini master class uh plus some
+tips and tricks that I learned during
+the production. We'll also take an an
+early-ish review of C-Dance because as I
+have learned it is a bit of a different
+beast. On that note, saddle up to the
+bar. The first round's on me.
+Kicking off, I recently released Death
+Walks into a Bar, a short neo-noir kind
+of thing with a twist. If you haven't
+caught it, don't stress. We're actually
+going to run it here. If you have seen
+it, well, you know, it's only 2 minutes.
+So, uh it might be interes...
+
+涉及对象：
+股票：（无）
+行业：AI
+主题：GPT, Claude, prompt
+
+关键原文：
+> So, a few days ago I released a short
+film using C-Dance 2.5. Uh released via
+the normal social channels and you guys
+seem to enjoy it. So, I thank you for
+that. So, today as promised we're going
+to t
+
+---
+
+### Theoretically Media
+
+视频/文章：AI's Hardest Tool Just Killed The Hard Part!
+链接：https://www.youtube.com/watch?v=ghCKziHvGXo
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- You know, there are two types of people
+in the world. Those that love Comfy UI
+and those that hate Comfy UI. Kind of
+best illustrated by these two
+detectives.
+What am I looking at? It's a nodebased
+system. Something like Comfy.
+It's giving me a headache. That one
+never gets old. But today, I do have
+something that might bring over the
+haters and the Comfy Curious to the Node
+side. Officially
+kicking off. You know, I do have to say
+that Comfy UI is probably one of the
+most important tools, if not the most
+important one in the generative video
+and image landscape, but it is also
+probably one of the most divisive. It is
+both extremely powerful and has a a
+pretty steep learning curve. And to be
+clear, like I am not a comfy wizard in
+the least. At best, I'm somewhere in the
+neighborhood of Comf...
+
+涉及对象：
+股票：NVIDIA, NET
+行业：AI
+主题：GPT, Claude, LLM, Agent, RAG, prompt, workflow
+
+关键原文：
+> You know, there are two types of people
+in the world. Those that love Comfy UI
+and those that hate Comfy UI. Kind of
+best illustrated by these two
+detectives.
+What am I looking at? It's a nodebased
+sy
+
+---
+
+### Theoretically Media
+
+视频/文章：MiniMax Just Dropped a Open Source "Seedance Killer"
+链接：https://www.youtube.com/watch?v=j2pRgZpFPCw
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- Well, this is a surprise. HaiLu Mini Max
+have come roaring back on the scene with
+the long-awaited update to their video
+model, and it's pretty good. So, today
+we're going to dive in to see if the Max
+is back.
+>> Mini Max just launched H3, and people
+ARE SAYING IT'S A SEA DANCE KILLER.
+>> UNTIL I SEE it myself, that's just a
+tall tale.
+>> Editor Tim breaking in here. Uh you
+know, unconfirmed, but for release, I
+did overhear the pirates saying
+something pretty interesting.
+>> Well, Captain,
+the ocean is vast.
+Where do we search?
+>> It is an open sea.
+But before we travel,
+we need to drop some weight.
+>> So, that might be interesting, but at
+the same time, never trust a pirate. So,
+yeah, it has been a minute, HaiLu.
+Actually, it's been a solid 9 months
+since their last update to the with the...
+
+涉及对象：
+股票：Microsoft, META, Meta, NET
+行业：AI
+主题：GPT, Claude, Gemini, LLM, Agent, prompt
+
+关键原文：
+> Well, this is a surprise. HaiLu Mini Max
+have come roaring back on the scene with
+the long-awaited update to their video
+model, and it's pretty good. So, today
+we're going to dive in to see if the Max
+
+---
+
+### Theoretically Media
+
+视频/文章：Seedream 5.0 Tested & Seedance 2.5 Leaks Are Unreal!
+链接：https://www.youtube.com/watch?v=pn-YwWn3kkM
+发布时间：None
+
+原始内容摘要（仅整理，不判断）：
+- So, I know everyone is waiting on news
+about Stable Diffusion 2.5 and I've got
+a little bit on that, but overall, I
+thought today would be a good day to
+check in on a roundup of everything else
+that's going on. But, I do have some new
+Stable Diffusion 2.5 examples to check
+out as well. Plus, you know, hands-on
+tests and quick hits for the balloon
+view on everything else. All right,
+let's hop in.
+Kicking off, yeah, sadly, like no big
+Stable Diffusion 2.5 release as of yet.
+But, in the meantime, ByteDance have
+released SeaDream 5.0 Pro. We're going
+to see how many times I screw up and say
+dance in this video. This is another one
+in kind of our thinking image model
+category. It does have a few interesting
+tricks, kind of. At baseline, we are, of
+course, looking at image generation with
+native...
+
+涉及对象：
+股票：META, Meta
+行业：AI
+主题：GPT, Agent, RAG, prompt
+
+关键原文：
+> So, I know everyone is waiting on news
+about Stable Diffusion 2.5 and I've got
+a little bit on that, but overall, I
+thought today would be a good day to
+check in on a roundup of everything else
+that's
+
+---
+
+### Mx-Shell
+
+视频/文章：说唱、摄影双重经验，是如何点亮 AI 创作的？【独家对谈】
+链接：https://www.bilibili.com/video/BV192Vb66E8b
+发布时间：2026-05-29T05:15:00+00:00
+
+原始内容摘要（仅整理，不判断）：
+- 全网刷屏 人人都在找的丧尸清道夫创作者 他竟然还是一名rapper 千万流量背后的神秘作者居然是我身边熟人 我现在已经在美国了 到处宣扬离开 你看给你机会 你不中用啊 今天抛开作品标签 以音乐为起点 认识不一样的m excel刘子瑜 欢迎哈哈哈哈哈哈 你爆火之后 你的心理变化和你周围生活的变化 你的心态是怎么样的心态 其实还好 就生活变化的话很直观的 这段时间忙很忙 就是基本上找我的人挺多的嗯 各行各业各各个方面都有人找 然后我尽可能给每个人尊重吧 他们找我有正事的呃 我都会听一听他们的诉求啊 或者是说如果说我可以的 都尽量配合嘛 像大部分粉丝的话 就是他们来问我要教程 要提示词 就还有一些莫名其妙的问我 问我卖不卖号的 这种我就没有回了 然后就寄回消息 打电话开会 视频会议 线下会议 然后也采访嘛 反正就是突然忙起来 就基本上现在公司里的事都没太顾得上 然后家里也没怎么回去吃饭 我跟我儿子好几天没见了 好盼做 我们大概20岁做音乐的时候 遇到这样的机会 你觉得你的心态会是什么样子呢 我现在已经在美国了 我已经在加州喝着椰子汁儿 吹着海风啊 其实之前我们做音乐的时候 然后其实我在歌里面有有提到 那句话是写给你的 就是兄弟 我们火了 但是实际上我们没有像你现在的火的程度 但是其实从内心来说 我还是觉得特别为你感到高兴的 但是我也想知道 就是嗯我们都为人父之后的这种心态嘛 可能你还是比较稳一些啊 你考虑的东西得多一点 得全一点 就是如果说那个时候你就一个人没结婚 然后你热爱这个东西嘛 来了一个机会肯定握住不放 那现在就是你得考虑这个东西 我如果真的去了某一个地方 那是不是孩子也好 爱人也好 那就和他们突然一下又拉远了嘛 对吧 那还有一个就是其实我比较想问的问题 就是在你AI短剧里面出现的那个机器人 现在AI视频只是做的仿真嘛 就是大家做的比较真实一些 为什么你要选择用机器人 而...
+
+涉及对象：
+股票：（无）
+行业：AI, 机器人, 社交
+主题：（无）
+
+关键原文：
+> 全网刷屏 人人都在找的丧尸清道夫创作者 他竟然还是一名rapper 千万流量背后的神秘作者居然是我身边熟人 我现在已经在美国了 到处宣扬离开 你看给你机会 你不中用啊 今天抛开作品标签 以音乐为起点 认识不一样的m excel刘子瑜 欢迎哈哈哈哈哈哈 你爆火之后 你的心理变化和你周围生活的变化 你的心态是怎么样的心态 其实还好 就生活变化的话很直观的 这段时间忙很忙 就是基本上找我的人挺多的嗯 各
+
+---
+
+### Mx-Shell
+
+视频/文章：国产“爱死机”刷屏外网 好莱坞大佬全网寻人！wuhu独家专访导演MX-Shell
+链接：https://www.bilibili.com/video/BV19r5Y6WEYV
+发布时间：2026-05-15T03:38:39+00:00
+
+原始内容摘要（仅整理，不判断）：
+- 一部国产AI短片刷屏外网播放量破千万 好莱坞大佬PJS看完直接发帖 全网悬赏 帮我找到这个中国导演 他大概不知道被他满世界找的这个人 白天还在房地产公司上班 十天3000块一个人 导演mx shell和我们聊了聊 那部丧尸清道夫是怎么做出来的 他说这部片子一开始连剧本都没有 原来神作是这样诞生的吗 来跟着呜呼一起了解导演的创作幕后 最近吧应该是最近这次这几天啊 应该是特别忙啊 信息量爆炸的一个状态哈 可以聊聊 你是最近的这些 就是包括也跟好莱坞的制片人也联系上了 这几天是一个什么样的一个经历和感受 跟我们聊聊哈哈 我一直在回回消息 我想给尽可能给每一位 就是能够找到我的这个合作方也好 投资人也好 就是包括粉丝朋友也好 我都尽可能的去回一下他们的消息 私信呀或者是微信 我基本上都都在回 我想尊重每一个人的这个想法嘛 我都有听他们的诉求 反正就是因为这个信息量真的太多了 然后就 累一个字累还一个字累啊 对对 我从来没有过的体验 我从我从发了片子 应该是第一天 还好 从第二天开始 基本上没有睡过一个好觉 白天基本上就是都是我所有的时间 除了吃饭 还有我现在连就连陪家人都得抽时间 就是可能都会有点感觉 对不起 他们明白明白 今天刚刚跟刘导演在聊 就那个时间还在陪陪小朋友 哈哈是吧 对对我好几天没好好陪她 陪下她了啊 我也蛮好奇你的一个经历的 是怎么样一个经历啦 除了咱们那个上次清道夫之外 我还看了之前在那个刘导也做了一些JI作品嘛 啊其实我也蛮好奇你成长的经历啊 没有是呃音乐也好 摄影也好 包括AI也好 其实我都没有系统的去学习过 都基本上是嗯因为爱好驱使着嘛 然后自己去研究的 现在做这个相关工作是你的主业吗 还是说你其实原来是属于把这个 只是当做业余爱好 你刚才提到的这三样 其实全部都是算是爱好和或者副业吧 我主业其实也算是一个打工人这个样子诶 我方便呃 这个刘导 你你的主业是做...
+
+涉及对象：
+股票：（无）
+行业：AI, 机器人
+主题：（无）
+
+关键原文：
+> 一部国产AI短片刷屏外网播放量破千万 好莱坞大佬PJS看完直接发帖 全网悬赏 帮我找到这个中国导演 他大概不知道被他满世界找的这个人 白天还在房地产公司上班 十天3000块一个人 导演mx shell和我们聊了聊 那部丧尸清道夫是怎么做出来的 他说这部片子一开始连剧本都没有 原来神作是这样诞生的吗 来跟着呜呼一起了解导演的创作幕后 最近吧应该是最近这次这几天啊 应该是特别忙啊 信息量爆炸的一个状态
+
+---
+
+### Mx-Shell
+
+视频/文章：Ai原创短片《丧尸清道夫》-重制版，国产“爱死机”！
+链接：https://www.bilibili.com/video/BV1FFRQB2Eqw
+发布时间：2026-05-09T09:27:20+00:00
+
+原始内容摘要（仅整理，不判断）：
+- 区域已清空 ♪ 音乐 ♪ 音乐 ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ 这里着火了 ♪ 音乐 ♪ 音乐 音乐 ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ 当我 ♪ 音乐 ♪ 音乐 ♪ 音乐 ♪ 音乐 ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ 啊 快点 见鬼 ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ 音乐
+
+涉及对象：
+股票：（无）
+行业：（无）
+主题：（无）
+
+关键原文：
+> 区域已清空 ♪ 音乐 ♪ 音乐 ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ 这里着火了 ♪ 音乐 ♪ 音乐 音乐 ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 音乐 ♪ 当我 ♪ 音乐 ♪ 音乐 ♪ 音乐 ♪ 音乐 ♪ 音乐 ♪ ♪ 音乐 ♪ ♪ 
+
+---
+
+### Mx-Shell
+
+视频/文章：国产“爱死机”《丧尸清道夫》图片资产工作流的创作思路分享！
+链接：https://www.bilibili.com/video/BV1qJ7C6cEfS
+发布时间：2026-06-08T09:00:00+00:00
+
+原始内容摘要（仅整理，不判断）：
+- Hello 大家好 我是刘子瑜 也是丧尸清道夫的原创作者MX笑 上一期视频里 我给大家分享了关于视频方面的制作流程 但是大家好像都会觉得缺少了点什么嗯 接触过AI的朋友都应该了解 决定画面质感的关键其实是由图片来决定的 一张优质的参考图 可以为你的画面提升一个档次 同时也可以为你的视频 奠定一个良好的视觉基调 所以我打算把视频和图片分开来讲 那么这一期视频我将为大家分享 在AI的制作过程中 我是如何只靠文案 再将一张张图片给制作出来的吧 你懂的呃 这一次我使用到的软件或者说平台呢 是芯片厂旗下的一个AI创作平台 那为了方便演示 大家也能看懂我的这个制作流程和步骤的话 那我还是使用无线画布来给大家做演示吧 那首先点击我的画布 然后新建一个画布呃 在开始制作之前呢 我觉得大家可以去了解一下每一款AI生图软件 它的特点是什么 就是不同的AI生图软件都有它的长处 也会有他的弱项 就是大家可以根据自己所要创作的内容 去选择不同的AI模型来适配不同的工作场景 我就拿这次我制作清道夫所使用到的 AI生图模型来给大家讲一讲我的看法吧 呃就只能说是我的看法哈 不能说很权威 首先就是拿NO bana怎么说王者 或者可以说是曾经的王者哈 就是大家都应该接触过NANOBANA 就是香蕉模型 呃 这款模型给我的感觉就是很稳定 很可靠 效率高 我在直播中也给大家提到的 我在制作清道夫的过程当中 我会用到一些构图的参考 就是手绘版的构图 这样的图片其实我用到的就是难度bana to 然后nano banana two的话 它的特点就是轻量化 更便捷 更高效 它的出图的速度会很快 大家如果要使用到一些算力不是特别高 就是比较简单的图 比如说这样的参考图 这样的手绘图的话 就可以使用lana bana two 但是大家如果要制作一个正儿八经的参考图 我觉得还是要使用难度 bana pro就是它会分为两个版本...
+
+涉及对象：
+股票：（无）
+行业：AI, 芯片, 机器人
+主题：（无）
+
+关键原文：
+> Hello 大家好 我是刘子瑜 也是丧尸清道夫的原创作者MX笑 上一期视频里 我给大家分享了关于视频方面的制作流程 但是大家好像都会觉得缺少了点什么嗯 接触过AI的朋友都应该了解 决定画面质感的关键其实是由图片来决定的 一张优质的参考图 可以为你的画面提升一个档次 同时也可以为你的视频 奠定一个良好的视觉基调 所以我打算把视频和图片分开来讲 那么这一期视频我将为大家分享 在AI的制作过程中 我是如
+
+---
+
+### Mx-Shell
+
+视频/文章：今天把我关于《丧尸清道夫》的创作思路分享给大家，如果能帮到你，我会很开心。
+链接：https://www.bilibili.com/video/BV1xuVC6AEbg
+发布时间：2026-06-03T02:00:00+00:00
+
+原始内容摘要（仅整理，不判断）：
+- Hello 大家好 我是刘子瑜 也是丧尸清道夫的原创作者MX笑 目前这部短片在国内短视频平台的播放量呢 已经超过一个亿了 非常感谢大家对我的喜欢和支持 相信各位粉丝朋友都一直在等待 我的教学视频吧 那么今天呢教学谈不上 因为我的创作过程好像和大多数人都不太一样 所以我就只讲重点 从大家最关心的提示词入手 再到如何使用小云雀生成短片 以及后期剪辑的一些小技巧list分享给你 为为什么 通常我的视频提示词都会由三个大部分组成呃 基础设定 氛围画质 还有画面内容 首先基础设定指的就是时间地点 人物这些关键元素 很多人会觉得只要把图片做好 然后直接丢给AI 然后把文案给他就可以了 但是这里是一个很大的误区 而我通常的习惯会把参考图给到小云雀以后 对其进行一个简单的描述呃 以确保AI模型能够知道我给他的是什么东西 同时也能够锁定住我提供的参考图 与最后视频出来了以后 呈现的这些的各个方面的一致性 在最后这里往往是大家最容易忽略的一点 就是声音呃 SEDENCE2.0是音画同步生成 我在之前使用沉浸式短片的时候 它经常会自动为我生成一些 后期制作才要用到的氛围音 还有背景音乐这些 而我是需要后期剪辑和二次配乐的呃 为了保证这个剪辑的时候的过度的自然 我就会对因声音加入一些限制 第二个氛围与画质 这个其实是画面最终呈现质感的关键呃 风格核心就是你画面所需要突出的重点啊 同时我也会加入一些限制词 比如我要突出的重点就是原子朋克的风格呃 末日丧尸 然后需要是电极的质感 这个是我需要突出的重点 同时会加入一些限制词哦 后面这里的杜绝游戏cg感 杜绝动作僵硬啊这一类的限制 然后呃其实这里有一个小技巧 就是很多人制作的视频 他的AI味道会很明显啊 可以尝试像我一样加入这几个关键词 就是超写实 极致逼真 然后嗯这个这个这个真人实景拍摄啊 然后我相信你用了这几个提示呃 这几个关键词加进去以后 你生成的...
+
+涉及对象：
+股票：（无）
+行业：AI, 机器人
+主题：Agent
+
+关键原文：
+> Hello 大家好 我是刘子瑜 也是丧尸清道夫的原创作者MX笑 目前这部短片在国内短视频平台的播放量呢 已经超过一个亿了 非常感谢大家对我的喜欢和支持 相信各位粉丝朋友都一直在等待 我的教学视频吧 那么今天呢教学谈不上 因为我的创作过程好像和大多数人都不太一样 所以我就只讲重点 从大家最关心的提示词入手 再到如何使用小云雀生成短片 以及后期剪辑的一些小技巧list分享给你 为为什么 通常我的视频提
+
+---
+
 ## 今日全部素材索引
 
 - `subtitles/2026-08-23/Andrej Karpathy-Deep Dive into LLMs like ChatGPT.txt`
@@ -1568,6 +2349,14 @@ remembers
   - The different levels of how Claude thinks
   - https://www.youtube.com/watch?v=rKV5JcALQoQ
 
+- `subtitles/2026-08-23/Curious Refuge-SeedDance 2.5 Just Got Upstaged by Nvidia.txt`
+  - SeedDance 2.5 Just Got Upstaged by Nvidia
+  - https://www.youtube.com/watch?v=2vSqzvonRts
+
+- `subtitles/2026-08-23/Curious Refuge-We Tested Elon's New AI Video Tool... And Have Some Thoughts.txt`
+  - We Tested Elon's New AI Video Tool... And Have Some Thoughts
+  - https://www.youtube.com/watch?v=EbDzfeBwszM
+
 - `subtitles/2026-08-23/Curious Refuge-16 AI Filmmaking News Updates You Missed.txt`
   - 16 AI Filmmaking News Updates You Missed
   - https://www.youtube.com/watch?v=N7zh3PoMeSk
@@ -1584,9 +2373,21 @@ remembers
   - I Can’t Believe This AI Video Generator is Free
   - https://www.youtube.com/watch?v=qv0s1_coX50
 
+- `subtitles/2026-08-23/Curious Refuge-Is This the Best Free AI Video Generator?.txt`
+  - Is This the Best Free AI Video Generator?
+  - https://www.youtube.com/watch?v=rUGbh6hjijc
+
+- `subtitles/2026-08-23/Curious Refuge-I found the craziest AI Film Tools you need to see....txt`
+  - I found the craziest AI Film Tools you need to see...
+  - https://www.youtube.com/watch?v=uiYnWs6Wcqs
+
 - `subtitles/2026-08-23/Curious Refuge-Is Suno Still the Best AI Music Tool?.txt`
   - Is Suno Still the Best AI Music Tool?
   - https://www.youtube.com/watch?v=wEU5yR9koeg
+
+- `subtitles/2026-08-23/Curious Refuge-Seedance 2.5 Is Incredible... Until It Isn't.txt`
+  - Seedance 2.5 Is Incredible... Until It Isn't
+  - https://www.youtube.com/watch?v=xjyuNokwAPw
 
 - `subtitles/2026-08-23/Futurepedia-A Complete Guide to the New Claude Design.txt`
   - A Complete Guide to the New Claude Design
@@ -1664,9 +2465,69 @@ remembers
   - ChatGPT Can Now See Everything You Do On Your Screen
   - https://www.youtube.com/watch?v=rzLYEIheLPs
 
-文件：34 个素材
+- `subtitles/2026-08-23/Theoretically Media-The Best AI Short Film You'll See Today (Seedance 2.5).txt`
+  - The Best AI Short Film You'll See Today (Seedance 2.5)
+  - https://www.youtube.com/watch?v=4wFBA9-KyzY
+
+- `subtitles/2026-08-23/Theoretically Media-Fine. Let's Talk About Higgsfield..txt`
+  - Fine. Let's Talk About Higgsfield.
+  - https://www.youtube.com/watch?v=7vGp40qEV4s
+
+- `subtitles/2026-08-23/Theoretically Media-Real-Time AI Video (FREE_Cheap!) & Seedance 2.5 Footage.txt`
+  - Real-Time AI Video (FREE/Cheap!) & Seedance 2.5 Footage
+  - https://www.youtube.com/watch?v=FCXz8uyPa3Y
+
+- `subtitles/2026-08-23/Theoretically Media-AI Film Just Hit A Landmark & Flux 3 Video Is Here!.txt`
+  - AI Film Just Hit A Landmark & Flux 3 Video Is Here!
+  - https://www.youtube.com/watch?v=TZ1uAQazv90
+
+- `subtitles/2026-08-23/Theoretically Media-The "Secret" to AI Character Sheets.txt`
+  - The "Secret" to AI Character Sheets
+  - https://www.youtube.com/watch?v=X-rlr3k-2TI
+
+- `subtitles/2026-08-23/Theoretically Media-Two NEW Mystery AI Video Models & A FREE Cinematic Library!.txt`
+  - Two NEW Mystery AI Video Models & A FREE Cinematic Library!
+  - https://www.youtube.com/watch?v=YQTduCzNoqw
+
+- `subtitles/2026-08-23/Theoretically Media-Seedance 2.5 Masterclass & Early Review.txt`
+  - Seedance 2.5 Masterclass & Early Review
+  - https://www.youtube.com/watch?v=b5F81eip5BM
+
+- `subtitles/2026-08-23/Theoretically Media-AI's Hardest Tool Just Killed The Hard Part!.txt`
+  - AI's Hardest Tool Just Killed The Hard Part!
+  - https://www.youtube.com/watch?v=ghCKziHvGXo
+
+- `subtitles/2026-08-23/Theoretically Media-MiniMax Just Dropped a Open Source "Seedance Killer".txt`
+  - MiniMax Just Dropped a Open Source "Seedance Killer"
+  - https://www.youtube.com/watch?v=j2pRgZpFPCw
+
+- `subtitles/2026-08-23/Theoretically Media-Seedream 5.0 Tested & Seedance 2.5 Leaks Are Unreal!.txt`
+  - Seedream 5.0 Tested & Seedance 2.5 Leaks Are Unreal!
+  - https://www.youtube.com/watch?v=pn-YwWn3kkM
+
+- `subtitles/2026-08-23/Mx-Shell-说唱、摄影双重经验，是如何点亮 AI 创作的？【独家对谈】.txt`
+  - 说唱、摄影双重经验，是如何点亮 AI 创作的？【独家对谈】
+  - https://www.bilibili.com/video/BV192Vb66E8b
+
+- `subtitles/2026-08-23/Mx-Shell-国产“爱死机”刷屏外网 好莱坞大佬全网寻人！wuhu独家专访导演MX-Shell.txt`
+  - 国产“爱死机”刷屏外网 好莱坞大佬全网寻人！wuhu独家专访导演MX-Shell
+  - https://www.bilibili.com/video/BV19r5Y6WEYV
+
+- `subtitles/2026-08-23/Mx-Shell-Ai原创短片《丧尸清道夫》-重制版，国产“爱死机”！.txt`
+  - Ai原创短片《丧尸清道夫》-重制版，国产“爱死机”！
+  - https://www.bilibili.com/video/BV1FFRQB2Eqw
+
+- `subtitles/2026-08-23/Mx-Shell-国产“爱死机”《丧尸清道夫》图片资产工作流的创作思路分享！.txt`
+  - 国产“爱死机”《丧尸清道夫》图片资产工作流的创作思路分享！
+  - https://www.bilibili.com/video/BV1qJ7C6cEfS
+
+- `subtitles/2026-08-23/Mx-Shell-今天把我关于《丧尸清道夫》的创作思路分享给大家，如果能帮到你，我会很开心。.txt`
+  - 今天把我关于《丧尸清道夫》的创作思路分享给大家，如果能帮到你，我会很开心。
+  - https://www.bilibili.com/video/BV1xuVC6AEbg
+
+文件：54 个素材
 路径：subtitles/2026-08-23/
-数量：34 个素材
+数量：54 个素材
 
 ## 待分析队列
 
@@ -1704,4 +2565,19 @@ remembers
 - youtube:qv0s1_coX50 → knowledge_extraction
 - youtube:aA_AFy-GDwo → knowledge_extraction
 - youtube:N7zh3PoMeSk → knowledge_extraction
+- youtube:EbDzfeBwszM → knowledge_extraction
+- youtube:rUGbh6hjijc → knowledge_extraction
+- youtube:2vSqzvonRts → knowledge_extraction
+- youtube:xjyuNokwAPw → knowledge_extraction
+- youtube:uiYnWs6Wcqs → knowledge_extraction
+- youtube:ghCKziHvGXo → knowledge_extraction
+- youtube:YQTduCzNoqw → knowledge_extraction
+- youtube:b5F81eip5BM → knowledge_extraction
+- youtube:4wFBA9-KyzY → knowledge_extraction
+- youtube:X-rlr3k-2TI → knowledge_extraction
+- youtube:j2pRgZpFPCw → knowledge_extraction
+- youtube:7vGp40qEV4s → knowledge_extraction
+- youtube:TZ1uAQazv90 → knowledge_extraction
+- youtube:FCXz8uyPa3Y → knowledge_extraction
+- youtube:pn-YwWn3kkM → knowledge_extraction
 
