@@ -13,64 +13,48 @@
 
 ---
 
-# Core Rule
+# Core Principle
+
+研究对象是创作者的方法，不是视频内容。
 
 不要：
 
-- 生成普通视频摘要
-- 罗列工具名称
-- 因为一个案例新增 Skill
-- 建立无法使用的复杂知识体系
+- 生成视频摘要
+- 罗列工具新闻
+- 根据单个案例新增 Skill
+- 建立无法使用的资料库
 
-重点回答：
+必须回答：
 
-1. 创作者解决了什么问题？
-2. 使用了什么工作流程？
-3. 哪些经验可以迁移？
-4. Hermes 是否已经具备？
+1. 创作者解决什么问题？
+2. 使用什么稳定流程？
+3. 哪些方法可以迁移？
+4. Hermes 是否已有？
 5. 最小如何补充？
 
 ---
 
-# Source Discovery Rule
+# Source Discovery
 
-素材定位必须先使用真实索引，不依赖搜索结果。
+## 唯一优先入口
 
-## Discovery Priority
+字幕库存在索引时，必须使用索引定位素材。
 
-执行顺序：
-
-```
-用户指定入口
-
-↓
-
-research-input.md / index.json
-
-↓
-
-根据索引字段过滤 creator
-
-↓
-
-repository_path
-
-↓
-
-读取原始字幕/文章/项目文件
-```
-
-## Index First Rule
-
-如果存在字幕索引：
-
-例如：
+流程：
 
 ```
-subtitles/YYYY-MM-DD/index.json
+index.json
+↓
+解析 JSON
+↓
+遍历 entries[]
+↓
+过滤 up_name
+↓
+获取 repository_path
+↓
+读取原始素材
 ```
-
-必须优先读取。
 
 索引字段：
 
@@ -80,41 +64,25 @@ subtitles/YYYY-MM-DD/index.json
 - sha256
 - size_bytes
 
-流程：
+## Important
 
-```
-index.json
+不要根据工具返回的截断文本判断结果。
 
-↓
+必须把 index.json 当 JSON 解析。
 
-过滤 up_name
+不要：
 
-↓
+- 使用 GitHub 搜索作为主要定位方式
+- 搜索不到就认为不存在
+- 根据文件名猜内容
 
-获得全部 repository_path
-
-↓
-
-批量读取素材
-```
-
-禁止：
-
-- 优先使用 GitHub 搜索找字幕
-- 搜索不到就判断文件不存在
-- 根据文件名猜测内容
-
-## GitHub Search Limitation
-
-GitHub 搜索可能存在索引延迟。
-
-搜索只能作为辅助。
+GitHub 搜索只能辅助验证。
 
 ---
 
 # Raw Material Rule
 
-必须读取原始素材。
+必须读取原始字幕、文章或项目文件。
 
 禁止：
 
@@ -131,34 +99,24 @@ GitHub 搜索可能存在索引延迟。
 流程：
 
 ```
-同一创作者多条素材
-
+多条素材
 ↓
-
 整体阅读
-
 ↓
-
 寻找重复方法
-
 ↓
-
-去除工具新闻和单案例
-
+去除单案例和工具信息
 ↓
-
 提取稳定工作流
-
 ↓
-
 判断 Hermes 缺口
 ```
 
 规则：
 
 - 单条视频只能作为证据。
-- 多素材重复出现的方法优先。
-- 不因为单个技巧新增 Skill。
+- 重复出现的方法优先。
+- 不因为一次技巧新增能力。
 
 ---
 
@@ -168,17 +126,19 @@ GitHub 搜索可能存在索引延迟。
 
 ## Creator Core Contribution
 
-这个创作者真正贡献的能力。
+创作者真正贡献的能力。
 
 ## Repeated Workflow Patterns
 
-多个素材反复出现的方法。
+多个素材重复出现的方法。
 
 ## Workflow Extraction
 
 输入、步骤、输出、适用场景。
 
 ## Hermes Comparison
+
+分类：
 
 - 已覆盖
 - 部分缺失
@@ -199,9 +159,9 @@ GitHub 搜索可能存在索引延迟。
 
 不负责：
 
+- 保存视频摘要
 - 建立工具数据库
-- 保存大量视频摘要
-- 直接堆叠知识资料
+- 堆叠无实际价值资料
 
 原则：
 
