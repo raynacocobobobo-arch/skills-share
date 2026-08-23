@@ -216,6 +216,11 @@ def load_registry(path: Path) -> dict[str, object]:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--publish",
+        action="store_true",
+        help="Run publish validation: compare against the current registry and rewrite it.",
+    )
     parser.add_argument("--write-registry", action="store_true")
     parser.add_argument(
         "--baseline-registry",
@@ -228,6 +233,11 @@ def main() -> int:
         help="Explicit emergency override for a documented version rollback.",
     )
     args = parser.parse_args()
+
+    if args.publish:
+        args.write_registry = True
+        if not args.baseline_registry:
+            args.baseline_registry = REGISTRY_PATH
 
     if not SKILLS_ROOT.exists():
         print(f"Missing skills root: {SKILLS_ROOT}", file=sys.stderr)
