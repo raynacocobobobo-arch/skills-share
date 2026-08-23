@@ -1,0 +1,28 @@
+# Creator Impact Registry
+
+# Records the outcome of Creator distillation.
+# Distinguishes new skills from enhancements and held candidates.
+
+creators:
+  OpenAI:
+    status:
+      distillation: completed
+
+    skills_created:
+      - hermes-vibe-coding-workflow
+
+    skills_enhanced:
+      - hermes-business-marketing-copilot
+
+    candidates:
+      - content-creation-workflow
+
+    decisions:
+      content-creation-workflow:
+        action: hold
+        reason: insufficient evidence for standalone skill
+
+    notes:
+      - Content Creation Workflow remains a candidate pattern.
+      - Do not create shared capability until cross-domain validation exists.
+      - Workflow stages should first be evaluated against existing skills.
