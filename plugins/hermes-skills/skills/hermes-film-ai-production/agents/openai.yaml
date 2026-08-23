@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hermes AI Film Production"
+  short_description: "AI影视创意、资产、镜头和Prompt生产流程"
+  default_prompt: "Use $hermes-film-ai-production to turn this AI film idea into a visual direction, asset plan, shot design, and generation prompts."
