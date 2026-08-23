@@ -72,6 +72,29 @@ End State
 - 如何变化
 - 镜头如何观察变化
 
+## Timeline Prompt
+
+视频镜头可以进一步拆分时间阶段：
+
+```text
+Start
+↓
+Action Development
+↓
+Camera Movement
+↓
+End State
+```
+
+描述：
+
+- 开始状态
+- 动作变化过程
+- 镜头运动过程
+- 最终状态
+
+不要只描述一张静态图片，而要描述镜头如何发生。
+
 ## Prompt Iteration
 
 生成不是一次完成。
