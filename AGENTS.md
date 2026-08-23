@@ -1,63 +1,29 @@
 # Agent Collaboration Guide
 
-This repository is the shared source of truth for Hermes-derived skills and methodology notes.
+This repository is the shared source of truth for Hermes-derived skills,
+methodology notes, and source-library material.
 
-## Actors
+## Core Boundaries
 
-- `codex-local`: Codex on Rayna's Mac.
-- `hermes-local`: local Hermes on Rayna's Mac.
-- `hermes-cloud`: cloud Hermes.
-- `chatgpt-web`: ChatGPT web with GitHub repository access.
+- Treat GitHub `main` as the accepted shared source.
+- Treat local copies, Library copies, archives, and feature branches as
+  candidates until merged.
+- Before using or changing a skill, read the current repository file, then read
+  only the referenced files needed for the task.
+- Keep Hermes as a capability library. Do not add governance frameworks,
+  approval systems, workflow engines, or extra manifest layers unless a separate
+  task explicitly requires them.
 
-## Golden Rule
-
-Before using or changing a skill, read the latest repository state. Before publishing a change, validate it, commit it, and push it.
-
-## Canonical latest and version promotion
-
-- GitHub `main` is the only runtime authority for accepted Hermes skills.
-- Library copies, local copies, archives, and feature branches are candidates only; a higher version outside `main` is not automatically authoritative.
-- Promotion happens by validated merge to `main`, not by copying a file into a workspace.
-- `manifests/skill-registry.json` records declared skill versions. Once an accepted skill declares a version, a later candidate must not remove or lower it silently.
-- A lower-version rollback requires an explicit documented override and must remain visible in validation logs/review history.
-
-## Read Workflow
-
-1. Read `manifests/web-chatgpt-router.md` or `manifests/skill-registry.json`.
-2. Select the matching skill.
-3. Read the selected `SKILL.md`.
-4. Read only the referenced `references/`, `shared/`, `assets/`, or `scripts/` files required by that skill.
-5. Execute the user task using the repository files as the current authority.
-
-## Write Workflow
-
-1. Sync first:
-   - Local Git clients: `git pull --ff-only`.
-   - ChatGPT web: re-read the GitHub repo files before proposing edits.
-2. Create a branch:
-   - Codex: `codex/<task-name>`.
-   - Local Hermes: `local-hermes/<task-name>`.
-   - Cloud Hermes: `cloud-hermes/<task-name>`.
-   - ChatGPT web: `web-chatgpt/<task-name>`.
-3. Make the smallest scoped edit.
-4. Update `manifests/agent-activity-log.md`.
-5. Run `python3 scripts/validate-skills.py --baseline-registry manifests/skill-registry.json --write-registry` before the registry is overwritten; for a bootstrap repository without a registry, run without `--baseline-registry`.
-6. Commit and push.
-7. Merge only after validation succeeds.
-
-## Main Branch Rules
-
-- `main` contains the shared accepted skill set.
-- Do not force-push `main` unless replacing a known bootstrap commit or recovering from a documented mistake.
-- Do not commit local-only paths, credentials, cookies, tokens, or customer-private documents.
-
-## Sensitive Data
+## Safety Rules
 
 Never commit:
 
-- API keys, bearer tokens, cookies, passwords, SSH private keys, Apple app passwords, or cloud credentials.
-- Customer scripts, contracts, quotes, contact details, unpublished project files, or private meeting notes unless explicitly cleared.
-- Machine-specific absolute paths when an environment variable or relative path can be used.
+- API keys, bearer tokens, cookies, passwords, SSH private keys, Apple app
+  passwords, or cloud credentials.
+- Customer scripts, contracts, quotes, contact details, unpublished project
+  files, or private meeting notes unless explicitly cleared.
+- Machine-specific absolute paths when an environment variable, placeholder, or
+  relative path can be used.
 
 Use placeholders such as:
 
@@ -66,21 +32,55 @@ Use placeholders such as:
 - `${HERMES_TODO_ROOT}`
 - `<REPO_ROOT>`
 
-## Conflict Handling
+## Modification Levels
 
-If two agents modify the same skill:
+### Level 1: Documentation Changes
 
-1. Preserve both intent streams in a temporary branch.
-2. Compare `SKILL.md`, `references/`, and registry changes.
-3. Keep the simpler version unless the more complex version has clear task evidence.
-4. Re-run validation before merge.
+Use Level 1 for typo fixes, wording cleanup, clarification, and reference-link
+adjustments that do not change skill behavior, routing behavior, registry
+content, or published package structure.
 
-## Repository Layout
+Rules:
 
-- `plugins/hermes-skills/`: Codex plugin package.
-- `plugins/hermes-skills/skills/`: skill directories.
-- `shared/`: shared methodology notes for Obsidian and skill references.
-- `manifests/skill-registry.json`: generated skill inventory.
-- `manifests/web-chatgpt-router.md`: routing instructions for ChatGPT web.
-- `scripts/validate-skills.py`: validation and registry generation.
-- `scripts/sync-hermes-knowledge.sh`: pull latest repository updates.
+- Make the smallest scoped edit.
+- Do not rewrite the registry for pure documentation cleanup.
+- Run the lightweight relevant check, normally `python3 scripts/validate-skills.py`.
+- Commit with a message that makes the documentation-only scope clear.
+
+### Level 2: Capability Changes
+
+Use Level 2 for any change that affects:
+
+- skill behavior or frontmatter;
+- router behavior;
+- registry or manifest content;
+- bundled references that a skill depends on;
+- validation, packaging, or publish behavior.
+
+Rules:
+
+- Make the smallest scoped edit.
+- Update generated registry content when skill metadata or referenced paths
+  change.
+- Run `python3 scripts/validate-skills.py`; for publish/merge preparation, run
+  the repository's publish validation path when available.
+- Do not remove, move, or merge a skill until callers and routes have been
+  checked.
+
+## Commit Principles
+
+- Work on a branch, not directly on `main`.
+- Sync or re-read the latest repository state before editing.
+- Keep unrelated cleanup out of the diff.
+- Do not force-push `main` unless recovering from a documented mistake.
+- If two agents touch the same skill, compare both intent streams and keep the
+  simpler version unless the more complex version has clear task evidence.
+
+## Entry Points
+
+- ChatGPT Web routing: `manifests/web-chatgpt-router.md`
+- Machine-readable skill inventory: `manifests/skill-registry.json`
+- Capability policy: `manifests/execution-capability-policy.md`
+- Skill root: `plugins/hermes-skills/skills/`
+- Shared methodology and source library: `shared/`
+- Validation: `scripts/validate-skills.py`

@@ -1,41 +1,25 @@
 # Hermes Skills Router for ChatGPT Web
 
-This file is the canonical entry point for using the private `hermes-skills` repository from ChatGPT Web through the GitHub connection.
+This file is the routing entry point for using Hermes skills from ChatGPT Web
+through the GitHub connection. It is an index, not the full repository rulebook.
 
-## Mandatory execution rule
+## Execution Rule
 
 When the user says **“请按 Hermes skill 路由执行这个任务”**, or otherwise asks to use Hermes skills:
 
 1. Read this file first.
 2. Match the task to one or more skills below.
-3. Read `manifests/skill-registry.json` from GitHub `main` and resolve the matched skill's canonical `skill_path` and declared `version`.
-4. **Before answering or executing the task, read that canonical `SKILL.md` from GitHub `main`.**
-5. If the registry and `SKILL.md` both declare a version, they must match exactly. If one side declares a version and the other does not, or the values differ, stop and report a repository consistency error instead of executing the skill.
-6. A legacy skill with no declared version may still run from GitHub `main`; `main` remains authoritative until that skill adopts versioned governance.
-7. Follow the canonical `SKILL.md` as the authoritative workflow.
-8. If the skill requires files under `references/`, `shared/`, or another skill, read those files before continuing.
-9. **Do not simulate a skill from memory, prior chat history, model knowledge, Library copies, local copies, archives, or feature branches.** GitHub `main` is the runtime source of truth.
-10. If a required GitHub file cannot be read, say which file is unavailable. Do not silently replace it with an approximate workflow.
-11. If several skills match, load the primary workflow skill first, then load supporting skills only when needed.
-12. Repository `main` content overrides older copies from previous chats, local notes, remembered versions, and numerically higher but unmerged candidates.
-13. **Re-check routing whenever the task changes materially during a follow-up turn** — for example when the user uploads an existing artifact, changes from analysis to direct editing, changes the requested deliverable, or says “在这个版本上改”. Do not assume the first-turn route remains sufficient.
-
-### Canonical latest definition
-
-For Hermes runtime purposes, **latest** means the latest approved canonical content merged to GitHub `main`.
-
-- A Library/local/feature-branch copy with a higher version is a candidate, not runtime authority.
-- Promotion happens only after validation/review and merge to `main`.
-- Once a canonical skill declares a version, repository validation must reject silent version removal or downgrade.
-- An explicit documented rollback may use the validator's downgrade override, but normal routing never opts into that override automatically.
+3. Resolve the matched skill path from this table or `manifests/skill-registry.json`.
+4. Before answering or executing, read the matched `SKILL.md`.
+5. Follow that `SKILL.md` as the authoritative workflow.
+6. Read required `references/`, `shared/`, or supporting skills only when the matched skill or current task requires them.
+7. If a required GitHub file cannot be read, say which file is unavailable. Do not silently replace it with an approximate workflow.
+8. If several skills match, load the primary workflow skill first, then load supporting skills only when needed.
+9. Re-check routing whenever the task changes materially during a follow-up turn.
 
 Primary skill root:
 
 `plugins/hermes-skills/skills/`
-
-Known dependency index:
-
-`manifests/dependency-manifest.json`
 
 Shared methodology mirrors:
 
@@ -301,7 +285,6 @@ After opening a matched `SKILL.md`:
 - If it gives a task-to-reference map, select the reference based on the current task and read it.
 - If it depends on another skill, read that skill only when the dependency is relevant to the requested output.
 - Prefer the copy bundled inside the skill folder. Use `shared/` as a methodology mirror or fallback index, not as a substitute for reading the actual skill.
-- Use `manifests/dependency-manifest.json` to verify migrated dependency locations when uncertain.
 
 ---
 
@@ -310,9 +293,8 @@ After opening a matched `SKILL.md`:
 If ChatGPT Web cannot access a path:
 
 1. Report the exact unavailable path.
-2. Try the repository's dependency manifest to verify whether the file moved.
-3. Do not claim the Hermes skill was followed if the required `SKILL.md` was not read.
-4. If the user wants to proceed without the file, clearly label the result as a non-Hermes fallback.
+2. Do not claim the Hermes skill was followed if the required `SKILL.md` was not read.
+3. If the user wants to proceed without the file, clearly label the result as a non-Hermes fallback.
 
 ---
 
@@ -329,20 +311,3 @@ For a specific skill:
 For strict file-grounded execution:
 
 > 请按 Hermes skill 路由执行。先从 GitHub 读取路由文件和匹配的 `SKILL.md`，不要凭记忆模拟。
-
----
-
-## Repository coordination
-
-For repository edits, ChatGPT Web should also read:
-
-- `AGENTS.md` for the shared-agent protocol.
-- `manifests/skill-registry.json` for the generated skill inventory.
-- `manifests/agent-activity-log.md` for recent changes.
-
-When ChatGPT Web proposes edits:
-
-1. Work on a branch named `web-chatgpt/<task-name>`.
-2. Update `manifests/agent-activity-log.md`.
-3. Do not add secrets, cookies, tokens, or machine-specific absolute paths.
-4. If a change touches skill metadata, ensure `python3 scripts/validate-skills.py --write-registry` and PR validation complete before merge.

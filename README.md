@@ -25,7 +25,7 @@ Private knowledge and skill repository for Hermes-derived Codex skills.
 - `plugins/hermes-skills/` - local Codex plugin package.
 - `plugins/hermes-skills/skills/` - bundled skills copied from the curated Hermes migration set.
 - `shared/` - Obsidian-readable methodology mirrors.
-- `manifests/` - generated registries, dependency reports, redaction reports, and agent coordination notes.
+- `manifests/` - runtime skill registry, legacy inventory lists, migration/archive records, redaction reports, and agent coordination notes.
 - `scripts/` - validation and sync helpers.
 
 The plugin currently contains 23 primary migrated skills plus 5 nested perspective example skills from `huashu-nuwa`.
@@ -57,16 +57,23 @@ Important paths:
 - Web ChatGPT router: `manifests/web-chatgpt-router.md`
 - Plugin root: `plugins/hermes-skills/`
 - Skill directory: `plugins/hermes-skills/skills/`
-- Skill registry: `manifests/skill-registry.json`
-- Dependency manifest: `manifests/dependency-manifest.json`
+- Runtime skill inventory: `manifests/skill-registry.json`
+- Legacy/simple skill list: `manifests/skills-manifest.json`
+- Migration/archive record: `manifests/dependency-manifest.json`
 - Redaction report: `manifests/redaction-report.md`
 
 ## Validation
 
-Run this before committing skill changes:
+Run the daily validation check before committing changes:
 
 ```bash
-python3 scripts/validate-skills.py --write-registry
+python3 scripts/validate-skills.py
+```
+
+Run publish validation before merging skill metadata or reference changes:
+
+```bash
+python3 scripts/validate-skills.py --publish
 ```
 
 Local agents can sync the latest accepted version with:
