@@ -236,6 +236,25 @@ sources:
       collector: youtube
       language: en
 
+  bilibili:
+
+    - name: Mx-Shell
+      tier: daily
+      uid: 388217494
+      role:
+        - ai_filmmaking_workflow
+      knowledge_type:
+        - filmmaking_workflow
+        - methodology
+      topics:
+        - AI 短片
+        - AI 影视创作
+        - 图片资产工作流
+        - 创作方法论
+      priority: high
+      collector: bilibili
+      language: zh
+
 model_watch:
 
   - name: OpenAI
