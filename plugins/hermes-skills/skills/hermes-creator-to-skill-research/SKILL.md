@@ -169,6 +169,75 @@ rejected
 
 ---
 
+# Skill Impact Mapping Rules
+
+Creator Distillation 完成方法提取后，进入 Skill Impact 阶段。
+
+禁止根据 Creator 所属领域直接映射 Skill。
+
+错误方式：
+
+```
+Creator 是影视作者
+↓
+直接进入影视 Skill
+```
+
+正确流程：
+
+```
+提取 Creator 方法
+↓
+查看已有 plugins/hermes-skills/skills/
+↓
+识别候选 Skill
+↓
+读取候选 Skill 的 SKILL.md
+↓
+判断是否增强已有能力
+↓
+更新对应 Skill 或 references
+```
+
+强制规则：
+
+1. MUST inspect existing skills before creating new capability.
+2. MUST read candidate SKILL.md before deciding destination.
+3. MUST prioritize extending existing skills.
+4. 不允许仅根据名称、领域或 Creator 类型猜测目标 Skill。
+5. 新建 Skill 必须证明：
+   - 现有 Skill 无法覆盖
+   - 能力可重复调用
+   - 能产生长期复用价值
+
+---
+
+# Creator Is Not Capability
+
+Creator 是输入来源，不是知识架构。
+
+正确关系：
+
+```
+Creator
+↓
+Methods
+↓
+Capability
+↓
+Skill
+```
+
+禁止：
+
+```
+Creator
+↓
+Creator 专属 Skill
+```
+
+---
+
 # Completion Requirement
 
 Creator Distillation 只有满足以下条件才算完成：
