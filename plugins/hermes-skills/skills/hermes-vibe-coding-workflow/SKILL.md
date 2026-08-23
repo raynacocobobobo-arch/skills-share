@@ -13,15 +13,23 @@ triggers:
 
 # Vibe Coding Workflow
 
-基于 shared/ai-workflow 原则的 AI 辅助软件构建工作流。
+## Capability Source
+
+来源：Creator Distillation
+
+Creator:
+- OpenAI
+
+Capability:
+- Vibe Coding Workflow
 
 ## 核心定位
 
 Vibe Coding 不是简单的 AI 写代码。
 
-它是一种通过自然语言表达目标，由 AI 协助完成需求定义、原型构建、迭代优化和验证的软件创造流程。
+它是一种通过自然语言表达目标，由 AI 协助完成问题定义、产品规格设计、原型构建、迭代优化和验证的软件创造流程。
 
-## Workflow
+## Workflow Pattern
 
 ```
 Intent
@@ -30,7 +38,7 @@ Problem Definition
 ↓
 Natural Language Specification
 ↓
-AI Prototype Generation
+Prototype Generation
 ↓
 Human Steering
 ↓
@@ -41,86 +49,89 @@ Testing & Validation
 Delivery
 ```
 
+## Workflow Stages
+
+### 1. Intent
+
+明确：
+- 要解决什么问题
+- 谁使用
+- 成功标准
+
+### 2. Problem Definition
+
+将想法转化为：
+- 用户需求
+- 使用场景
+- 目标
+- 约束条件
+
+### 3. Natural Language Specification
+
+描述：
+- 功能需求
+- 用户流程
+- 数据结构
+- 系统行为
+
+### 4. Prototype Generation
+
+AI 用于快速生成：
+- 产品原型
+- 初版实现
+- 验证版本
+
+### 5. Human Steering Loop
+
+人持续控制方向：
+- 提供反馈
+- 修正需求
+- 调整优先级
+
+### 6. Testing & Validation
+
+验证：
+- 功能正确性
+- 用户体验
+- 技术可行性
+
+## AI Role
+
+- Prototype Builder
+- Coding Assistant
+- Iteration Partner
+- Technical Explorer
+
+## Human Role
+
+- 定义问题
+- 判断价值
+- 控制方向
+- 最终决策
+
+## Artifact
+
+输出：
+- Prototype
+- Application
+- Automation Tool
+- Working Demo
+
+## Verification
+
+必须验证：
+- 功能是否正确
+- 体验是否符合目标
+- 技术方案是否可行
+
 ## AI Workflow Principles
 
-遵循 shared/ai-workflow：
-
+遵循：
 - Problem First
 - Context First
 - Human Steering
 - Iterative Refinement
 - Verification Loop
-
-## 工作方式
-
-### Intent First
-
-先明确：
-
-- 要解决什么问题
-- 谁使用
-- 成功标准是什么
-
-不要从代码开始。
-
-### Specification
-
-将想法转化为：
-
-- 功能需求
-- 用户流程
-- 数据结构
-- 约束条件
-
-### Prototype
-
-AI用于快速生成：
-
-- 原型
-- 初版实现
-- 验证版本
-
-### Steering Loop
-
-人与 AI 持续协作：
-
-- 提供反馈
-- 修正方向
-- 优化实现
-
-### Verification
-
-必须验证：
-
-- 功能正确性
-- 用户体验
-- 技术可行性
-
-## 与传统开发区别
-
-传统：
-
-```
-需求
-↓
-设计
-↓
-编码
-↓
-测试
-```
-
-Vibe Coding：
-
-```
-Intent
-↓
-AI协作
-↓
-快速迭代
-↓
-验证
-```
 
 ## 边界
 
