@@ -84,6 +84,39 @@ GitHub API 读取完整 txt 字幕
 
 ---
 
+# Workflow Pattern Extraction Stage
+
+在 Capability Extraction 前，必须先识别 Workflow Pattern。
+
+禁止只提取功能名称或主题。
+
+每个工作流必须拆解：
+
+```yaml
+workflow_pattern:
+  name:
+  trigger:
+  inputs:
+  stages:
+    - step:
+      action:
+      ai_role:
+      human_role:
+  artifacts:
+  verification:
+```
+
+分析目标：
+
+- 什么时候触发该流程
+- 需要什么输入
+- 中间有哪些阶段
+- AI 和人的职责如何分配
+- 最终产生什么资产
+- 如何验证结果
+
+---
+
 # Capability Extraction Stage
 
 Batch Distillation 后，必须进入 Capability Extraction。
@@ -94,6 +127,8 @@ Batch Distillation 后，必须进入 Capability Extraction。
 
 ```
 Creator Methods
+↓
+Workflow Pattern Extraction
 ↓
 Capability Extraction
 ↓
@@ -112,8 +147,14 @@ capability:
   category:
   problem_solved:
   reusable_value:
-  workflow:
-  artifacts:
+  workflow_pattern:
+    trigger:
+    inputs:
+    stages:
+    ai_role:
+    human_role:
+    artifacts:
+    verification:
   candidate_skills:
   decision:
     enhance_existing | create_new
@@ -131,6 +172,8 @@ Creator 是输入来源，不是知识架构。
 Creator
 ↓
 Methods
+↓
+Workflow Pattern
 ↓
 Capability
 ↓
@@ -208,7 +251,7 @@ hermes-daily-report/data/creators.json
 ```
 原始字幕已读取
 ↓
-方法论已提取
+Workflow Pattern 已提取
 ↓
 Capability Map 已生成
 ↓
