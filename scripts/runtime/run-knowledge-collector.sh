@@ -11,11 +11,14 @@ source .venv/bin/activate
 export HTTPS_PROXY=http://127.0.0.1:7890
 export HTTP_PROXY=http://127.0.0.1:7890
 export ALL_PROXY=http://127.0.0.1:7890
-PYTHONDONTWRITEBYTECODE=1 python3 scripts/knowledge-collector/cli.py
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/knowledge-collector/cli.py --limit-sources 1
 
-if ! git diff --quiet -- shared/knowledge-library; then
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Generating research input..."
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/generate-research-input.py
+
+if ! git diff --quiet -- shared/knowledge-library data/latest; then
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] New assets found, pushing..."
-  git add shared/knowledge-library
+  git add shared/knowledge-library data/latest
   git commit -m "chore: collect knowledge assets"
   git push
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] Push done."
