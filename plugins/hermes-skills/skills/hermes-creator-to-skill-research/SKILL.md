@@ -59,11 +59,13 @@ repository_path
 
 ---
 
-# Distillation State Tracking
+# Creator Distillation Tracking
 
-蒸馏不是一次性阅读任务，必须记录状态。
+Creator Distillation 必须记录状态。
 
-每个字幕 entry 或 Creator 分组需要维护状态：
+状态以 Creator 为单位维护，不以单个字幕文件为主要单位。
+
+流程：
 
 ```
 pending
@@ -75,8 +77,10 @@ completed
 rejected
 ```
 
-完成蒸馏后必须更新索引或对应注册表，记录：
+Creator Distillation 完成后必须记录：
 
+- creator_name
+- source_files
 - distillation_status
 - completed_date
 - target_path
@@ -86,19 +90,20 @@ rejected
 
 ```json
 {
-  "distillation": {
+  "creator_distillation": {
+    "creator": "Matthew Berman",
     "status": "completed",
     "target": "shared/ai-workflow",
-    "output": "shared/ai-workflow/sources/example.md"
+    "output": "shared/ai-workflow/sources/matthew-berman.md"
   }
 }
 ```
 
 目的：
 
-- 避免重复蒸馏
-- 区分已分析与未分析素材
-- 保持字幕资产和知识资产关联
+- 避免重复蒸馏同一 Creator
+- 区分已完成 Creator 和待研究 Creator
+- 保持字幕资产与方法论资产关联
 
 ---
 
@@ -109,7 +114,7 @@ rejected
 流程：
 
 ```
-多条素材
+同一 Creator 多条素材
 ↓
 整体阅读
 ↓
@@ -121,7 +126,7 @@ rejected
 ↓
 验证是否值得沉淀
 ↓
-更新蒸馏状态
+更新 Creator Distillation 状态
 ```
 
 重点提取：
@@ -159,7 +164,7 @@ rejected
 
 # Distillation Decision
 
-每次蒸馏完成后，只判断四种结果：
+每次 Creator Distillation 完成后，只判断四种结果：
 
 ## 1. 补充已有 Skill
 
@@ -199,7 +204,7 @@ rejected
 
 为什么不进入系统。
 
-完成后同步更新蒸馏状态。
+完成后同步更新 Creator Distillation 状态。
 
 ---
 
