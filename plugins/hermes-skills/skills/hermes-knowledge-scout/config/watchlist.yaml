@@ -1,13 +1,28 @@
 # Hermes Knowledge Scout Watchlist
 # Focus: reusable workflows, not tool advertisements.
+#
+# 分层（tier）：
+#   daily    —— 每日研究：AI能力/工作流变化、新方法
+#   weekly   —— 每周观察：生态趋势、应用案例
+#   knowledge—— 长期知识：基础原理、认知，不进入 Daily Research
+#   observe  —— 低频观察：导演/视觉/创意视角
+#
+# 过滤原则（人工选频道时遵循，不抓）：
+#   - AI 新闻搬运
+#   - Top 10 AI Tools / 工具合集
+#   - 标题党内容
+# 优先：workflow / tutorial / how I use AI / case study / build / create / complete process
 
-version: 1.3
+version: 1.4
 
 sources:
 
   youtube:
 
+    # ============ Daily（每日研究） ============
+
     - name: OpenAI
+      tier: daily
       role:
         - primary_capability_tracking
         - chatgpt_workflow
@@ -25,26 +40,10 @@ sources:
         - prompt iteration
       priority: high
       collector: youtube
-      frequency: weekly
-      language: en
-
-    - name: Andrej Karpathy
-      role:
-        - ai_engineering_methodology
-      knowledge_type:
-        - methodology
-        - workflow
-      topics:
-        - LLM workflow
-        - vibe coding
-        - AI-native development
-        - agents
-      priority: high
-      collector: youtube
-      frequency: weekly
       language: en
 
     - name: Anthropic
+      tier: daily
       role:
         - coding_agent_tracking
       knowledge_type:
@@ -56,10 +55,10 @@ sources:
         - context engineering
       priority: high
       collector: youtube
-      frequency: weekly
       language: en
 
     - name: The AI Advantage
+      tier: daily
       role:
         - ai_workflow_methodology
       knowledge_type:
@@ -72,40 +71,26 @@ sources:
         - prompt systems
       priority: high
       collector: youtube
-      frequency: weekly
       language: en
 
-    - name: Futurepedia
+    - name: AI Engineer
+      tier: daily
+      url: https://www.youtube.com/@aiDotEngineer
       role:
-        - ai_workflow_research
+        - ai_engineering_methodology
       knowledge_type:
+        - methodology
         - workflow
-        - tool_evaluation
       topics:
-        - ChatGPT workflow
-        - AI automation
-        - creative workflow
-      priority: medium
+        - AI engineering
+        - agent architecture
+        - developer workflow
+      priority: high
       collector: youtube
-      frequency: weekly
-      language: en
-
-    - name: Matthew Berman
-      role:
-        - prompt_engineering_tracking
-      knowledge_type:
-        - prompt_method
-        - capability_update
-      topics:
-        - ChatGPT
-        - prompt engineering
-        - AI models
-      priority: medium
-      collector: youtube
-      frequency: weekly
       language: en
 
     - name: Curious Refuge
+      tier: daily
       role:
         - ai_filmmaking_methodology
       knowledge_type:
@@ -118,7 +103,137 @@ sources:
         - production pipeline
       priority: high
       collector: youtube
-      frequency: weekly
+      language: en
+
+    - name: Gumvue Studio
+      tier: daily
+      url: https://www.youtube.com/channel/UCfJieIqrYYJImTJZGVyaiaQ
+      role:
+        - ai_filmmaking_workflow
+      knowledge_type:
+        - filmmaking_workflow
+        - methodology
+      topics:
+        - AI short film
+        - ChatGPT creation
+        - AI character
+        - AI shot design
+        - AI film pipeline
+      priority: high
+      collector: youtube
+      language: en
+
+    # ============ Weekly（每周观察） ============
+
+    - name: Matt Wolfe
+      tier: weekly
+      url: https://www.youtube.com/@mreflow
+      role:
+        - ai_ecosystem_tracking
+      knowledge_type:
+        - tool_evaluation
+        - capability_update
+      topics:
+        - AI ecosystem
+        - new tools
+        - model trends
+      priority: medium
+      collector: youtube
+      language: en
+
+    - name: Matthew Berman
+      tier: weekly
+      role:
+        - prompt_engineering_tracking
+      knowledge_type:
+        - prompt_method
+        - capability_update
+      topics:
+        - ChatGPT
+        - prompt engineering
+        - AI models
+      priority: medium
+      collector: youtube
+      language: en
+
+    - name: Futurepedia
+      tier: weekly
+      role:
+        - ai_workflow_research
+      knowledge_type:
+        - workflow
+        - tool_evaluation
+      topics:
+        - ChatGPT workflow
+        - AI automation
+        - creative workflow
+      priority: medium
+      collector: youtube
+      language: en
+
+    - name: Corridor Crew
+      tier: weekly
+      url: https://www.youtube.com/@CorridorCrew
+      role:
+        - vfx_ai_filmmaking
+      knowledge_type:
+        - methodology
+        - filmmaking_workflow
+      topics:
+        - VFX
+        - AI filmmaking
+      priority: medium
+      collector: youtube
+      language: en
+
+    # ============ Knowledge（长期知识） ============
+
+    - name: Andrej Karpathy
+      tier: knowledge
+      role:
+        - ai_engineering_methodology
+      knowledge_type:
+        - methodology
+        - workflow
+      topics:
+        - LLM workflow
+        - vibe coding
+        - AI-native development
+        - agents
+      priority: high
+      collector: youtube
+      language: en
+
+    # ============ Observe（低频观察） ============
+
+    - name: Matti Haapoja
+      tier: observe
+      url: https://www.youtube.com/channel/UCbvIIQc5Jo9-jIXnkPe03oA
+      role:
+        - director_perspective
+      knowledge_type:
+        - methodology
+        - filmmaking_workflow
+      topics:
+        - filmmaking
+        - AI in film
+      priority: low
+      collector: youtube
+      language: en
+
+    - name: Sam Kolder
+      tier: observe
+      url: https://www.youtube.com/@kold
+      role:
+        - visual_language_creative
+      knowledge_type:
+        - methodology
+        - creative_workflow
+      topics:
+        - visual language
+        - creative process
+      priority: low
+      collector: youtube
       language: en
 
 model_watch:
