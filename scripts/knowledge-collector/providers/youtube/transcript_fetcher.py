@@ -1,24 +1,52 @@
-"""YouTube transcript fetcher interface.
+"""YouTube transcript fetcher.
 
-Execution adapter for real transcript providers.
-
-Priority:
-1. Official captions
-2. Creator captions
-3. Automatic transcript
-4. Whisper fallback
+This collector only uses captions already available on YouTube. It does not
+fall back to Whisper; videos without accessible captions are skipped.
 """
 
 
-def fetch_transcript(video_id):
-    """Fetch transcript for a YouTube video.
+def fetch_transcript(video_id, languages=("en",)):
+    """Fetch an existing YouTube transcript.
 
-    Real adapters will connect here.
+    Returns a dict with ``status=ok`` and normalized text, or ``status=skip``
+    when captions are not available.
     """
-    raise NotImplementedError("Connect transcript provider")
+    try:
+        from youtube_transcript_api import YouTubeTranscriptApi
+        from youtube_transcript_api._errors import (
+            NoTranscriptFound,
+            TranscriptsDisabled,
+            VideoUnavailable,
+        )
+    except ImportError as exc:
+        raise RuntimeError(
+            "Missing dependency: install youtube-transcript-api to fetch captions."
+        ) from exc
+
+    try:
+        transcript = YouTubeTranscriptApi().fetch(video_id, languages=languages)
+    except (NoTranscriptFound, TranscriptsDisabled, VideoUnavailable) as exc:
+        return {
+            "status": "skip",
+            "reason": exc.__class__.__name__,
+            "transcript": "",
+        }
+
+    return {
+        "status": "ok",
+        "reason": None,
+        "transcript": normalize_segments(transcript),
+    }
 
 
 def normalize_segments(segments):
-    return "\n".join(
-        segment.get("text", "") for segment in segments
-    ).strip()
+    lines = []
+    for segment in segments:
+        if hasattr(segment, "text"):
+            text = segment.text
+        else:
+            text = segment.get("text", "")
+        text = " ".join(text.split())
+        if text:
+            lines.append(text)
+    return "\n".join(lines).strip()

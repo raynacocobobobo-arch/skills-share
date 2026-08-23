@@ -2,6 +2,14 @@
 
 Record changes made by Codex, local Hermes, cloud Hermes, and ChatGPT web.
 
+## 2026-08-23 Codex — Hermes Knowledge Scout YouTube collector MVP
+
+- Branch: `codex/youtube-collector-mvp`.
+- Implemented the first real YouTube collection chain for `scripts/knowledge-collector`: read watchlist, resolve the first YouTube channel, fetch its latest video, fetch existing YouTube captions, skip videos without captions, save raw assets, dedupe by `source_id`, and enqueue analysis only for `workflow`, `methodology`, or `prompt_method`.
+- Saved the first real OpenAI asset at `shared/knowledge-library/raw/youtube/openai/XjSJ6ybS9I8/` with metadata, transcript, and source traceability.
+- Added collector dependency notes and focused offline tests for storage, queue dedupe, and transcript normalization.
+- Verification: `python3 scripts/knowledge-collector/cli.py --limit-sources 1` collected `youtube:XjSJ6ybS9I8`; repository skill validation reported 28 skills / 0 errors.
+
 ## 2026-08-22 ChatGPT Web — Story Skill short-form visual upgrade
 
 - Branch: `web-chatgpt/story-short-form-visual-v13-2`.
