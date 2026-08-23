@@ -1,0 +1,1 @@
+"""Knowledge collector providers."""
