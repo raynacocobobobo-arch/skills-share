@@ -21,10 +21,10 @@ source .venv/bin/activate
 export HTTPS_PROXY=http://127.0.0.1:7890
 export HTTP_PROXY=http://127.0.0.1:7890
 export ALL_PROXY=http://127.0.0.1:7890
-PYTHONDONTWRITEBYTECODE=1 python3 scripts/knowledge-collector/cli.py --cookies "$COOKIES"
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/knowledge-collector/cli.py --cookies "$COOKIES" --videos-per-source 20
 
 echo "[$NOW] Running Bilibili collector..."
-/usr/bin/python3 scripts/knowledge-collector/bilibili_collect.py
+/usr/bin/python3 scripts/knowledge-collector/bilibili_collect.py --videos-per-source 10
 
 echo "[$NOW] Generating research input..."
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/generate-research-input.py
