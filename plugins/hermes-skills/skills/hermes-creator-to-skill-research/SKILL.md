@@ -45,6 +45,8 @@
 ```
 index.json
 ↓
+获取完整文件内容
+↓
 解析 JSON
 ↓
 遍历 entries[]
@@ -64,19 +66,32 @@ index.json
 - sha256
 - size_bytes
 
-## Important
+## JSON Parsing Rule
 
-不要根据工具返回的截断文本判断结果。
+index.json 是机器索引，不是阅读摘要。
 
-必须把 index.json 当 JSON 解析。
+执行时：
 
-不要：
+必须：
+
+- 解析完整 JSON
+- 使用 entries 字段过滤
+- 使用 repository_path 定位文件
+
+禁止：
+
+- 根据聊天窗口显示内容判断 entries 是否存在
+- 根据截断输出判断没有目标创作者
+- 根据文件名搜索代替索引解析
+
+## Search Limitation
+
+GitHub 搜索只能作为辅助验证。
+
+禁止：
 
 - 使用 GitHub 搜索作为主要定位方式
-- 搜索不到就认为不存在
-- 根据文件名猜内容
-
-GitHub 搜索只能辅助验证。
+- 搜索不到就认为文件不存在
 
 ---
 
