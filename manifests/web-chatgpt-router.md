@@ -21,6 +21,10 @@ Primary skill root:
 
 `plugins/hermes-skills/skills/`
 
+Workflow root:
+
+`plugins/hermes-workflows/workflows/`
+
 Shared methodology mirrors:
 
 `shared/`
@@ -76,6 +80,17 @@ Routing note: prefer `transcript-cleanup` for recorded-video/audio word-strippin
 ---
 
 ### 3. Film / video creation
+
+#### AI story short film workflow
+Use when the user wants to make an AI story short, AI microfilm, AI film experiment, or to turn one idea into a short narrative video production pipeline.
+
+- Workflow: `ai-short-film-production`
+- Path: `plugins/hermes-workflows/workflows/ai-short-film-production/WORKFLOW.md`
+- Supporting phases: `plugins/hermes-workflows/workflows/ai-short-film-production/phases.md`
+- Supporting checkpoints: `plugins/hermes-workflows/workflows/ai-short-film-production/checkpoints.md`
+- Templates: `plugins/hermes-workflows/workflows/ai-short-film-production/templates/`
+
+Routing note: load this workflow before individual film skills when the request is an end-to-end AI short-film pipeline. It should orchestrate `故事片创作`, `hermes-film-ai-production`, `影视分镜`, and `AI绘画提示词`. Do not generate prompts before Story Lock.
 
 #### Corporate / brand / product promotional film
 Use for enterprise films, brand films, product films, investment-promotion films, government/corporate briefing films, promotional-film copywriting, structure, creative direction, or full promotional-film workflows.
