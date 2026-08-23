@@ -13,11 +13,7 @@ def fetch_transcript(video_id, languages=("en",)):
     """
     try:
         from youtube_transcript_api import YouTubeTranscriptApi
-        from youtube_transcript_api._errors import (
-            NoTranscriptFound,
-            TranscriptsDisabled,
-            VideoUnavailable,
-        )
+        from youtube_transcript_api._errors import CouldNotRetrieveTranscript
     except ImportError as exc:
         raise RuntimeError(
             "Missing dependency: install youtube-transcript-api to fetch captions."
@@ -25,7 +21,7 @@ def fetch_transcript(video_id, languages=("en",)):
 
     try:
         transcript = YouTubeTranscriptApi().fetch(video_id, languages=languages)
-    except (NoTranscriptFound, TranscriptsDisabled, VideoUnavailable) as exc:
+    except CouldNotRetrieveTranscript as exc:
         return {
             "status": "skip",
             "reason": exc.__class__.__name__,

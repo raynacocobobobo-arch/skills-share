@@ -20,8 +20,8 @@ class YouTubeAsset:
     published: Optional[str] = None
 
 
-def get_latest_video(source):
-    """Resolve a watchlist source to its latest YouTube video."""
+def get_latest_videos(source, limit=5):
+    """Resolve a watchlist source to its N latest YouTube videos (most recent first)."""
     try:
         import yt_dlp
     except ImportError as exc:
@@ -36,7 +36,7 @@ def get_latest_video(source):
         "quiet": True,
         "skip_download": True,
         "extract_flat": True,
-        "playlistend": 1,
+        "playlistend": limit,
         "ignoreerrors": True,
     }
     with yt_dlp.YoutubeDL(opts) as ydl:
@@ -44,20 +44,35 @@ def get_latest_video(source):
 
     entries = [entry for entry in playlist.get("entries", []) if entry]
     if not entries:
-        return None
+        return []
 
-    flat_video = entries[0]
-    video_id = flat_video["id"]
-    with yt_dlp.YoutubeDL({"quiet": True, "skip_download": True}) as ydl:
-        info = ydl.extract_info(YOUTUBE_WATCH_URL.format(video_id=video_id), download=False)
+    videos = []
+    for flat_video in entries:
+        video_id = flat_video["id"]
+        try:
+            with yt_dlp.YoutubeDL({"quiet": True, "skip_download": True}) as ydl:
+                info = ydl.extract_info(YOUTUBE_WATCH_URL.format(video_id=video_id), download=False)
+        except Exception:
+            info = None
 
-    return YouTubeAsset(
-        video_id=video_id,
-        title=info.get("title") or flat_video.get("title") or "",
-        channel=info.get("channel") or info.get("uploader") or source["name"],
-        url=info.get("webpage_url") or YOUTUBE_WATCH_URL.format(video_id=video_id),
-        published=format_published(info),
-    )
+        videos.append(YouTubeAsset(
+            video_id=video_id,
+            title=(info.get("title") if info else None) or flat_video.get("title") or "",
+            channel=(info.get("channel") if info else None)
+                    or (info.get("uploader") if info else None)
+                    or flat_video.get("channel")
+                    or flat_video.get("uploader")
+                    or source["name"],
+            url=(info.get("webpage_url") if info else None) or YOUTUBE_WATCH_URL.format(video_id=video_id),
+            published=format_published(info) if info else None,
+        ))
+    return videos
+
+
+def get_latest_video(source):
+    """Resolve a watchlist source to its latest YouTube video."""
+    videos = get_latest_videos(source, limit=1)
+    return videos[0] if videos else None
 
 
 def resolve_channel_url(channel_name, yt_dlp):
