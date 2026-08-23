@@ -8,6 +8,11 @@ NOW=$(date '+%Y-%m-%d %H:%M:%S')
 
 cd "$SKILLS_SHARE"
 
+COOKIES="$HOME/.hermes/cookies/youtube_cookies.txt"
+if [[ ! -f "$COOKIES" ]]; then
+  echo "[$NOW] WARN: YouTube cookies 缺失 ($COOKIES)，采集可能被反爬拦截"
+fi
+
 echo "[$NOW] Pulling skills-share..."
 git pull --ff-only
 
@@ -16,7 +21,7 @@ source .venv/bin/activate
 export HTTPS_PROXY=http://127.0.0.1:7890
 export HTTP_PROXY=http://127.0.0.1:7890
 export ALL_PROXY=http://127.0.0.1:7890
-PYTHONDONTWRITEBYTECODE=1 python3 scripts/knowledge-collector/cli.py --limit-sources 1
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/knowledge-collector/cli.py --cookies "$COOKIES"
 
 echo "[$NOW] Generating research input..."
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/generate-research-input.py
