@@ -104,7 +104,7 @@ GitHub API 读取完整 txt 字幕
 
 禁止直接从主题或功能名称创建 Skill。
 
-首先提取 Workflow：
+任何 Creator 字幕分析，必须先提取 Workflow Pattern，再进入 Capability Extraction。
 
 ```yaml
 workflow_pattern:
@@ -132,7 +132,7 @@ workflow_pattern:
 
 ---
 
-# Capability Extraction
+# Capability Map
 
 流程：
 
@@ -145,7 +145,9 @@ Capability Extraction
 ↓
 Capability Map
 ↓
-Skill Impact Mapping
+Skill Impact Analysis
+↓
+Skill Create / Enhance / Ignore
 ```
 
 Capability 记录：
@@ -153,16 +155,27 @@ Capability 记录：
 ```yaml
 capability:
   name:
+  category:
   problem_solved:
   reusable_value:
   workflow_pattern:
+    trigger:
+    inputs:
+    stages:
+    ai_role:
+    human_role:
+    artifacts:
+    verification:
   candidate_skills:
   decision:
+    type: enhance_existing | create_new | shared | ignore
+    target:
+    rationale:
 ```
 
 ---
 
-# Skill Impact Decision Rules
+# Skill Impact Decision
 
 Capability 不等于 Skill。
 
@@ -174,13 +187,13 @@ plugins/hermes-skills/skills/
 
 并读取候选 SKILL.md。
 
-## 优先增强已有 Skill
+## Case A: Enhance Existing Skill
 
 如果：
 
-- 属于已有领域
-- 只是增加 Workflow 阶段
-- 丰富已有能力
+- Workflow 属于已有领域；
+- 只是补充阶段、步骤或方法；
+- 能力边界已经被现有 Skill 覆盖；
 
 则：
 
@@ -190,7 +203,17 @@ Enhance Existing Skill
 
 例如：
 
-Business Question → Research → Storyline → Strategy Deck
+```
+Business Question
+↓
+Research
+↓
+Context Assembly
+↓
+Storyline
+↓
+Strategy Deck
+```
 
 属于：
 
@@ -198,34 +221,63 @@ Business Question → Research → Storyline → Strategy Deck
 hermes-business-marketing-copilot
 ```
 
-不是新建 Research Skill。
+不是新建 `hermes-research-workflow`，也不是新增 `shared/research-decision`。
 
 ---
 
-## 创建新 Skill 条件
+## Case B: Create New Skill
 
 必须同时满足：
 
-- 现有 Skill 无法覆盖
-- 有独立触发场景
-- 有独立输入输出
-- 有长期复用价值
+- 新能力；
+- 现有 Skill 无法覆盖；
+- 有独立触发场景；
+- 有独立输入输出；
+- 跨项目长期复用；
 
 否则不要创建。
 
+例：Vibe Coding Workflow 可以创建独立 Skill，因为它有独立触发、独立输入输出和跨项目复用价值。
+
 ---
 
-## Shared 方法库规则
+## Case C: Shared Method Library
 
 不要把单个 Skill 内部阶段提升为 shared。
 
 只有满足：
 
-- 多个 Skill 共用
-- 跨领域复用
-- 不依赖具体业务场景
+- 跨多个 Skill；
+- 跨多个领域；
+- 不依赖具体业务；
 
 才进入 shared。
+
+错误：
+
+```
+Business Strategy
+↓
+Research
+↓
+Decision
+
+新增 shared/research-workflow
+```
+
+正确：
+
+```
+Research 是 Business Strategy Skill 的阶段
+```
+
+---
+
+## Case D: Ignore
+
+如果字幕内容只是新闻、产品发布、一次性观点、口号、工具名称或不可迁移经验，记录为 `ignore`。
+
+不要为了“看起来有能力名”而创建 Skill。
 
 ---
 
@@ -266,6 +318,8 @@ Capability Map
 ↓
 读取候选 SKILL.md
 ↓
+判断：增强已有 / 创建新 Skill / 进入 shared / 忽略
+↓
 增强已有 Skill
 或
 创建新 Skill
@@ -289,6 +343,8 @@ hermes-daily-report/data/creators.json
 - completed_date
 - skills_created
 - skills_enhanced
+- skills_ignored
+- shared_added
 
 ---
 
@@ -305,7 +361,22 @@ Capability Map 已生成
 ↓
 Skill Impact 已判断
 ↓
-Skill 创建或增强完成
+Skill 创建、增强、shared 记录或 ignore 完成
 ↓
 creators.json 更新
+```
+
+OpenAI Creator Distillation 的结论示例：
+
+```yaml
+creator: OpenAI
+skills_created:
+  - hermes-meeting-preparation
+  - hermes-content-creation-workflow
+  - hermes-vibe-coding-workflow
+skills_enhanced:
+  - hermes-business-marketing-copilot
+do_not_create:
+  - hermes-research-workflow
+  - shared/research-decision
 ```
