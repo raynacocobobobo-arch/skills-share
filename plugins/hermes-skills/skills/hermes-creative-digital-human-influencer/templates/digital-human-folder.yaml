@@ -1,0 +1,25 @@
+character_id: DH-001
+
+folder_structure:
+  identity:
+    - character-profile.yaml
+    - face-reference/
+    - turnaround/
+
+  wardrobe:
+    - casual/
+    - travel/
+    - premium/
+
+  scenes:
+    - hotel/
+    - city/
+    - outdoor/
+
+  outputs:
+    - draft/
+    - publish/
+
+  history:
+    - generation-records/
+    - feedback/
