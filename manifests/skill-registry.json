@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "plugins/hermes-skills/skills",
-  "skill_count": 34,
+  "skill_count": 35,
   "skills": [
     {
       "name": "doc-reviewer",
@@ -604,6 +604,29 @@
         "给云端发消息",
         "查收件箱",
         "mesh-bridge"
+      ],
+      "references": [],
+      "missing_references": []
+    },
+    {
+      "name": "hermes-image-prompt-design",
+      "description": "单张图生成提示词设计，用于海报、插画、角色设定图、建筑效果图、商业视觉图和风格探索图；不用于影视、连续镜头或视频任务。",
+      "version": "4.0.0",
+      "category": "hermes-image-prompt-design",
+      "skill_dir": "hermes-image-prompt-design",
+      "skill_path": "plugins/hermes-skills/skills/hermes-image-prompt-design/SKILL.md",
+      "triggers": [
+        "生成绘画提示词",
+        "单帧转提示词",
+        "image prompt",
+        "图片提示词",
+        "单张图提示词",
+        "绘图提示词",
+        "画面提示词",
+        "肖像提示词",
+        "人物肖像",
+        "半身像",
+        "给我一个提示词"
       ],
       "references": [],
       "missing_references": []
