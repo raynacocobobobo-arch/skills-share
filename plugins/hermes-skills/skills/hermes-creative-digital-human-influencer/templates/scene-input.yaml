@@ -1,0 +1,30 @@
+request_id:
+
+character_id:
+
+scene:
+  source_image:
+  location_type:
+  description:
+
+camera:
+  angle:
+  focal_length:
+  depth_of_field:
+
+lighting:
+  direction:
+  color_temperature:
+
+human:
+  pose:
+  action:
+  position:
+
+outfit:
+  reference_image:
+  style:
+
+output:
+  aspect_ratio:
+  platform:
