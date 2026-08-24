@@ -134,6 +134,24 @@
       "references": [],
       "missing_references": []
     },
+       {
+      "name": "hermes-creative-digital-human",
+      "description": "创建真人感数字人博主，并将数字人与真实环境、服装和摄影条件融合，用于小红书等内容生产。",
+      "version": "1.0.0",
+      "category": "hermes-creative-digital-human",
+      "skill_dir": "hermes-creative-digital-human",
+      "skill_path": "plugins/hermes-skills/skills/hermes-creative-digital-human/SKILL.md",
+      "triggers": [
+        "数字人",
+        "虚拟博主",
+        "AI博主",
+        "真人数字人",
+        "小红书数字人",
+        "实景融合"
+      ],
+      "references": [],
+      "missing_references": []
+    },
     {
       "name": "gdevelop5-click-adventure-director",
       "description": "GDevelop 5 轻量级无对白点击冒险制作导演——辅助制作《机械迷城 / 银河历险记》式 10～20 分钟 Point-and-Click Demo，聚焦少对白、单屏/少场景谜题、轻背包、状态驱动、GDevelop 事件表落地。",
@@ -734,23 +752,5 @@
       "references": [],
       "missing_references": []
        },
-    {
-      "name": "hermes-creative-digital-human",
-      "description": "创建真人感数字人博主，并将数字人与真实环境、服装和摄影条件融合，用于小红书等内容生产。",
-      "version": "1.0.0",
-      "category": "hermes-creative-digital-human",
-      "skill_dir": "hermes-creative-digital-human",
-      "skill_path": "plugins/hermes-skills/skills/hermes-creative-digital-human/SKILL.md",
-      "triggers": [
-        "数字人",
-        "虚拟博主",
-        "AI博主",
-        "真人数字人",
-        "小红书数字人",
-        "实景融合"
-      ],
-      "references": [],
-      "missing_references": []
-    }
   ]
 }
