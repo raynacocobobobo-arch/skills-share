@@ -1,0 +1,28 @@
+character_id: DH-001
+
+basic_identity:
+  visual_age:
+  persona:
+  content_direction:
+
+appearance:
+  face:
+    face_shape:
+    eye_shape:
+    nose:
+    skin_texture:
+    hair:
+
+  body:
+    height_ratio:
+    body_type:
+    posture:
+
+style:
+  keywords:
+  photography_style:
+
+assets:
+  face_reference:
+  turnaround_sheet:
+  wardrobe_library:
