@@ -22,11 +22,19 @@ Use for:
 
 A digital human must maintain identity consistency.
 
+Identity stability is more important than beauty score.
+
 Before generating content:
 - check whether a character asset exists
 - create identity references if missing
 
 Do not regenerate a different person every time.
+
+Minimum identity reference:
+- face reference
+- three view reference
+- body reference
+- style reference
 
 ### Reality First
 
@@ -50,13 +58,18 @@ Existing character:
 Bad output:
 `workflows/improve-output.md`
 
-## Asset Minimum
+## Quality Check Order
 
-A character should have:
-- face reference
-- three view reference
-- body reference
-- style reference
+When improving output, check in this order:
+
+1. identity consistency
+2. body proportion
+3. perspective
+4. lighting
+5. skin texture
+6. social media style
+
+Do not optimize all variables at the same time.
 
 ## Quality Check
 
