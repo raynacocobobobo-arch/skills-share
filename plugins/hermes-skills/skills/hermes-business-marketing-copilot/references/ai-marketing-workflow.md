@@ -18,22 +18,26 @@ AI 不替代营销战略判断，而是增强：
 - 策略综合
 - 决策材料制作
 
-## Core Workflow
+## Business Strategy Workflow
 
 ```
 Business Question
         ↓
-Context Gathering
+Context Assembly
+        - market research
+        - customer data
+        - historical strategy materials
+        - internal documents
         ↓
-AI Analysis
+Analysis Planning
         ↓
-Strategic Synthesis
+Storyline Development
         ↓
-Artifact Generation
+Strategy Artifact Generation
         ↓
-Verification & Human Review
+Human Review
         ↓
-Final Decision Material
+Final Recommendation
 ```
 
 ## 1. Problem First: Define Business Question
@@ -41,6 +45,14 @@ Final Decision Material
 不要从：
 
 "生成一个营销方案"
+
+开始。
+
+也不要从：
+
+```
+直接生成 Strategy Deck
+```
 
 开始。
 
@@ -52,7 +64,7 @@ Final Decision Material
 - 需要验证的假设
 - 成功评价标准
 
-## 2. Context First: Build Marketing Context
+## 2. Context Assembly
 
 AI 分析前，需要建立可靠上下文：
 
@@ -62,10 +74,61 @@ AI 分析前，需要建立可靠上下文：
 - 市场研究
 - 竞争信息
 - 客户资料
+- 历史战略材料
+- 内部文档
 
 禁止脱离上下文直接生成营销策略。
 
-## 3. AI-assisted Analysis
+## 3. Analysis Planning
+
+先定义分析路径，再开始写结论：
+
+- 需要回答哪些子问题
+- 应使用哪些营销章节、市场资料或内部资料
+- 哪些假设需要验证
+- 哪些数据缺口必须标注
+
+## 4. Storyline Development
+
+把研究材料组织成可向业务方沟通的逻辑线：
+
+```
+业务问题
+↓
+关键事实
+↓
+洞察
+↓
+战略选择
+↓
+建议和取舍
+```
+
+不要把资料堆成报告。Storyline 必须服务决策。
+
+## 5. Strategy Artifact Generation
+
+输出应形成可执行战略资产：
+
+- Strategy Deck
+- Business Readout
+- Recommendation Document
+
+必要时也可以输出：
+
+- Marketing Brief
+- Campaign Plan
+- Customer Meeting Brief
+- Content Outline
+
+## 6. Human Review
+
+人工必须：
+
+- 定义问题
+- 判断战略方向
+- 验证数据
+- 审核建议
 
 AI 可辅助：
 
@@ -77,25 +140,27 @@ AI 可辅助：
 
 AI 提供分析加速，不替代战略判断。
 
-## 4. Artifact Driven Output
+## 7. Final Recommendation
 
-输出应形成可执行营销资产：
+最终建议必须包含：
 
-- Marketing Brief
-- Strategy Deck
-- Campaign Plan
-- Customer Meeting Brief
-- Content Outline
+- 推荐方向
+- 支撑证据
+- 关键取舍
+- 风险和数据缺口
+- 下一步行动
 
-## 5. Verification Loop
+## Verification Loop
 
 遵循：
 
 ```
-Generate
-→ Check Evidence
-→ Review Result
-→ Human Decision
+Business Question
+→ Analysis Framework
+→ Evidence Collection
+→ Logic Structure
+→ Strategy Artifact
+→ Human Review
 ```
 
 人工确认：
@@ -110,10 +175,11 @@ Generate
 AI Marketing Copilot 的价值不是替代营销专家，而是缩短：
 
 ```
-问题定义
-→ 信息获取
-→ 分析判断
-→ 决策输出
+业务问题
+→ 分析框架
+→ 证据收集
+→ 逻辑结构
+→ 战略资产
 ```
 
 这一完整链路。
