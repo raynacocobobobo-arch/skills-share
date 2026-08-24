@@ -100,8 +100,8 @@ Inputs:
 
 Use:
 
-- `AI绘画提示词` for still-image prompt conversion
-- `hermes-film-ai-production` for prompt strategy and review
+- `hermes-film-ai-production` for prompt strategy, continuous-shot/video production, and review
+- `hermes-image-prompt-design` for still-image prompt conversion when a locked storyboard frame needs a single-image output
 
 Deliverable:
 
