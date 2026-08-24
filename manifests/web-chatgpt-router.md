@@ -17,6 +17,46 @@ When the user says **“请按 Hermes skill 路由执行这个任务”**, or ot
 8. If several skills match, load the primary workflow skill first, then load supporting skills only when needed.
 9. Re-check routing whenever the task changes materially during a follow-up turn.
 
+## Task-object ambiguity guard
+
+**Skill routing and task-object resolution are separate decisions.**
+
+ChatGPT may infer the correct skill from the user's task type, but it must **not** infer the current task object merely because a historical project, file, or conversation is semantically similar.
+
+If the user specifies the task type but does not identify the object to operate on — for example:
+
+- “帮我修改一个宣传片”
+- “帮我看看一个方案”
+- “帮我改个文档”
+- “分析一个项目”
+
+then the router may load the relevant skill, but must stop before selecting a historical object or executing edits.
+
+### Forbidden object inference
+
+When the current object is not uniquely identified, do **not** choose it from:
+
+- previous conversations;
+- saved memory or user profile context;
+- the most recent project;
+- file-library search ranking;
+- recently uploaded or recently modified files;
+- semantic similarity to prior work;
+- “most likely” historical context.
+
+Historical context may help interpret **how** to work, but must not silently decide **what current artifact/project** the user means.
+
+### Object may be treated as resolved only when at least one condition is met
+
+1. The user identifies the project, file, artifact, URL, or other target in the current request.
+2. The user uploads or attaches the target in the current conversation and the intended operation is clear.
+3. The user makes an explicit continuation reference such as “继续刚才那个”“接着上一版”“就是博川那个”, and that reference resolves uniquely in the active conversation.
+4. The active conversation already has exactly one clearly established working object, and the user's follow-up unambiguously refers to it.
+
+If none applies, finish the Hermes skill routing/read step, state that the task object is not yet identified, and wait for the user's target/materials. **Do not search the library or prior chats in order to guess the object.**
+
+This guard has priority over convenience-oriented context reuse. Routing can be inferred; the current task object cannot be guessed.
+
 Primary skill root:
 
 `plugins/hermes-skills/skills/`
