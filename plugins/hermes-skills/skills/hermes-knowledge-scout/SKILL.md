@@ -1,4 +1,3 @@
-````markdown
 ---
 name: knowledge-scout
 description: Hermes 外部知识侦察与采集入口——发现值得研究的 Creator、AI 工具、工作流与行业来源，获取原始素材、完成价值初筛，并路由给后续研究能力。
@@ -47,7 +46,7 @@ Verify Original Material
 Value Triage
 ↓
 Research Routing
-````
+```
 
 ---
 
