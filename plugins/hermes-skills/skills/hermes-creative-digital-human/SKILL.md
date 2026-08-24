@@ -1,3 +1,9 @@
+---
+name: hermes-creative-digital-human
+description: 创建真人感数字人博主，并将数字人与真实环境、服装和摄影条件融合，用于小红书等内容生产。
+version: 1.0.0
+---
+
 # Hermes Creative Digital Human
 
 ## Purpose
