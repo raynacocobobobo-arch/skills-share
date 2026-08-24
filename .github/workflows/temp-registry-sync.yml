@@ -1,0 +1,31 @@
+name: Temporary Registry Sync
+
+on:
+  push:
+    branches:
+      - feature/image-prompt-sequence-canonical
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/image-prompt-sequence-canonical
+          fetch-depth: 0
+
+      - name: Regenerate skill registry
+        run: python3 scripts/validate-skills.py --write-registry
+
+      - name: Remove temporary workflow and commit registry
+        run: |
+          rm .github/workflows/temp-registry-sync.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add manifests/skill-registry.json .github/workflows/temp-registry-sync.yml
+          git commit -m "chore: sync skill registry"
+          git push origin HEAD:feature/image-prompt-sequence-canonical
