@@ -297,12 +297,12 @@ skill_targets:
     - research-report-style
 
   ai_image:
-    - AI绘画提示词
+    - hermes-image-prompt-design
     - 影视分镜
     - 故事片创作
 
   ai_video:
-    - AI绘画提示词
+    - hermes-film-ai-production
     - 影视分镜
     - 宣传片创作
 
