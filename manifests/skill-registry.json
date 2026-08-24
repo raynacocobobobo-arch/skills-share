@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "plugins/hermes-skills/skills",
-  "skill_count": 33,
+  "skill_count": 34,
   "skills": [
     {
       "name": "doc-reviewer",
@@ -604,6 +604,29 @@
         "给云端发消息",
         "查收件箱",
         "mesh-bridge"
+      ],
+      "references": [],
+      "missing_references": []
+    },
+    {
+      "name": "knowledge-scout",
+      "description": "Hermes 外部知识侦察与采集入口——发现值得研究的 Creator、AI 工具、工作流与行业来源，获取原始素材、完成价值初筛，并路由给后续研究能力。",
+      "version": "",
+      "category": "hermes-knowledge-scout",
+      "skill_dir": "hermes-knowledge-scout",
+      "skill_path": "plugins/hermes-skills/skills/hermes-knowledge-scout/SKILL.md",
+      "triggers": [
+        "Knowledge Scout",
+        "knowledge scout",
+        "知识侦察",
+        "外部知识采集",
+        "YouTube 研究",
+        "Bilibili 研究",
+        "AI 工作流追踪",
+        "KOL 追踪",
+        "Creator 追踪",
+        "watchlist",
+        "字幕采集"
       ],
       "references": [],
       "missing_references": []
