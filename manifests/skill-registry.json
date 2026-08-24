@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "plugins/hermes-skills/skills",
-  "skill_count": 28,
+  "skill_count": 33,
   "skills": [
     {
       "name": "doc-reviewer",
@@ -88,6 +88,27 @@
         "references/Good_Strategy_Bad_Strategy_Full.md",
         "references/市场营销.md"
       ],
+      "missing_references": []
+    },
+    {
+      "name": "content-creation-workflow",
+      "description": "AI 内容生产工作流 —— 基于 AI Workflow 原则，从内容目标、受众、研究到成品资产的完整创作流程。",
+      "version": "",
+      "category": "hermes-content-creation-workflow",
+      "skill_dir": "hermes-content-creation-workflow",
+      "skill_path": "plugins/hermes-skills/skills/hermes-content-creation-workflow/SKILL.md",
+      "triggers": [
+        "内容创作",
+        "写作",
+        "博客",
+        "文章",
+        "脚本",
+        "文案",
+        "Newsletter",
+        "内容策略",
+        "AI写作"
+      ],
+      "references": [],
       "missing_references": []
     },
     {
@@ -249,6 +270,28 @@
       "missing_references": []
     },
     {
+      "name": "creator-to-skill-research",
+      "description": "Creator 研究与 Skill 蒸馏工作流——基于原始字幕批量提取稳定 Workflow Pattern 和 Capability，并映射到现有 Hermes Skill 或新 Skill。",
+      "version": "",
+      "category": "hermes-creator-to-skill-research",
+      "skill_dir": "hermes-creator-to-skill-research",
+      "skill_path": "plugins/hermes-skills/skills/hermes-creator-to-skill-research/SKILL.md",
+      "triggers": [
+        "Creator Distillation",
+        "creator distillation",
+        "Creator 蒸馏",
+        "KOL 蒸馏",
+        "KOL 研究",
+        "创作者研究",
+        "创作者蒸馏",
+        "工作流蒸馏",
+        "能力蒸馏",
+        "creator to skill"
+      ],
+      "references": [],
+      "missing_references": []
+    },
+    {
       "name": "android-adb-apk-shortcuts",
       "description": "Android/Redmi Pad 通过 ADB 识别设备、核对已安装 App 与桌面 pinned shortcut、提取 APK、或把系统桌面快捷方式封装成独立可安装 APK 的工作流。",
       "version": "",
@@ -362,6 +405,17 @@
         "半身像",
         "给我一个提示词"
       ],
+      "references": [],
+      "missing_references": []
+    },
+    {
+      "name": "hermes-film-ai-production",
+      "description": "AI导演工作流技能，用于AI短片、宣传片、品牌片、世界观视觉开发、AI资产设计、分镜设计和生成提示词。",
+      "version": "",
+      "category": "hermes-film-ai-production",
+      "skill_dir": "hermes-film-ai-production",
+      "skill_path": "plugins/hermes-skills/skills/hermes-film-ai-production/SKILL.md",
+      "triggers": [],
       "references": [],
       "missing_references": []
     },
@@ -592,6 +646,44 @@
         "游泳",
         "椭圆机",
         "仰卧起坐"
+      ],
+      "references": [],
+      "missing_references": []
+    },
+    {
+      "name": "meeting-preparation",
+      "description": "AI 客户会议准备 Workflow —— 基于 shared/ai-workflow 原则，将背景研究、对象分析和会议材料生成整合为可执行流程。",
+      "version": "",
+      "category": "hermes-meeting-preparation",
+      "skill_dir": "hermes-meeting-preparation",
+      "skill_path": "plugins/hermes-skills/skills/hermes-meeting-preparation/SKILL.md",
+      "triggers": [
+        "客户会议",
+        "会前准备",
+        "meeting brief",
+        "客户研究",
+        "商务拜访",
+        "谈判准备",
+        "会议纪要准备"
+      ],
+      "references": [],
+      "missing_references": []
+    },
+    {
+      "name": "vibe-coding-workflow",
+      "description": "Vibe Coding 工作流 —— 从自然语言意图到可运行原型的 AI 辅助构建方法。",
+      "version": "",
+      "category": "hermes-vibe-coding-workflow",
+      "skill_dir": "hermes-vibe-coding-workflow",
+      "skill_path": "plugins/hermes-skills/skills/hermes-vibe-coding-workflow/SKILL.md",
+      "triggers": [
+        "vibe coding",
+        "AI开发",
+        "AI编程",
+        "自然语言开发",
+        "原型开发",
+        "AI生成应用",
+        "Codex工作流"
       ],
       "references": [],
       "missing_references": []

@@ -1,3 +1,19 @@
+---
+name: creator-to-skill-research
+description: Creator 研究与 Skill 蒸馏工作流——基于原始字幕批量提取稳定 Workflow Pattern 和 Capability，并映射到现有 Hermes Skill 或新 Skill。
+triggers:
+  - Creator Distillation
+  - creator distillation
+  - Creator 蒸馏
+  - KOL 蒸馏
+  - KOL 研究
+  - 创作者研究
+  - 创作者蒸馏
+  - 工作流蒸馏
+  - 能力蒸馏
+  - creator to skill
+---
+
 # Hermes Creator To Skill Research
 
 ## Purpose
