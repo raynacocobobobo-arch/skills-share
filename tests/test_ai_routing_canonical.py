@@ -6,17 +6,20 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 
 class CanonicalAIRoutingTests(unittest.TestCase):
-    def test_old_image_prompt_skill_path_is_gone(self):
-        old_skill = ROOT / "plugins/hermes-skills/skills/hermes-film-AI绘画提示词/SKILL.md"
-        self.assertFalse(old_skill.exists())
+    def test_legacy_image_prompt_skill_is_a_compatibility_entry(self):
+        legacy_skill = ROOT / "plugins/hermes-skills/skills/hermes-film-AI绘画提示词/SKILL.md"
+        self.assertTrue(legacy_skill.is_file())
+        content = legacy_skill.read_text(encoding="utf-8")
+        self.assertIn("兼容入口", content)
+        self.assertIn("hermes-image-prompt-design", content)
+        self.assertIn("hermes-film-ai-production", content)
 
-    def test_web_router_uses_split_image_and_film_skills(self):
+    def test_router_can_resolve_canonical_split_via_registry(self):
         router = (ROOT / "manifests/web-chatgpt-router.md").read_text(encoding="utf-8")
-        self.assertIn("plugins/hermes-skills/skills/hermes-image-prompt-design/SKILL.md", router)
-        self.assertIn("plugins/hermes-skills/skills/hermes-film-ai-production/SKILL.md", router)
-        self.assertIn("hermes-image-prompt-design", router)
-        self.assertIn("hermes-film-ai-production", router)
-        self.assertNotIn("plugins/hermes-skills/skills/hermes-film-AI绘画提示词/SKILL.md", router)
+        registry = (ROOT / "manifests/skill-registry.json").read_text(encoding="utf-8")
+        self.assertIn("skill-registry.json", router)
+        self.assertIn('"name": "hermes-image-prompt-design"', registry)
+        self.assertIn('"name": "hermes-film-ai-production"', registry)
 
     def test_ai_short_film_workflow_dispatches_video_to_film_skill(self):
         workflow = (
