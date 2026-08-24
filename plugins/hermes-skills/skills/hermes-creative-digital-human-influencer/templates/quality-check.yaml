@@ -1,0 +1,20 @@
+identity_check:
+  face_consistency:
+  body_consistency:
+
+composition_check:
+  perspective:
+  scale:
+  position:
+
+lighting_check:
+  light_match:
+  shadow_match:
+
+photography_check:
+  depth_of_field:
+  texture_match:
+
+final:
+  publishable:
+  issues:
