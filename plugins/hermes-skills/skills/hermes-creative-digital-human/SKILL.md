@@ -1,7 +1,7 @@
 ---
 name: hermes-creative-digital-human
 description: Use when creating or maintaining a realistic digital human, virtual creator, AI blogger, outfit variant, pose variant, or real-scene composite where identity consistency across generations matters.
-version: 2.1.0
+version: 2.2.0
 triggers:
   - 数字人
   - 虚拟博主
@@ -14,10 +14,10 @@ triggers:
   - 人脸跑偏
 ---
 
-# Hermes Creative Digital Human V2.1
+# Hermes Creative Digital Human V2.2
 
 ## Purpose
-Build a reusable digital-human production asset with explicit identity control. V2.1 separates WHO the person is from body/appearance, pose, props, and scene, and makes identity binding session-safe for ChatGPT Web production.
+Build a reusable digital-human production asset with explicit identity control. V2.2 separates WHO the person is from body/appearance, pose, props, and scene, makes identity binding session-safe for ChatGPT Web production, and adds a lightweight per-character Identity Anchor for deterministic asset addressing.
 
 **Core principle: identity is an upstream asset, not a prompt adjective. A three-view sheet is not proof of facial identity.**
 
@@ -47,13 +47,52 @@ If the user says the person does not look like the reference, treat that candida
 ## Approved Reference Pool
 Every generated asset is `CANDIDATE`, `APPROVED`, or `REJECTED`. Only `APPROVED` assets may enter the reusable reference pool. `REJECTED` assets must never be reused as identity references.
 
+## Identity Anchor Card
+Maintain one Identity Anchor Card, **one per character**. It is a lightweight address card for approved identity assets; it is not another global manifest, workflow engine, or face model. **Do not create a global digital-human registry.**
+
+Minimum fields:
+
+```yaml
+character_id: DH001
+active_identity:
+  version: V1
+  state: ACTIVE
+references:
+  - tag: "@DH001_ID_V1_FRONT"
+    role: IDENTITY_ONLY
+    view: front
+    status: APPROVED
+  - tag: "@DH001_ID_V1_L45"
+    role: IDENTITY_ONLY
+    view: left_45
+    status: APPROVED
+  - tag: "@DH001_ID_V1_R45"
+    role: IDENTITY_ONLY
+    view: right_45
+    status: APPROVED
+```
+
+Tags are stable aliases, not image payloads. They make assets addressable and auditable, but a tag alone does not satisfy Explicit Master Re-attachment when the active tool requires the actual image input. The exact approved asset must still be selected/re-attached from the project, library, saved-reference system, or equivalent tool input.
+
+### Identity Version Lifecycle
+Approved identity masters are immutable. Never overwrite an approved master in place. If the authoritative face set changes, create a new version such as `V2`, set it `ACTIVE`, and mark the previous approved version `DEPRECATED`. Keep deprecated versions for traceability; never silently mutate their contents.
+
+### Reference Priority
+Use symbolic priority only: `CRITICAL / HIGH / NORMAL`.
+
+- IDENTITY = normally `CRITICAL`
+- BODY = normally `HIGH` when full-body geometry matters
+- WARDROBE / POSE / SCENE = normally `NORMAL` unless the shot requires stronger attention
+
+Do not invent numeric reference weights unless the active tool exposes a real documented weight control.
+
 ## ChatGPT Web Session Contract
 For long-running production, use **one project + multiple short chats + permanent master assets**. Project/chat context can carry goals, naming, status, and production notes, but **conversation history is not an identity source**.
 
 ### Explicit Master Re-attachment
-Every new production chat and every identity-critical generation must explicitly re-attach the latest approved `IDENTITY_MASTER` asset. Re-attach `BODY_MASTER` as well when full-body geometry matters. A phrase such as “use the same person as before” or “refer to the person above” is not a substitute for the master asset.
+Every new production chat and every identity-critical generation must resolve the character's ACTIVE Identity Anchor and explicitly re-attach the exact approved `IDENTITY_MASTER` asset. Re-attach `BODY_MASTER` as well when full-body geometry matters. A phrase such as “use the same person as before” or “refer to the person above” is not a substitute for the master asset.
 
-If the correct master is not actually present in the current task inputs, stop before generation and restore the approved master input rather than guessing from chat history.
+If the correct master is not actually present in the current task inputs, stop before generation and restore the approved master input rather than guessing from chat history or a tag alone.
 
 ### Reference Role Mapping
 Every reference image must have one declared role. Identity authority must never be inferred from visual similarity alone.
@@ -67,6 +106,19 @@ Every reference image must have one declared role. Identity authority must never
 | `SCENE ONLY` | Environment, camera geometry, lighting, perspective |
 
 A non-identity reference cannot redefine the face.
+
+### Reference Map
+Before every identity-critical generation, number the active inputs so the model or operator does not have to infer which image controls which layer.
+
+```text
+REF01 = @DH001_ID_V1_FRONT | IDENTITY ONLY | CRITICAL
+REF02 = @DH001_BODY_V1_FRONT | BODY ONLY | HIGH
+REF03 = @DH001_WARDROBE_RIG_01 | WARDROBE ONLY | NORMAL
+REF04 = @POSE_PHOTOGRAPHER_MONOPOD_03 | POSE ONLY | NORMAL
+REF05 = @SCENE_RIG_RAIN_02 | SCENE ONLY | NORMAL
+```
+
+The tag is the stable address; the attached image is the actual visual evidence.
 
 ## No Generation Chaining
 Forbidden: `SOURCE → generated A → generated B → generated C`
@@ -111,31 +163,33 @@ Candidate Hard Stop blocks contamination; it does not terminate the whole produc
 ## 8-Step Production Flow
 Use this as the user-facing production sequence. Internal gates and prototypes may add checks inside a step, but must not change the order or identity authority.
 
-1. SOURCE INTAKE — register original person references and factual data.
-2. IDENTITY MASTER — build and human-approve the authoritative face identity set.
+1. SOURCE INTAKE — register original person references and factual data; assign stable `character_id`.
+2. IDENTITY MASTER — build and human-approve the authoritative face identity set; create/update the per-character Identity Anchor Card.
 3. STANDARD THREE-VIEW — build the standard front/side/back body/appearance asset from approved upstream identity and factual body evidence.
 4. IDENTITY VALIDATION — verify the same person across the master set and three-view output; reject drift before downstream production.
 5. WARDROBE — create approved clothing/PPE variants without redefining identity.
 6. ENVIRONMENT — integrate the approved person into real or designed scenes with perspective/light matching.
 7. ACTION — add pose, prop, camera, and interaction complexity while re-running Identity Gate when identity-bearing output changes.
-8. BATCH CONTENT — produce multiple approved outputs from the same explicit masters; never promote batch content into identity authority.
+8. BATCH CONTENT — produce multiple approved outputs from the same ACTIVE anchor and explicit masters; never promote batch content into identity authority.
 
 ## Detailed Production Pipeline
 1. SOURCE INTAKE
 2. IDENTITY MASTER Face ID Set
 3. IDENTITY TEST GRID
 4. IDENTITY GATE
-5. BODY MASTER
-6. BODY GATE
-7. APPEARANCE / WARDROBE
-8. SHOT DESIGN
-9. POSE + PROP PROTOTYPE when complex
-10. IDENTITY INTEGRATION
-11. IDENTITY GATE again
-12. SCENE INTEGRATION
-13. REALISM QC
-14. APPROVED CONTENT
-15. optional image-to-video / reference-to-video continuity
+5. IDENTITY ANCHOR CARD
+6. BODY MASTER
+7. BODY GATE
+8. APPEARANCE / WARDROBE
+9. SESSION BOOTSTRAP + REFERENCE MAP
+10. SHOT DESIGN
+11. POSE + PROP PROTOTYPE when complex
+12. IDENTITY INTEGRATION
+13. IDENTITY GATE again
+14. SCENE INTEGRATION
+15. REALISM QC
+16. APPROVED CONTENT
+17. optional image-to-video / reference-to-video continuity
 
 ## Identity Test Grid
 Before production, prefer a simple neutral-background validation set: front, left 45°, right 45°, supported near-profiles, slight look down, slight look up, and medium shot. The purpose is to expose identity drift before scene complexity hides it.
@@ -144,7 +198,7 @@ Before production, prefer a simple neutral-background validation set: front, lef
 Identity failure rejects the **candidate**, not the entire workflow.
 
 1. Mark the failed candidate `REJECTED` and remove it from identity/reference inputs.
-2. Return first to the latest approved `IDENTITY MASTER`.
+2. Resolve the ACTIVE Identity Anchor Card and return to its latest approved `IDENTITY_MASTER`.
 3. Return to L0 SOURCE only if the approved master itself is missing, disputed, or invalid.
 4. Diagnose whether drift came from identity conditioning, angle, pose/prop complexity, scene complexity, or conflicting references.
 5. Change strategy: simplify the shot, isolate pose/prop, reduce conflicting references, or use a stronger identity-aware path.
@@ -168,4 +222,4 @@ Existing character / real-scene content: `workflows/generate-realistic-content.m
 Bad output / identity drift: `workflows/improve-output.md`
 
 ## Asset Naming
-Examples: `SOURCE_001`, `IDENTITY_MASTER_V1_FRONT`, `IDENTITY_MASTER_V1_LEFT45`, `IDENTITY_MASTER_V1_RIGHT45`, `BODY_MASTER_V1_FRONT`, `POSE_CAMERA_MONOPOD_WALK_01`, `SCENE_DRILLING_SITE_01`, `CONTENT_CANDIDATE_001`, `CONTENT_APPROVED_001`, `CONTENT_REJECTED_001`.
+Examples: `SOURCE_001`, `@DH001_ID_V1_FRONT`, `@DH001_ID_V1_L45`, `@DH001_ID_V1_R45`, `@DH001_BODY_V1_FRONT`, `@DH001_WARDROBE_RIG_01`, `@POSE_CAMERA_MONOPOD_WALK_01`, `@SCENE_DRILLING_SITE_01`, `CONTENT_CANDIDATE_001`, `CONTENT_APPROVED_001`, `CONTENT_REJECTED_001`.
