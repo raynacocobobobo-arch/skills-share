@@ -17,6 +17,16 @@ When the user says **“请按 Hermes skill 路由执行这个任务”**, or ot
 8. If several skills match, load the primary workflow skill first, then load supporting skills only when needed.
 9. Re-check routing whenever the task changes materially during a follow-up turn.
 
+## Sticky Skill Binding
+
+When a resolved task object has already been routed to a workflow skill, keep an **active skill binding** for ordinary follow-up turns that still refer to that same task object. The user does not need to repeat the Hermes invocation on every message.
+
+For `hermes-creative-digital-human`, keep the binding while the conversation concerns the **same digital-human task object**, including likeness corrections, wardrobe notes, environment changes, pose/action changes, prop/camera fixes, continuity, review, or batch outputs for that character.
+
+Release or re-route the binding only when the user explicitly ends or switches the workflow, the task object changes, or the request materially becomes a different primary task. A supporting skill may be added without silently dropping the existing primary skill when the same task object still depends on it.
+
+Sticky binding preserves workflow continuity; it does not override the task-object ambiguity guard below and it does not allow a skill to skip its own gates or required assets.
+
 ## Task-object ambiguity guard
 
 **Skill routing and task-object resolution are separate decisions.**
