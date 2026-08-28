@@ -24,7 +24,7 @@ Use SOURCE + approved IDENTITY MASTER as identity evidence. BODY/APPEARANCE/POSE
 Do not use previous L3 content as the main identity reference for the next shot.
 
 ## 5. Identity Gate
-Before polishing realism, verify same person and same age impression. If identity fails, STOP and route to `improve-output.md`.
+Before polishing realism, verify same person and same age impression. If identity fails, mark the current candidate `REJECTED` and route it into the Identity Recovery Loop in `improve-output.md`. The production workflow remains active; recovery returns first to the latest approved IDENTITY MASTER and changes strategy before a fresh candidate is generated.
 
 ## 6. Scene Integration
 Only after identity passes, optimize perspective/scale, ground contact, lighting/shadow, color, depth of field, sharpness/noise, skin texture, rain/mud/contact effects, and edge integration.
@@ -32,4 +32,4 @@ Only after identity passes, optimize perspective/scale, ground contact, lighting
 ## 7. Output State
 New scene output begins as `CONTENT_CANDIDATE`. Human-approved output may become `CONTENT_APPROVED`. Failed identity becomes `CONTENT_REJECTED` and must never feed the identity reference pool.
 
-Goal: preserve the approved person first, then make that person look naturally photographed in the scene.
+Goal: preserve the approved person first, recover intelligently when a candidate drifts, then make the approved person look naturally photographed in the scene.
