@@ -1,7 +1,7 @@
 ---
 name: hermes-creative-digital-human
 description: Use when creating or maintaining a realistic digital human, virtual creator, AI blogger, outfit variant, pose variant, or real-scene composite where identity consistency across generations matters.
-version: 2.0.0
+version: 2.1.0
 triggers:
   - 数字人
   - 虚拟博主
@@ -14,10 +14,10 @@ triggers:
   - 人脸跑偏
 ---
 
-# Hermes Creative Digital Human V2
+# Hermes Creative Digital Human V2.1
 
 ## Purpose
-Build a reusable digital-human production asset with explicit identity control. V2 separates WHO the person is from body/appearance, pose, props, and scene.
+Build a reusable digital-human production asset with explicit identity control. V2.1 separates WHO the person is from body/appearance, pose, props, and scene, and makes identity binding session-safe for ChatGPT Web production.
 
 **Core principle: identity is an upstream asset, not a prompt adjective. A three-view sheet is not proof of facial identity.**
 
@@ -46,6 +46,27 @@ If the user says the person does not look like the reference, treat that candida
 
 ## Approved Reference Pool
 Every generated asset is `CANDIDATE`, `APPROVED`, or `REJECTED`. Only `APPROVED` assets may enter the reusable reference pool. `REJECTED` assets must never be reused as identity references.
+
+## ChatGPT Web Session Contract
+For long-running production, use **one project + multiple short chats + permanent master assets**. Project/chat context can carry goals, naming, status, and production notes, but **conversation history is not an identity source**.
+
+### Explicit Master Re-attachment
+Every new production chat and every identity-critical generation must explicitly re-attach the latest approved `IDENTITY_MASTER` asset. Re-attach `BODY_MASTER` as well when full-body geometry matters. A phrase such as “use the same person as before” or “refer to the person above” is not a substitute for the master asset.
+
+If the correct master is not actually present in the current task inputs, stop before generation and restore the approved master input rather than guessing from chat history.
+
+### Reference Role Mapping
+Every reference image must have one declared role. Identity authority must never be inferred from visual similarity alone.
+
+| Role | May control |
+|---|---|
+| `IDENTITY ONLY` | Face identity and age impression |
+| `BODY ONLY` | Body proportions and silhouette |
+| `WARDROBE ONLY` | Clothing, PPE, accessories, footwear |
+| `POSE ONLY` | Pose, hands, action, prop interaction |
+| `SCENE ONLY` | Environment, camera geometry, lighting, perspective |
+
+A non-identity reference cannot redefine the face.
 
 ## No Generation Chaining
 Forbidden: `SOURCE → generated A → generated B → generated C`
@@ -77,7 +98,29 @@ No reliable identity conditioning. Use for scene design, pose prototypes, wardro
 
 Tier B/C drift should trigger the Identity Recovery Loop. Repeated failure should change strategy or escalate tool capability rather than repeat the same prompt indefinitely.
 
-## Production Pipeline
+## Edit-first / Generate-second
+When an approved identity-bearing image already exists and the active tool supports reference-preserving edits, prefer an edit/transform path that preserves the approved person while changing only the requested layer. Use a fresh generation path when edit constraints cannot solve the required composition, pose, geometry, or scene change.
+
+Both paths still require Explicit Master Re-attachment. Edit-first is a production preference, not permission to chain from an unapproved or drifted image. Generate-second never weakens the Identity Gate.
+
+## Candidate Hard Stop
+If an identity-bearing candidate fails Identity Gate, that candidate **must not continue downstream** into wardrobe, scene polishing, action continuity, batch production, or future identity inputs. Mark it `REJECTED` and enter the Identity Recovery Loop from the latest approved upstream master.
+
+Candidate Hard Stop blocks contamination; it does not terminate the whole production workflow.
+
+## 8-Step Production Flow
+Use this as the user-facing production sequence. Internal gates and prototypes may add checks inside a step, but must not change the order or identity authority.
+
+1. SOURCE INTAKE — register original person references and factual data.
+2. IDENTITY MASTER — build and human-approve the authoritative face identity set.
+3. STANDARD THREE-VIEW — build the standard front/side/back body/appearance asset from approved upstream identity and factual body evidence.
+4. IDENTITY VALIDATION — verify the same person across the master set and three-view output; reject drift before downstream production.
+5. WARDROBE — create approved clothing/PPE variants without redefining identity.
+6. ENVIRONMENT — integrate the approved person into real or designed scenes with perspective/light matching.
+7. ACTION — add pose, prop, camera, and interaction complexity while re-running Identity Gate when identity-bearing output changes.
+8. BATCH CONTENT — produce multiple approved outputs from the same explicit masters; never promote batch content into identity authority.
+
+## Detailed Production Pipeline
 1. SOURCE INTAKE
 2. IDENTITY MASTER Face ID Set
 3. IDENTITY TEST GRID
@@ -105,7 +148,7 @@ Identity failure rejects the **candidate**, not the entire workflow.
 3. Return to L0 SOURCE only if the approved master itself is missing, disputed, or invalid.
 4. Diagnose whether drift came from identity conditioning, angle, pose/prop complexity, scene complexity, or conflicting references.
 5. Change strategy: simplify the shot, isolate pose/prop, reduce conflicting references, or use a stronger identity-aware path.
-6. Generate a fresh candidate from the approved upstream anchor.
+6. Explicitly re-attach the approved master and generate a fresh candidate from that upstream anchor.
 7. Re-run Identity Gate.
 8. PASS → continue downstream. FAIL → remain in recovery mode within a bounded retry budget.
 9. If the retry budget is exhausted without a meaningful strategy change available, escalate the tool/path limitation to the user.

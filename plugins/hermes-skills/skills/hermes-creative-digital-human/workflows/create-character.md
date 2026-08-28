@@ -1,4 +1,4 @@
-# Create Character Workflow V2
+# Create Character Workflow V2.1
 
 ## Goal
 Create a reusable digital-human identity before solving body, wardrobe, pose, props, or scenes.
@@ -31,6 +31,11 @@ FAIL:
 PASS:
 - require human approval before promotion to `IDENTITY_MASTER`
 
+## 6. Persist the Approved Master
+Once human-approved, treat the Face ID Set as a permanent production asset, not as remembered chat context. Give it a stable versioned identity such as `IDENTITY_MASTER_V1_FRONT`, `IDENTITY_MASTER_V1_LEFT45`, and `IDENTITY_MASTER_V1_RIGHT45`.
+
+Downstream chats must explicitly re-attach the approved master required for the shot. A long conversation, prior generated content, or “same person as before” instruction is not a replacement for the approved file input.
+
 ## Required Output
 - SOURCE inventory
 - Face ID Set
@@ -38,6 +43,7 @@ PASS:
 - Identity Test Grid
 - Identity Gate result
 - approved IDENTITY MASTER set
+- stable asset names/version
 - uncertainty/synthetic-completion notes
 
 Do not proceed to body, wardrobe, complex pose, props, or scene work until identity is approved; identity failure should remain an active recovery workflow rather than silently contaminating downstream assets.
