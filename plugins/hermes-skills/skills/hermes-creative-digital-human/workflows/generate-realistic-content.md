@@ -1,70 +1,35 @@
-# Generate Realistic Content Workflow
+# Generate Realistic Content Workflow V2
 
 ## Preconditions
-
-Required identity anchors:
+Required:
 - L0 SOURCE
-- approved FACE MASTER
-- approved BODY MASTER when full body is needed
+- approved IDENTITY MASTER
+- Identity Gate = PASS
+- approved BODY MASTER when full body matters
 
-Optional:
-- approved wardrobe reference
-- environment photo
-- pose requirement
+Optional presentation assets: APPEARANCE, POSE/PROP, SCENE.
 
-L2/L3 outputs may guide presentation, but must not replace SOURCE / MASTER as identity anchors.
+## 1. Capability Check
+Classify the active image path as Tier A identity-aware, Tier B multi-reference, or Tier C ordinary generation. Tier B/C must not be described as guaranteed face lock.
 
-## Process
+## 2. Shot Design
+Analyze camera angle/height, perspective, focal-length impression, subject scale, placement, light direction, color temperature, depth of field, and noise/sharpness.
 
-### 1. Analyze Environment
+## 3. Pose / Prop Prototype
+If action or equipment is complex, solve geometry before final identity integration. Use a stand-in if needed to validate pose, hands, weight distribution, camera/monopod/tool geometry, and interaction with the environment.
 
-Determine:
-- camera angle and height
-- perspective / focal-length impression
-- subject scale and placement
-- lighting direction and softness
-- color temperature
-- depth of field
-- sharpness / noise characteristics
+## 4. Identity Integration
+Use SOURCE + approved IDENTITY MASTER as identity evidence. BODY/APPEARANCE/POSE/SCENE assets may guide their own layers but must not redefine the face.
 
-### 2. Build Generation Inputs
+Do not use previous L3 content as the main identity reference for the next shot.
 
-Identity inputs:
-- SOURCE
-- approved FACE MASTER
-- approved BODY MASTER as needed
+## 5. Identity Gate
+Before polishing realism, verify same person and same age impression. If identity fails, mark the current candidate `REJECTED` and route it into the Identity Recovery Loop in `improve-output.md`. The production workflow remains active; recovery returns first to the latest approved IDENTITY MASTER and changes strategy before a fresh candidate is generated.
 
-Presentation inputs:
-- outfit reference
-- pose
-- environment
-- mood / framing
+## 6. Scene Integration
+Only after identity passes, optimize perspective/scale, ground contact, lighting/shadow, color, depth of field, sharpness/noise, skin texture, rain/mud/contact effects, and edge integration.
 
-Keep identity and style roles separate.
+## 7. Output State
+New scene output begins as `CONTENT_CANDIDATE`. Human-approved output may become `CONTENT_APPROVED`. Failed identity becomes `CONTENT_REJECTED` and must never feed the identity reference pool.
 
-### 3. Generate Composite
-
-Create the requested scene directly from the approved identity anchors.
-
-Do not use the previous lifestyle/content generation as the main reference for the next one.
-
-### 4. Quality Check
-
-Check in order:
-1. same person
-2. same age impression
-3. body proportion / scale
-4. perspective and ground contact
-5. lighting / shadow / color
-6. depth of field / sharpness / noise
-7. natural skin and scene integration
-
-If identity fails, stop and route to `improve-output.md` instead of stacking more derivatives.
-
-## Output Classification
-
-Scene composites and final social images are L3 CONTENT.
-
-They may be published or used as visual examples, but must never feed back into FACE MASTER or BODY MASTER.
-
-Goal: the approved person should look as if they were photographed in the original scene.
+Goal: preserve the approved person first, recover intelligently when a candidate drifts, then make the approved person look naturally photographed in the scene.

@@ -1,57 +1,60 @@
-# Improve Output Workflow
+# Improve Output Workflow V2
 
-## First Diagnose the Failure Layer
+## Diagnose the Failed Layer
+Identity: wrong person, face drift, age drift, structural facial changes.
 
-Identity:
-- face drift
-- inconsistent person
-- age drift
-- style reference changing facial structure
+Body: wrong mass/proportions or unstable synthetic completion.
 
-Body:
-- wrong mass / proportions
-- synthetic completion becoming inconsistent
+Pose/Prop: unnatural anatomy, hand placement, load bearing, camera/monopod/tool geometry.
 
-Reality:
-- pasted feeling
-- wrong lighting / color / depth
+Reality/Scene: perspective, scale, contact, lighting, color, depth, texture.
 
-Composition:
-- wrong scale
-- wrong perspective / ground contact
-
-## Identity Drift Recovery
-
-If identity drift is present, do not continue normal refinement.
+## Identity Recovery Loop
+Identity failure rejects the current candidate; it does **not** terminate the whole production workflow.
 
 Required recovery:
-1. stop downstream generation
-2. identify the last approved SOURCE / MASTER
-3. demote drifting outputs to L2 DERIVATIVE or L3 CONTENT
-4. remove those drifting outputs from identity-reference inputs
-5. regenerate directly from SOURCE / approved MASTER
-6. run face/body QC again
+1. mark failed output `REJECTED`
+2. remove it from every identity/reference input
+3. return first to the latest approved IDENTITY MASTER
+4. return to SOURCE only if the approved master itself is invalid, disputed, or unavailable
+5. diagnose the failed variable: identity conditioning, view angle, pose/prop complexity, scene complexity, or conflicting references
+6. change strategy before retrying
+7. generate a fresh candidate from the approved upstream anchor
+8. run Identity Gate again
+9. PASS → resume downstream work; FAIL → continue the workflow in recovery mode within the Retry Budget
 
-Forbidden recovery:
-- using the bad output as the next face reference
-- repeatedly editing a drifted lifestyle image until it looks closer
-- promoting a scene/style output to MASTER without explicit human approval
+Forbidden:
+- failed candidate → next candidate as identity reference
+- repeated prompt emphasis such as "same exact face" without changing strategy
+- promoting a scene/style output to identity master
+- using shared helmet, glasses, clothing, age, or ethnicity as evidence that identity passed
 
-## Reality / Composition Recovery
+## Retry Budget
+A retry is useful only when at least one causal variable changes. Examples: isolate identity from scene, simplify pose, remove conflicting references, switch reference angle, or move to a stronger identity-aware path.
 
-If identity is correct and only realism fails, keep the approved identity anchors fixed and adjust one layer at a time:
-1. perspective / scale
-2. lighting / shadow
-3. color temperature
-4. depth of field / sharpness / noise
-5. skin / edge integration
+Default recovery budget: up to 2 strategy-changing retries for the same failure mode. This is not an image-count quota; materially different failure modes may start a new diagnosis. Do not spend the budget on identical prompt reruns.
 
-Do not optimize all variables simultaneously.
+## Tool Escalation
+When the same identity failure remains after the Retry Budget:
+1. stop repeating the same generation strategy
+2. state what failed and which variables were already changed
+3. change strategy or escalate to a stronger identity-aware tool/path when available
+4. ask for a stronger SOURCE view only when missing evidence is actually the bottleneck
+5. if no stronger path or evidence exists, report the capability limit instead of pretending another identical retry will solve it
+
+Tool escalation is a production decision, not a failure of the entire digital-human project.
+
+## Pose / Prop Recovery
+If identity is correct but action/equipment is wrong, preserve the approved identity anchor and prototype the pose/prop separately before reintegration.
+
+## Reality Recovery
+If identity/body/pose are correct, adjust one scene layer at a time: perspective/scale → contact → lighting/shadow → color → depth/sharpness/noise → skin/edge/weather integration.
 
 ## Decision Rule
+- identity wrong, master valid → latest approved IDENTITY MASTER → Recovery Loop
+- identity master itself wrong → SOURCE → rebuild Identity Master
+- identity right, body wrong → BODY MASTER rebuild
+- identity/body right, pose/prop wrong → pose prototype
+- identity/body/pose right, scene wrong → scene integration only
 
-- Identity wrong → return upstream to SOURCE / MASTER.
-- Identity right, body wrong → rebuild from SOURCE + approved FACE MASTER.
-- Identity/body right, scene wrong → keep identity fixed and repair scene integration.
-
-Goal: fix the failed layer without contaminating upstream identity assets.
+Goal: repair the failed layer, preserve good upstream assets, and keep the workflow moving without contaminating identity lineage.
