@@ -1,8 +1,21 @@
 {
   "schema_version": 1,
   "source": "plugins/hermes-skills/skills",
-  "skill_count": 36,
+  "skill_count": 37,
   "skills": [
+    {
+      "name": "registry-sync-smoke",
+      "description": "Temporary CI smoke fixture for registry auto-sync verification.",
+      "version": "1.0.0",
+      "category": "_registry-sync-smoke",
+      "skill_dir": "_registry-sync-smoke",
+      "skill_path": "plugins/hermes-skills/skills/_registry-sync-smoke/SKILL.md",
+      "triggers": [
+        "registry sync smoke"
+      ],
+      "references": [],
+      "missing_references": []
+    },
     {
       "name": "doc-reviewer",
       "description": "文档审阅器——AI直接在Word原文件副本里加批注、删除线、修订或净稿修改。适用于合同审查、方案评审、脚本改稿、简历优化、报告批注等既有文档任务。",
