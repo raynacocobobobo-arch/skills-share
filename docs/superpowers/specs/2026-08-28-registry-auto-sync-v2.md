@@ -20,3 +20,7 @@ Make `SKILL.md` the single source of truth. Keep `manifests/skill-registry.json`
 - Preserve version downgrade protection and repository validation.
 - Auto-sync may write only `manifests/skill-registry.json` on the triggering non-main branch.
 - If generation/validation fails, do not commit anything.
+
+## Verification
+
+The final PR head must receive the repository's required `validate` check before merge.
