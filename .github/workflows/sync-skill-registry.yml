@@ -1,0 +1,55 @@
+name: Sync Hermes skill registry
+
+on:
+  push:
+    branches-ignore:
+      - main
+    paths:
+      - 'plugins/hermes-skills/skills/**'
+      - 'scripts/validate-skills.py'
+      - 'manifests/skill-registry.json'
+      - '.github/workflows/sync-skill-registry.yml'
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+
+      - name: Capture accepted main registry
+        run: |
+          git fetch origin main --depth=1
+          git show origin/main:manifests/skill-registry.json > /tmp/baseline-registry.json
+
+      - name: Validate skills and regenerate registry
+        run: |
+          python3 scripts/validate-skills.py \
+            --baseline-registry /tmp/baseline-registry.json \
+            --write-registry
+
+      - name: Commit generated registry when changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- manifests/skill-registry.json; then
+            echo "Registry already matches SKILL.md metadata."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add manifests/skill-registry.json
+          git commit -m "chore: auto-sync skill registry"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+          # Pushes made with GITHUB_TOKEN do not trigger normal push/PR workflows.
+          # Explicitly validate the new branch head so required checks attach to it.
+          gh workflow run validate-skills.yml --ref "$GITHUB_REF_NAME"
