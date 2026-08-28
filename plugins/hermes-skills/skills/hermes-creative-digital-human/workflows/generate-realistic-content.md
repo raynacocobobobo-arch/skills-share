@@ -1,4 +1,4 @@
-# Generate Realistic Content Workflow V2.2
+# Generate Realistic Content Workflow V2.3
 
 ## Preconditions
 Required:
@@ -7,11 +7,18 @@ Required:
 - Identity Gate = PASS
 - approved BODY MASTER when full body matters
 - per-character Identity Anchor Card
+- current Digital Human Session State
 
 Optional presentation assets: APPEARANCE, POSE/PROP, SCENE.
 
-## 0. Identity Session Bootstrap
-Before every new production chat and every identity-critical generation, resolve the character's Identity Anchor Card and its `ACTIVE` identity version.
+## 0. Production State / Identity Session Bootstrap
+Before every new production chat and every identity-critical generation, resolve the current Digital Human Session State and the character's Identity Anchor Card.
+
+Confirm:
+- active skill binding = `hermes-creative-digital-human`
+- `character_id` is resolved
+- `current_step` and `next_allowed_action` are known
+- ACTIVE identity version is known
 
 A tag such as `@DH001_ID_V1_FRONT` is a stable alias, not a magic lookup. Tags are stable aliases, not image payloads, and tag alone does not satisfy Explicit Master Re-attachment.
 
@@ -28,6 +35,8 @@ If the master is absent, unresolved, disputed, rejected, or only mentioned by ta
 Do not generate an identity-bearing candidate while the anchor is MISSING. Restore the exact approved master from the project/library/saved-reference system available in the active tool.
 
 Do not rely on a long chat, a previous generation, or instructions such as “same person as before” to recover identity. Project/chat history may carry task context, but conversation history is not an identity source.
+
+If the user mentions a later-stage request while the current workflow step has not passed its required gate, record that request as a deferred requirement. Do not silently skip the current step.
 
 ## Reference Map
 Before generation, number every active reference. Every reference image has **one declared role**; bind each numbered reference to that one role. Use symbolic priority `CRITICAL / HIGH / NORMAL`. Do not invent numeric reference weights unless the active tool exposes a real documented weight control.
@@ -65,13 +74,30 @@ Allowed roles:
 
 If a reference has no clear role, resolve its role or remove it. A BODY/WARDROBE/POSE/SCENE reference must not redefine identity.
 
+## Generation Preflight
+Before any identity-bearing generation or identity-bearing edit, verify:
+
+- active skill binding is still `hermes-creative-digital-human`
+- requested action is allowed by `current_step` / `next_allowed_action`
+- required upstream gates are PASS
+- ACTIVE Identity Anchor is resolved
+- required identity master image is actually attached
+- BODY master is attached when body geometry matters
+- Reference Map is complete and role-bound
+
+If all required checks pass, declare `PREFLIGHT PASS` and continue.
+
+If any required check fails, declare `PREFLIGHT BLOCKED`, name the missing/failed prerequisite, restore it, and update the Session State if needed. **Do not execute an identity-bearing generation** while preflight is blocked.
+
+A non-identity stand-in or pose/prop prototype may proceed only when the current workflow step explicitly allows it and it must never be promoted into identity authority.
+
 ## 1. Capability Check
 Classify the active image path as Tier A identity-aware, Tier B multi-reference, or Tier C ordinary generation. Tier B/C must not be described as guaranteed face lock.
 
 ## 2. Edit-first / Generate-second Decision
 When a valid approved identity-bearing image and a reference-preserving edit path are available, prefer Edit-first: preserve the approved person and change only the requested layer.
 
-Use Generate-second when edit constraints cannot solve the required composition, pose, prop geometry, view change, or scene transformation. A generated candidate still starts from an `IDENTITY ANCHOR READY` state and must pass Identity Gate before downstream work.
+Use Generate-second when edit constraints cannot solve the required composition, pose, prop geometry, view change, or scene transformation. A generated candidate still starts from an `IDENTITY ANCHOR READY` + `PREFLIGHT PASS` state and must pass Identity Gate before downstream work.
 
 Never use Edit-first as permission to edit from a drifted or rejected candidate.
 
@@ -96,15 +122,18 @@ If identity fails:
 - route recovery into `improve-output.md`
 - return to the ACTIVE Identity Anchor Card
 - explicitly re-attach the latest approved IDENTITY MASTER before the next attempt
+- update the Digital Human Session State; do not advance `current_step`
 
 This Candidate Hard Stop blocks contamination of later stages; it does not terminate the whole production workflow.
 
 ## 7. Scene Integration
 Only after identity passes, optimize perspective/scale, ground contact, lighting/shadow, color, depth of field, sharpness/noise, skin texture, rain/mud/contact effects, and edge integration.
 
-## 8. Output State
+## 8. Output State / State Checkpoint
 New scene output begins as `CONTENT_CANDIDATE`. Human-approved output may become `CONTENT_APPROVED`. Failed identity becomes `CONTENT_REJECTED` and must never feed the identity reference pool.
+
+After every state-changing action, checkpoint the Digital Human Session State: approval/rejection, gate result, step completion, step transition, master-version change, or next-action change.
 
 For batch production, bootstrap each identity-critical shot from the ACTIVE anchor and explicit approved masters rather than chaining from the prior content image.
 
-Goal: preserve the approved person first, recover intelligently when a candidate drifts, then make the approved person look naturally photographed in the scene.
+Goal: preserve the approved person first, keep the production workflow bound and stateful across ordinary follow-ups, recover intelligently when a candidate drifts, then make the approved person look naturally photographed in the scene.
