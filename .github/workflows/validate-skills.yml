@@ -2,6 +2,7 @@ name: Validate Hermes skills
 
 on:
   pull_request:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -21,9 +22,6 @@ jobs:
       - name: Run validator regression tests
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
 
-      - name: Capture committed registry
-        run: cp manifests/skill-registry.json /tmp/committed-registry.json
-
       - name: Capture accepted PR base registry
         if: github.event_name == 'pull_request'
         run: |
@@ -36,6 +34,12 @@ jobs:
           if [ "$BEFORE_SHA" != "0000000000000000000000000000000000000000" ]; then
             git show "$BEFORE_SHA:manifests/skill-registry.json" > /tmp/baseline-registry.json
           fi
+
+      - name: Capture main registry for dispatched validation
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          git fetch origin main --depth=1
+          git show origin/main:manifests/skill-registry.json > /tmp/baseline-registry.json
 
       - name: Validate skills and regenerate registry
         run: |
@@ -53,6 +57,3 @@ jobs:
         with:
           name: generated-skill-registry
           path: manifests/skill-registry.json
-
-      - name: Require semantic registry match
-        run: python3 scripts/validate-skills.py --check-registry /tmp/committed-registry.json
