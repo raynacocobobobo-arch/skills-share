@@ -30,7 +30,7 @@ Do not generate an identity-bearing candidate while the anchor is MISSING. Resto
 Do not rely on a long chat, a previous generation, or instructions such as “same person as before” to recover identity. Project/chat history may carry task context, but conversation history is not an identity source.
 
 ## Reference Map
-Before generation, number every active reference and bind it to one role. Use symbolic priority `CRITICAL / HIGH / NORMAL`. Do not invent numeric reference weights unless the active tool exposes a real documented weight control.
+Before generation, number every active reference. Every reference image has **one declared role**; bind each numbered reference to that one role. Use symbolic priority `CRITICAL / HIGH / NORMAL`. Do not invent numeric reference weights unless the active tool exposes a real documented weight control.
 
 Example:
 
