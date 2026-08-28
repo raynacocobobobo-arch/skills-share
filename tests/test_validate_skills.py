@@ -89,6 +89,27 @@ class ValidateSkillsVersionTests(unittest.TestCase):
         )
         self.assertEqual(errors, [])
 
+    def test_registry_semantic_match_ignores_json_formatting(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            compact = root / "compact.json"
+            pretty = root / "pretty.json"
+            compact.write_text('{"schema_version":1,"skills":[{"name":"demo"}]}', encoding="utf-8")
+            pretty.write_text(
+                '{\n  "schema_version": 1,\n  "skills": [\n    {\n      "name": "demo"\n    }\n  ]\n}\n',
+                encoding="utf-8",
+            )
+            committed = validate_skills.load_registry(compact)
+            generated = validate_skills.load_registry(pretty)
+            self.assertEqual(validate_skills.compare_registry_content(committed, generated), [])
+
+    def test_registry_semantic_mismatch_is_rejected(self):
+        errors = validate_skills.compare_registry_content(
+            {"skill_count": 1, "skills": [{"name": "demo"}]},
+            {"skill_count": 2, "skills": [{"name": "demo"}, {"name": "other"}]},
+        )
+        self.assertTrue(any("registry content mismatch" in error for error in errors))
+
 
 if __name__ == "__main__":
     unittest.main()

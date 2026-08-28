@@ -117,6 +117,16 @@ def compare_registry_versions(
     return errors
 
 
+def compare_registry_content(
+    committed: dict[str, object],
+    generated: dict[str, object],
+) -> list[str]:
+    """Compare registry data semantically, ignoring JSON whitespace and formatting."""
+    if committed == generated:
+        return []
+    return ["registry content mismatch: committed registry differs from generated registry"]
+
+
 def find_reference_mentions(text: str) -> list[str]:
     mentions = set()
     for match in re.findall(r"`([^`]+)`", text):
@@ -228,6 +238,11 @@ def main() -> int:
         help="Compare skill versions against this previously accepted registry.",
     )
     parser.add_argument(
+        "--check-registry",
+        type=Path,
+        help="Compare this committed registry with the generated registry by JSON content, not formatting.",
+    )
+    parser.add_argument(
         "--allow-version-downgrade",
         action="store_true",
         help="Explicit emergency override for a documented version rollback.",
@@ -274,6 +289,14 @@ def main() -> int:
                     allow_downgrade=args.allow_version_downgrade,
                 )
             )
+
+    if args.check_registry:
+        try:
+            committed = load_registry(args.check_registry)
+        except ValueError as exc:
+            errors.append(str(exc))
+        else:
+            errors.extend(compare_registry_content(committed, registry))
 
     if args.write_registry and not errors:
         REGISTRY_PATH.parent.mkdir(parents=True, exist_ok=True)

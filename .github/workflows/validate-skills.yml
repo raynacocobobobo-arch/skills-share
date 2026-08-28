@@ -21,6 +21,9 @@ jobs:
       - name: Run validator regression tests
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
 
+      - name: Capture committed registry
+        run: cp manifests/skill-registry.json /tmp/committed-registry.json
+
       - name: Capture accepted PR base registry
         if: github.event_name == 'pull_request'
         run: |
@@ -51,5 +54,5 @@ jobs:
           name: generated-skill-registry
           path: manifests/skill-registry.json
 
-      - name: Require committed registry to match generated registry
-        run: git diff --exit-code -- manifests/skill-registry.json
+      - name: Require semantic registry match
+        run: python3 scripts/validate-skills.py --check-registry /tmp/committed-registry.json
