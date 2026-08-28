@@ -1,7 +1,7 @@
 ---
 name: hermes-creative-digital-human
 description: Use when creating or maintaining a realistic digital human, virtual creator, AI blogger, outfit variant, pose variant, or real-scene composite where identity consistency across generations matters.
-version: 2.2.0
+version: 2.3.0
 triggers:
   - 数字人
   - 虚拟博主
@@ -14,10 +14,10 @@ triggers:
   - 人脸跑偏
 ---
 
-# Hermes Creative Digital Human V2.2
+# Hermes Creative Digital Human V2.3
 
 ## Purpose
-Build a reusable digital-human production asset with explicit identity control. V2.2 separates WHO the person is from body/appearance, pose, props, and scene, makes identity binding session-safe for ChatGPT Web production, and adds a lightweight per-character Identity Anchor for deterministic asset addressing.
+Build a reusable digital-human production asset with explicit identity control. V2.3 separates WHO the person is from body/appearance, pose, props, and scene; makes identity binding session-safe; keeps the skill bound to the active digital-human task across ordinary follow-ups; and adds lightweight production state plus a generation preflight so conversation drift cannot silently skip required assets or gates.
 
 **Core principle: identity is an upstream asset, not a prompt adjective. A three-view sheet is not proof of facial identity.**
 
@@ -89,6 +89,41 @@ Do not invent numeric reference weights unless the active tool exposes a real do
 ## ChatGPT Web Session Contract
 For long-running production, use **one project + multiple short chats + permanent master assets**. Project/chat context can carry goals, naming, status, and production notes, but **conversation history is not an identity source**.
 
+### Sticky Skill Binding
+Once a resolved digital-human task object is routed to this skill, keep the **active skill binding** on `hermes-creative-digital-human` for ordinary follow-up turns about the same character/project. The user does not need to repeat “Hermes” on every message.
+
+Keep the binding while the follow-up is still about the **same digital-human task object**, including comments about likeness, clothing, scene, pose, camera, props, continuity, or another output from that character. Release or re-route only when the user explicitly ends or switches the workflow, the task object changes, or the request materially becomes a different primary task. A supporting skill may be added without silently dropping this skill when digital-human production remains the primary workflow.
+
+### Digital Human Session State
+Maintain a lightweight state card in the active production chat/project context. **Do not create a global session-state registry.** This card records workflow position; it is not a second asset database.
+
+Minimum shape:
+
+```yaml
+active_skill: hermes-creative-digital-human
+skill_version: 2.3.0
+character_id: DH001
+current_step: 3
+active_identity: V1
+identity_anchor: READY
+completed:
+  - SOURCE_INTAKE
+  - IDENTITY_MASTER
+pending:
+  - STANDARD_THREE_VIEW
+  - IDENTITY_VALIDATION
+next_allowed_action:
+  - build_standard_three_view
+deferred_requirements: []
+```
+
+`current_step` advances only when the required gate for the present step passes. A tangential request about a later step may be recorded as a **deferred requirement**, but it **must not advance `current_step`** or bypass an upstream gate. Example: a wardrobe preference mentioned during Identity Master work is retained for Step 5, but does not authorize wardrobe generation before identity validation.
+
+### State Checkpoint
+Update the Digital Human Session State **after every state-changing action**: approval/rejection, master-version change, gate result, step completion, step transition, or a change to the next allowed action. Do not rewrite the card for casual discussion that changes no production state.
+
+In a **new chat**, re-bootstrap the state from the approved Identity Anchor, explicit approved assets, and known gate results that are actually available. Do not assume invisible persistence from a previous chat; re-bootstrap instead of guessing from remembered conversation history.
+
 ### Explicit Master Re-attachment
 Every new production chat and every identity-critical generation must resolve the character's ACTIVE Identity Anchor and explicitly re-attach the exact approved `IDENTITY_MASTER` asset. Re-attach `BODY_MASTER` as well when full-body geometry matters. A phrase such as “use the same person as before” or “refer to the person above” is not a substitute for the master asset.
 
@@ -119,6 +154,25 @@ REF05 = @SCENE_RIG_RAIN_02 | SCENE ONLY | NORMAL
 ```
 
 The tag is the stable address; the attached image is the actual visual evidence.
+
+### Generation Preflight
+Before any identity-bearing generation or identity-bearing edit, check the active production state instead of executing immediately.
+
+Required checks:
+- active skill binding is `hermes-creative-digital-human`
+- `character_id` is resolved
+- requested operation is allowed by `current_step` / `next_allowed_action`
+- every required upstream gate has PASS status
+- `active_identity` resolves to the ACTIVE approved Identity Anchor
+- required master images are actually attached to the current task
+- required BODY master is present when body geometry matters
+- Reference Map exists and every active reference has one declared role
+
+If all required checks pass, state `PREFLIGHT PASS` and proceed.
+
+If any required check fails, state `PREFLIGHT BLOCKED`, identify the missing or failed prerequisite, update the session state if needed, and restore that prerequisite. **Do not execute an identity-bearing generation** while preflight is blocked.
+
+A non-identity stand-in/pose prototype may still be produced only when the current workflow step explicitly allows it; it must not be promoted into identity authority.
 
 ## No Generation Chaining
 Forbidden: `SOURCE → generated A → generated B → generated C`
@@ -153,7 +207,7 @@ Tier B/C drift should trigger the Identity Recovery Loop. Repeated failure shoul
 ## Edit-first / Generate-second
 When an approved identity-bearing image already exists and the active tool supports reference-preserving edits, prefer an edit/transform path that preserves the approved person while changing only the requested layer. Use a fresh generation path when edit constraints cannot solve the required composition, pose, geometry, or scene change.
 
-Both paths still require Explicit Master Re-attachment. Edit-first is a production preference, not permission to chain from an unapproved or drifted image. Generate-second never weakens the Identity Gate.
+Both paths still require Explicit Master Re-attachment and Generation Preflight. Edit-first is a production preference, not permission to chain from an unapproved or drifted image. Generate-second never weakens the Identity Gate.
 
 ## Candidate Hard Stop
 If an identity-bearing candidate fails Identity Gate, that candidate **must not continue downstream** into wardrobe, scene polishing, action continuity, batch production, or future identity inputs. Mark it `REJECTED` and enter the Identity Recovery Loop from the latest approved upstream master.
@@ -181,15 +235,16 @@ Use this as the user-facing production sequence. Internal gates and prototypes m
 6. BODY MASTER
 7. BODY GATE
 8. APPEARANCE / WARDROBE
-9. SESSION BOOTSTRAP + REFERENCE MAP
-10. SHOT DESIGN
-11. POSE + PROP PROTOTYPE when complex
-12. IDENTITY INTEGRATION
-13. IDENTITY GATE again
-14. SCENE INTEGRATION
-15. REALISM QC
-16. APPROVED CONTENT
-17. optional image-to-video / reference-to-video continuity
+9. SESSION BOOTSTRAP + SESSION STATE + REFERENCE MAP
+10. GENERATION PREFLIGHT
+11. SHOT DESIGN
+12. POSE + PROP PROTOTYPE when complex
+13. IDENTITY INTEGRATION
+14. IDENTITY GATE again
+15. SCENE INTEGRATION
+16. REALISM QC
+17. APPROVED CONTENT
+18. optional image-to-video / reference-to-video continuity
 
 ## Identity Test Grid
 Before production, prefer a simple neutral-background validation set: front, left 45°, right 45°, supported near-profiles, slight look down, slight look up, and medium shot. The purpose is to expose identity drift before scene complexity hides it.
