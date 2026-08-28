@@ -35,39 +35,17 @@ Build a reusable digital-human production asset with explicit identity control. 
 Only L0 SOURCE and explicitly approved L1 masters may be upstream identity anchors.
 
 ## Identity Master Requirements
-Prefer original, high-quality, minimally stylized photos. Build a Face ID Set from the strongest available views:
-- front
-- left 30–45°
-- right 30–45°
-- optional profile when genuinely observed
-- neutral or mild natural expression
-- consistent age and recognizable facial structure
+Prefer original, high-quality, minimally stylized photos. Build a Face ID Set from the strongest available views: front, left 30–45°, right 30–45°, optional genuine profiles, neutral/mild expression, consistent age and recognizable facial structure.
 
-A contact sheet or three-view character sheet may be useful for review, but must not automatically become the identity source. Crop/route individual face views when possible so identity evidence is not diluted by clothing, scene, labels, or multiple unrelated tasks.
+A contact sheet or three-view character sheet may be useful for review, but must not automatically become the identity source. Crop/route individual face views when possible so identity evidence is not diluted by clothing, scene, labels, or unrelated tasks.
 
 ## Identity Gate
-Before body variants, wardrobe, complex poses, props, or scene integration, identity must pass.
+Before body variants, wardrobe, complex poses, props, or scene integration, identity must pass. Check face ratio, eye shape/spacing, brows, nose, mouth, jaw/chin, ears when visible, hairline, age impression, and overall recognizability.
 
-Check structural traits before styling:
-1. face length/width ratio
-2. eye shape, spacing, eyelid structure
-3. brow position
-4. nose bridge, tip, nostril width
-5. mouth width and lip proportions
-6. jaw/chin geometry
-7. ears when visible
-8. hairline
-9. age impression
-10. overall recognizability
-
-If the user says the person does not look like the reference, treat that as **Identity Gate = FAIL**. Do not argue from shared clothing, glasses, helmet, age, or ethnicity.
+If the user says the person does not look like the reference, treat that candidate as **Identity Gate = FAIL**. Shared clothing, glasses, helmet, age, or ethnicity are not proof of identity.
 
 ## Approved Reference Pool
-Every generated asset has one state: `CANDIDATE`, `APPROVED`, or `REJECTED`.
-
-Only `APPROVED` assets may enter the reusable reference pool. A generated candidate does not become a master merely because it is visually attractive.
-
-**REJECTED assets must never be reused as identity references.**
+Every generated asset is `CANDIDATE`, `APPROVED`, or `REJECTED`. Only `APPROVED` assets may enter the reusable reference pool. `REJECTED` assets must never be reused as identity references.
 
 ## No Generation Chaining
 Forbidden: `SOURCE → generated A → generated B → generated C`
@@ -80,28 +58,24 @@ Required star topology:
 Downstream content must not redefine upstream identity.
 
 ## Separate Identity From Appearance
-Three-view sheets primarily define height impression, body proportions, silhouette, clothing/PPE, and visible equipment. They are `APPEARANCE/BODY` references unless explicitly validated as identity masters.
-
-Do not claim that a three-view sheet "locks the face" merely because it contains a face.
+Three-view sheets primarily define height impression, body proportions, silhouette, clothing/PPE, and visible equipment. They are `APPEARANCE/BODY` references unless explicitly validated as identity masters. Do not claim a three-view sheet locks the face merely because it contains a face.
 
 ## Pose Prototype Rule
 For complex actions or props, solve pose/prop geometry before final identity integration when practical.
 
 Example: `stand-in → correct walking pose + shoulder load + monopod + camera geometry → identity integration → scene integration`
 
-Do not ask one unconstrained generation to simultaneously solve identity, body, clothing, difficult hand pose, complex prop geometry, scene perspective, and lighting when those layers can be isolated.
-
 ## Tool Capability Tiers
 ### Tier A — Identity-aware
-Explicit identity conditioning such as face embedding, FaceID/InstantID/PuLID/PhotoMaker-class conditioning, or a platform feature documented to preserve character identity. Use for high-confidence identity work.
+Explicit identity conditioning such as face embedding, FaceID/InstantID/PuLID/PhotoMaker-class conditioning, or a platform feature documented to preserve character identity.
 
 ### Tier B — Multi-reference image generation
-Accepts reference images but has no verified identity-specific conditioning. May produce a strong resemblance, but **must not be described as locked identity**. Use Identity Gate aggressively and expect retries.
+Accepts reference images but has no verified identity-specific conditioning. It may produce strong resemblance, but must not be described as guaranteed identity lock.
 
 ### Tier C — Prompt / ordinary generation
-No reliable identity conditioning. Use for scene design, pose prototypes, wardrobe exploration, stand-ins, and composition. Do not represent it as a production-grade identity lock.
+No reliable identity conditioning. Use for scene design, pose prototypes, wardrobe exploration, stand-ins, and composition.
 
-If the active tool is Tier B/C and repeated generations drift, STOP. More prompt emphasis is not a valid recovery strategy.
+Tier B/C drift should trigger the Identity Recovery Loop. Repeated failure should change strategy or escalate tool capability rather than repeat the same prompt indefinitely.
 
 ## Production Pipeline
 1. SOURCE INTAKE
@@ -120,23 +94,23 @@ If the active tool is Tier B/C and repeated generations drift, STOP. More prompt
 14. APPROVED CONTENT
 15. optional image-to-video / reference-to-video continuity
 
-Never skip directly from an unvalidated character sheet to complex production scenes when identity fidelity is important.
-
 ## Identity Test Grid
 Before production, prefer a simple neutral-background validation set: front, left 45°, right 45°, supported near-profiles, slight look down, slight look up, and medium shot. The purpose is to expose identity drift before scene complexity hides it.
 
-## Drift Recovery
-When identity drifts:
-1. STOP downstream generation.
-2. Mark failed outputs `REJECTED`.
-3. Remove them from all identity/reference inputs.
-4. Return to L0 SOURCE / latest approved IDENTITY MASTER.
-5. Reduce task complexity: neutral background, simpler pose, fewer props.
-6. Re-run Identity Gate.
-7. If Tier B/C repeatedly fails, report a tool-capability limitation instead of generating endless variants.
-8. Resume body/scene work only after identity passes.
+## Identity Recovery Loop
+Identity failure rejects the **candidate**, not the entire workflow.
 
-Never repair identity drift by recursively regenerating from the drifted result.
+1. Mark the failed candidate `REJECTED` and remove it from identity/reference inputs.
+2. Return first to the latest approved `IDENTITY MASTER`.
+3. Return to L0 SOURCE only if the approved master itself is missing, disputed, or invalid.
+4. Diagnose whether drift came from identity conditioning, angle, pose/prop complexity, scene complexity, or conflicting references.
+5. Change strategy: simplify the shot, isolate pose/prop, reduce conflicting references, or use a stronger identity-aware path.
+6. Generate a fresh candidate from the approved upstream anchor.
+7. Re-run Identity Gate.
+8. PASS → continue downstream. FAIL → remain in recovery mode within a bounded retry budget.
+9. If the retry budget is exhausted without a meaningful strategy change available, escalate the tool/path limitation to the user.
+
+Never repair drift by regenerating from an already-drifted image.
 
 ## Video Continuity
 For multi-shot video, preserve the same approved identity asset across shots. Where supported, use reference-to-video or an approved continuity frame, but never promote a drifted video frame into the identity master pool.
@@ -152,5 +126,3 @@ Bad output / identity drift: `workflows/improve-output.md`
 
 ## Asset Naming
 Examples: `SOURCE_001`, `IDENTITY_MASTER_V1_FRONT`, `IDENTITY_MASTER_V1_LEFT45`, `IDENTITY_MASTER_V1_RIGHT45`, `BODY_MASTER_V1_FRONT`, `POSE_CAMERA_MONOPOD_WALK_01`, `SCENE_DRILLING_SITE_01`, `CONTENT_CANDIDATE_001`, `CONTENT_APPROVED_001`, `CONTENT_REJECTED_001`.
-
-Avoid ambiguous lineage names such as `final2.png` or `new-final.png`.
