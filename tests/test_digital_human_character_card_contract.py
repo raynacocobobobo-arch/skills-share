@@ -21,7 +21,7 @@ class DigitalHumanCharacterCardContractTests(unittest.TestCase):
     def test_character_card_is_lightweight_staged_identity_skill(self):
         self.assertTrue(CARD_SKILL.exists())
         self.assertIn("name: hermes-digital-human-character-card", self.card)
-        self.assertIn("version: 1.3.0", self.card)
+        self.assertIn("version: 1.3.1", self.card)
         self.assertIn("STAGED MODE", self.card)
         self.assertIn("DIRECT MODE", self.card)
 
@@ -31,7 +31,14 @@ class DigitalHumanCharacterCardContractTests(unittest.TestCase):
         self.assertIn("是否继续生成全身三视图", self.card)
         self.assertIn("BODY_3VIEW_SHEET", self.card)
         self.assertIn("正面 / 侧面 / 背面", self.card)
-        self.assertIn("是否继续换衣服或生成内容图", self.card)
+
+    def test_body_stage_hands_off_to_explicit_wardrobe_or_content_choice(self):
+        self.assertIn("NEXT TURN GATE", self.card)
+        self.assertIn("要换衣服吗", self.card)
+        self.assertIn("上传服装参考图或描述穿搭", self.card)
+        self.assertIn("如果不换，也可以直接给环境、姿势或镜头要求", self.card)
+        self.assertIn("“下一步”不等于自动换装", self.card)
+        self.assertIn("不得自行决定穿搭并生成", self.card)
 
     def test_direct_mode_can_start_from_face_or_body_without_previous_steps(self):
         self.assertIn("只做面部三视图", self.card)
