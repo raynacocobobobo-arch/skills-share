@@ -415,7 +415,7 @@
     {
       "name": "hermes-digital-human-character-card",
       "description": "Use when the user wants to establish, review, or rebuild a reusable digital-human identity from real-person face/full-body references, especially for 人物卡、锁定人物、面部三视图、全身三视图 or identity setup before content production.",
-      "version": "1.3.0",
+      "version": "1.3.1",
       "category": "hermes-digital-human-character-card",
       "skill_dir": "hermes-digital-human-character-card",
       "skill_path": "plugins/hermes-skills/skills/hermes-digital-human-character-card/SKILL.md",
