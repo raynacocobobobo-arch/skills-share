@@ -1,6 +1,7 @@
 import unittest
 from pathlib import Path
 
+# Regression contract for the ChatGPT character-card aggregation failure.
 
 ROOT = Path(__file__).resolve().parents[1]
 CARD_DIR = ROOT / "plugins" / "hermes-skills" / "skills" / "hermes-digital-human-character-card"
