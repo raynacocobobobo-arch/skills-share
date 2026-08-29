@@ -157,9 +157,7 @@
       "references": [
         "references/xhs-pose-shot-library.md"
       ],
-      "missing_references": [
-        "references/xhs-pose-shot-library.md"
-      ]
+      "missing_references": []
     },
     {
       "name": "gdevelop5-click-adventure-director",
