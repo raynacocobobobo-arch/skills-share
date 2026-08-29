@@ -1,7 +1,7 @@
 ---
 name: hermes-digital-human-character-card
 description: Use when establishing or rebuilding a reusable digital-human character from real-person full-body photos, face close-ups, and partial or complete profile information, especially for 人物卡、数字人建模、人物三视图、面部三视图、锁定人物 or reusable master-asset requests.
-version: 1.1.1
+version: 1.2.0
 triggers:
   - 人物卡
   - 数字人人物卡
@@ -13,7 +13,7 @@ triggers:
   - character card
 ---
 
-# Hermes Digital Human Character Card V1.1
+# Hermes Digital Human Character Card V1.2
 
 ## Purpose
 Create the smallest useful reusable character package from real-person source evidence before wardrobe, environment, action, or batch content production.
@@ -27,6 +27,21 @@ The skill has exactly three core deliverables:
 3. `DH001_BODY_3VIEW_SHEET`
 
 Keep the workflow practical. Do not add extra deliverables, complex scoring systems, or unnecessary engineering unless the user explicitly asks.
+
+## Hard Execution Contract
+When Hermes routing resolves to this character-card skill, the operator/assistant must load this `SKILL.md` before any identity-bearing image operation.
+
+Required execution order:
+
+```text
+ROUTE → LOAD SKILL → RESOLVE SOURCE → PROFILE_CARD → FACE_3VIEW_SHEET → FACE QC → BODY_3VIEW_SHEET → BODY QC → DELIVERY
+```
+
+Rules:
+- Never jump directly from a Hermes character-card request to image generation.
+- Do not claim that the character-card skill was executed if this SKILL.md was not loaded in the current execution path.
+- The original uploaded images remain the visual authority throughout the run; conversation history does not replace SOURCE.
+- A later generated image is not automatically a better reference than the original SOURCE.
 
 ## Shorthand Invocation
 The user should not need to repeat the long character-card prompt every time.
@@ -197,6 +212,15 @@ Hard output isolation:
 - no biography/statistics table
 - no combined character-design poster
 
+#### Face Source Lock
+Each of FACE_FRONT, FACE_LEFT45, and FACE_RIGHT45 must be solved from original SOURCE FACE CLOSE-UP evidence.
+
+Do not generate a side/45-degree identity by treating a generated front view as the new identity source.
+
+Generated FACE panels are siblings, not parents. They may be displayed together as one sheet, but none of them gains upstream identity authority over another panel.
+
+If a requested angle is not directly photographed in SOURCE, infer only the view transformation conservatively while preserving identity from the strongest original face evidence. Do not solve missing-angle identity by chaining from a generated panel.
+
 ### 3. DH001_BODY_3VIEW_SHEET
 Generate one full-body three-view sheet containing exactly:
 - `BODY_FRONT`
@@ -219,6 +243,14 @@ Hard output isolation:
 - no FACE_3VIEW
 - no biography/statistics table
 - no combined character-design poster
+
+#### Body Source Lock
+For BODY_3VIEW generation:
+- original SOURCE FULL-BODY controls body geometry
+- original SOURCE FACE CLOSE-UP controls facial identity
+- PROFILE_CARD is supporting text only
+
+Do not use the generated FACE_3VIEW_SHEET as upstream identity authority for BODY_3VIEW_SHEET.
 
 Replace `DH001` with the active `character_id`.
 
@@ -260,6 +292,8 @@ Generate `DH001_FACE_3VIEW_SHEET` directly from original SOURCE FACE CLOSE-UP ev
 
 Do not derive one panel from another generated panel. The identity authority remains SOURCE.
 
+Before invoking an image tool, re-select/re-attach the strongest original face SOURCE available to the current runtime rather than relying on a previously generated image in the chat.
+
 ### Step 4 — INTERNAL FACE QC
 Compare the generated face sheet against SOURCE.
 
@@ -285,6 +319,8 @@ Generate `DH001_BODY_3VIEW_SHEET` directly from:
 
 Do not use a generated FACE sheet as upstream identity authority.
 
+Before invoking an image tool, re-select/re-attach the original full-body and face SOURCE required for the BODY sheet. Do not rely on the FACE sheet merely because it is the most recent character image.
+
 ### Step 6 — INTERNAL BODY QC
 Check:
 - height/build impression
@@ -308,6 +344,20 @@ DH001_BODY_3VIEW_SHEET
 ```
 
 Do not finish with image links alone. The final delivery must also include the PROFILE_CARD content.
+
+## Likeness Rejection Hard Stop
+A user statement such as `不像本人`, `不是这个人`, `脸跑了`, `人脸不对`, or an equivalent likeness rejection is authoritative QC feedback.
+
+On such feedback:
+1. mark the affected candidate `IDENTITY_FAIL`
+2. exclude the rejected candidate from all subsequent identity/reference inputs
+3. do not let it become SOURCE, a master, or an implicit chat-history reference
+4. restart from original SOURCE with a materially changed strategy
+5. re-run the relevant FACE or BODY QC before continuing
+
+The latest generated image is never preferred merely because it is recent in the chat.
+
+Do not repair identity by chaining from the wrong person. A rejected candidate may not become the parent of another character-card candidate.
 
 ## STAR TOPOLOGY
 Generated character-card assets do not generate each other.
