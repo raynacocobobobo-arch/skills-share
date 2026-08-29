@@ -137,7 +137,7 @@
     {
       "name": "hermes-creative-digital-human",
       "description": "Use when creating realistic Xiaohongshu-style digital-human photos, virtual creator content, outfit/pose variants, real-scene composites, or multi-image lifestyle sets where the same person's identity should remain consistent.",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "category": "hermes-creative-digital-human",
       "skill_dir": "hermes-creative-digital-human",
       "skill_path": "plugins/hermes-skills/skills/hermes-creative-digital-human/SKILL.md",
