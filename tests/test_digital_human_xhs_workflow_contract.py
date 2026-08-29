@@ -30,6 +30,7 @@ class DigitalHumanXhsWorkflowContractTests(unittest.TestCase):
             self.assertIn(module, self.skill)
         self.assertIn("按当前请求组合需要的模块", self.skill)
 
+    # Regression: after BODY three-view, bare "下一步" must not invent a wardrobe.
     def test_ambiguous_next_step_does_not_invent_outfit_or_content(self):
         self.assertIn("AMBIGUOUS NEXT-STEP GATE", self.skill)
         self.assertIn("下一步", self.skill)
