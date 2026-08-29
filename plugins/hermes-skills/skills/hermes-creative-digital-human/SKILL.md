@@ -1,352 +1,171 @@
 ---
 name: hermes-creative-digital-human
-description: Use when creating or maintaining a realistic digital human, virtual creator, AI blogger, outfit variant, pose variant, or real-scene composite where identity consistency across generations matters.
-version: 2.4.0
+description: Use when creating realistic Xiaohongshu-style digital-human photos, virtual creator content, outfit/pose variants, real-scene composites, or multi-image lifestyle sets where the same person's identity should remain consistent.
+version: 3.0.0
 triggers:
   - 数字人
   - 虚拟博主
   - AI博主
   - 真人数字人
   - 小红书数字人
+  - 小红书博主
+  - 换装
+  - 改姿势
   - 实景融合
+  - 环境合成
   - 人物一致性
-  - 锁脸
-  - 人脸跑偏
 ---
 
-# Hermes Creative Digital Human V2.4
+# Hermes Creative Digital Human V3
 
-## Purpose
-Build a reusable digital-human production asset with explicit identity control. V2.4 keeps the V2.3 sticky/session-safe workflow and adds a narrow face-repair recovery path so good composition, pose, prop, and scene work does not have to be discarded when only facial identity drifts.
+## Overview
+面向**小红书真人感内容生产**。目标不是维护一套复杂的人物数据库，而是用已有的人物素材快速生成像真人博主拍出来的照片。
 
-**Core principle: identity is an upstream asset, not a prompt adjective. A three-view sheet is not proof of facial identity.**
+核心模块：`IDENTITY / OUTFIT / POSE / SHOT / SCENE`。
 
-## V2 Asset Architecture
-| Layer | Asset | Responsibility | May define identity? |
-|---|---|---|---|
-| L0 SOURCE | Original user photos + factual data | Ground truth evidence | Yes |
-| L1 IDENTITY MASTER | Human-approved face identity set | WHO this person is | Yes |
-| L1 BODY MASTER | Human-approved body/proportion set | Body geometry | Body only |
-| L1 IDENTITY SUPPORT | Approved FACE_CROP_PACK | Close-view identity support | Supports approved identity only |
-| L2 APPEARANCE | Clothing, hair styling, PPE, accessories | Presentation | No |
-| L2 POSE / PROP | Pose, hands, equipment, camera, monopod, etc. | Action and prop geometry | No |
-| L2 SCENE | Environment, camera position, perspective, lighting | Scene | No |
-| L3 CONTENT | Final composites, lifestyle/social images | Publishable output | Never |
+**按当前请求组合需要的模块。可以从任意模块直接开始，不要求补跑前置步骤。**
 
-Only L0 SOURCE and explicitly approved L1 Identity Masters may be upstream identity anchors. `FACE_CROP_PACK` supports the approved master but never replaces its authority.
+## Two Modes
 
-## Identity Master Requirements
-Prefer original, high-quality, minimally stylized photos. Build a Face ID Set from the strongest available views: front, left 30–45°, right 30–45°, optional genuine profiles, neutral/mild expression, consistent age and recognizable facial structure.
+### STAGED MODE
+适合第一次建立人物：
 
-A contact sheet or three-view character sheet may be useful for review, but must not automatically become the identity source. Crop/route individual face views when possible so identity evidence is not diluted by clothing, scene, labels, or unrelated tasks.
+1. 用 `hermes-digital-human-character-card` 先做面部三视图。
+2. 用户确认后做全身三视图。
+3. 再进入换装、姿势、镜头、环境和成组内容。
 
-## FACE CROP PACK
-Maintain an optional approved `FACE_CROP_PACK` derived from SOURCE or approved Identity Master views when face identity is too small or diluted in full-body/scene references.
+每一步都允许停下、修改或跳转。
 
-Typical aliases:
+### DIRECT MODE
+用户已经给够当前任务需要的素材时，直接做当前任务。
 
-```text
-@DH001_FACE_FRONT_CLOSE
-@DH001_FACE_L45_CLOSE
-@DH001_FACE_R45_CLOSE
-```
+例子：
+- 人物面部图 + 人物全身图 + 环境照片 → **直接进入 SCENE**，把人物自然放进环境。
+- 人物图 + 服装参考 → 直接 `OUTFIT`。
+- 人物图 + 姿势参考/自然语言动作 → 直接 `POSE`。
+- 人物图 + 环境 + 穿搭 + 动作要求 → 直接生成最终内容图。
+- 已有可信人物图，只想换衣服或改姿势 → **无需重新建立人物卡**。
 
-Optional genuine profile crops may be added only when supported by real evidence.
+## IDENTITY
+原始人物照片优先：
+- 面部近照负责“是谁”
+- 全身照负责体型、比例和身高印象
+- 已确认的三视图可作为辅助参考
+- 生成图只作为辅助参考，不能静默取代原始人物照片
 
-Rules:
-- crops must preserve the same approved identity and age impression
-- use minimally stylized, high-quality close views
-- choose the crop whose view most closely matches the target head angle
-- every crop used in generation/repair is `IDENTITY ONLY | CRITICAL`
-- FACE_CROP_PACK is identity-support evidence, not a new independent person definition
-- FACE_CROP_PACK does not authorize promotion of a repaired/generated content image into upstream identity authority
+保持人物身份和体型比“变漂亮”更重要。
 
-## Identity Gate
-Before body variants, wardrobe, complex poses, props, or scene integration, identity must pass. Check face ratio, eye shape/spacing, brows, nose, mouth, jaw/chin, ears when visible, hairline, age impression, and overall recognizability.
+人物跑偏时重新挂回原始人物图，而不是拿跑偏结果继续生成。
 
-If the user says the person does not look like the reference, treat that candidate as **Identity Gate = FAIL**. Shared clothing, glasses, helmet, age, or ethnicity are not proof of identity.
+如果当前对话里已有用户原始人物图，优先继续使用；新会话如果没有这些图，就让用户重新上传关键身份素材，不靠长聊天历史猜脸。
 
-## Approved Reference Pool
-Every generated asset is `CANDIDATE`, `APPROVED`, or `REJECTED`. Only `APPROVED` assets may enter the reusable reference pool. `REJECTED` assets must never be reused as identity references.
+## OUTFIT
+支持：
+- 上传完整穿搭参考图
+- 上传单件衣服/鞋/包/帽子
+- 自然语言描述穿搭
+- 保留现有某些单品，只替换指定部分
 
-## Identity Anchor Card
-Maintain one Identity Anchor Card, **one per character**. It is a lightweight address card for approved identity assets; it is not another global manifest, workflow engine, or face model. **Do not create a global digital-human registry.**
+换装时只改用户要求的服装层，保持人物身份和体型、发型（除非要求修改）、动作和环境中不需要改变的部分。
 
-Minimum fields:
+## POSE
+支持姿势参考图，也支持自然语言：
+- 侧身回头
+- 边走边看镜头
+- 单手插兜
+- 拿咖啡
+- 对镜自拍
+- 坐在窗边看手机
+- 手拿包站立
+- 双手持相机拍摄
 
-```yaml
-character_id: DH001
-active_identity:
-  version: V1
-  state: ACTIVE
-references:
-  - tag: "@DH001_ID_V1_FRONT"
-    role: IDENTITY_ONLY
-    view: front
-    status: APPROVED
-  - tag: "@DH001_ID_V1_L45"
-    role: IDENTITY_ONLY
-    view: left_45
-    status: APPROVED
-  - tag: "@DH001_ID_V1_R45"
-    role: IDENTITY_ONLY
-    view: right_45
-    status: APPROVED
-```
+常用小红书姿势和镜头模板见 `references/xhs-pose-shot-library.md`。
 
-Tags are stable aliases, not image payloads. They make assets addressable and auditable, but a tag alone does not satisfy Explicit Master Re-attachment when the active tool requires the actual image input. The exact approved asset must still be selected/re-attached from the project, library, saved-reference system, or equivalent tool input.
+**不要求用户记编号**；编号只是内部快捷方式。用户说自然语言时，匹配最接近模板并根据场景调整。
 
-### Identity Version Lifecycle
-Approved identity masters are immutable. Never overwrite an approved master in place. If the authoritative face set changes, create a new version such as `V2`, set it `ACTIVE`, and mark the previous approved version `DEPRECATED`. Keep deprecated versions for traceability; never silently mutate their contents.
+改姿势只改变身体动作、手势、朝向和必要的构图，不应顺带重画成另一个人。
 
-### Reference Priority
-Use symbolic priority only: `CRITICAL / HIGH / NORMAL`.
+## SHOT
+SHOT 控制“怎么拍”，与 POSE 分开：
+- 3:4 全身穿搭
+- 半身近景
+- 人物偏左/偏右留环境
+- 低机位全身
+- 微俯拍坐姿
+- 前景遮挡抓拍
+- 镜面/玻璃反射
+- 手机随手拍感
 
-- IDENTITY = normally `CRITICAL`
-- BODY = normally `HIGH` when full-body geometry matters
-- WARDROBE / POSE / SCENE = normally `NORMAL` unless the shot requires stronger attention
+优先避免每张图都正中站立。小红书真人感来自镜头变化、非对称构图和轻微抓拍感，而不是复杂摆拍。
 
-Do not invent numeric reference weights unless the active tool exposes a real documented weight control.
+## SCENE
+真实环境照片优先作为空间依据。
 
-## ChatGPT Web Session Contract
-For long-running production, use **one project + multiple short chats + permanent master assets**. Project/chat context can carry goals, naming, status, and production notes, but **conversation history is not an identity source**.
+人物面部图 + 人物全身图 + 环境照片 可以直接合成，不需要先做人设卡或三视图。
 
-### Sticky Skill Binding
-Once a resolved digital-human task object is routed to this skill, keep the **active skill binding** on `hermes-creative-digital-human` for ordinary follow-up turns about the same character/project. The user does not need to repeat “Hermes” on every message.
+环境合成重点检查：
+- **透视**：人物与地平线、相机高度一致
+- **人物尺度**：大小符合空间和参照物
+- **接地**：脚底位置、接触阴影、地面关系自然
+- **光向**：主光方向与环境一致
+- **色温**：人物与环境白平衡接近
+- **景深**：人物清晰度和背景虚化符合镜头距离
+- **遮挡**：人物应被合理的前景/家具/栏杆遮挡时要成立
+- 反射、雨雪、雾气等环境效应按场景需要匹配
 
-Keep the binding while the follow-up is still about the **same digital-human task object**, including comments about likeness, clothing, scene, pose, camera, props, continuity, or another output from that character. Release or re-route only when the user explicitly ends or switches the workflow, the task object changes, or the request materially becomes a different primary task. A supporting skill may be added without silently dropping this skill when digital-human production remains the primary workflow.
+不要把真实环境重画成“AI 背景”风格；重点是让人物属于这个空间。
 
-### Digital Human Session State
-Maintain a lightweight state card in the active production chat/project context. **Do not create a global session-state registry.** This card records workflow position; it is not a second asset database.
+## Single Image Workflow
+收到请求后只做必要判断：
 
-Minimum shape:
+1. 找出当前可用的 IDENTITY 素材。
+2. 识别用户要求的 OUTFIT / POSE / SHOT / SCENE。
+3. 缺少决定性素材才询问；有足够素材就直接生成/编辑。
+4. 输出后重点检查人物是否还是同一个人，以及透视、动作、服装和场景是否自然。
 
-```yaml
-active_skill: hermes-creative-digital-human
-skill_version: 2.4.0
-character_id: DH001
-current_step: 3
-active_identity: V1
-identity_anchor: READY
-completed:
-  - SOURCE_INTAKE
-  - IDENTITY_MASTER
-pending:
-  - STANDARD_THREE_VIEW
-  - IDENTITY_VALIDATION
-next_allowed_action:
-  - build_standard_three_view
-deferred_requirements: []
-```
+当用户提供一张已经正确的人物图，只要求换服装、改姿势或局部调整时，优先使用编辑思路；动作变化过大或需要全新空间关系时再重新生成。
 
-`current_step` advances only when the required gate for the present step passes. A tangential request about a later step may be recorded as a **deferred requirement**, but it **must not advance `current_step`** or bypass an upstream gate. Example: a wardrobe preference mentioned during Identity Master work is retained for Step 5, but does not authorize wardrobe generation before identity validation.
+## Xiaohongshu Set Mode
+用户需要一组图时，默认规划 **4–6 张**，保持**同一套穿搭**和**同一环境**，通过**镜头变化**和**姿势变化**建立真实拍摄组图。
 
-### State Checkpoint
-Update the Digital Human Session State **after every state-changing action**: approval/rejection, master-version change, gate result, step completion, step transition, or a change to the next allowed action. Do not rewrite the card for casual discussion that changes no production state.
+典型 6 张结构：
+1. 环境建立 + 全身
+2. 行走/进入场景的抓拍
+3. 中景主图
+4. 坐姿或互动图
+5. 半身/近景氛围图
+6. 穿搭、包、鞋或场景细节图
 
-In a **new chat**, re-bootstrap the state from the approved Identity Anchor, explicit approved assets, and known gate results that are actually available. Do not assume invisible persistence from a previous chat; re-bootstrap instead of guessing from remembered conversation history.
+一组图不要求所有照片人物大小一致；真实内容应该有全身、中景、近景和环境占比变化。
 
-### Explicit Master Re-attachment
-Every new production chat and every identity-critical generation must resolve the character's ACTIVE Identity Anchor and explicitly re-attach the exact approved `IDENTITY_MASTER` asset. Re-attach `BODY_MASTER` as well when full-body geometry matters. A phrase such as “use the same person as before” or “refer to the person above” is not a substitute for the master asset.
-
-If the correct master is not actually present in the current task inputs, stop before generation and restore the approved master input rather than guessing from chat history or a tag alone.
-
-### Reference Role Mapping
-Every reference image must have one declared role. Identity authority must never be inferred from visual similarity alone.
-
-| Role | May control |
-|---|---|
-| `IDENTITY ONLY` | Face identity and age impression |
-| `BODY ONLY` | Body proportions and silhouette |
-| `WARDROBE ONLY` | Clothing, PPE, accessories, footwear |
-| `POSE ONLY` | Pose, hands, action, prop interaction |
-| `SCENE ONLY` | Environment, camera geometry, lighting, perspective |
-
-A non-identity reference cannot redefine the face.
-
-### Reference Map
-Before every identity-critical generation, number the active inputs so the model or operator does not have to infer which image controls which layer.
+## Prompt Composition
+内部生成指令按当前任务组合，而不是每次复制整套人物档案：
 
 ```text
-REF01 = @DH001_ID_V1_FRONT | IDENTITY ONLY | CRITICAL
-REF02 = @DH001_BODY_V1_FRONT | BODY ONLY | HIGH
-REF03 = @DH001_WARDROBE_RIG_01 | WARDROBE ONLY | NORMAL
-REF04 = @POSE_PHOTOGRAPHER_MONOPOD_03 | POSE ONLY | NORMAL
-REF05 = @SCENE_RIG_RAIN_02 | SCENE ONLY | NORMAL
+IDENTITY: 原始人物面部/全身参考
+OUTFIT: 当前穿搭或参考
+POSE: 当前动作
+SHOT: 当前镜头/构图
+SCENE: 当前环境
+REALISM: 透视、接地、光线、色温、景深、遮挡
 ```
 
-The tag is the stable address; the attached image is the actual visual evidence.
+没有用到的模块不要硬塞进提示词。
 
-During `FACE_REPAIR`, the matching approved FACE_CROP_PACK view may be added as another `IDENTITY ONLY | CRITICAL` input, while the ACTIVE approved Identity Master remains authoritative.
+## LIGHT RECOVERY
+复杂 recovery 不是默认流程。
 
-### Generation Preflight
-Before any identity-bearing generation or identity-bearing edit, check the active production state instead of executing immediately.
+当结果失败：
+1. 人脸不像 → **先回到原始人物图**，减少冲突参考后重做。
+2. 姿势不自然 → 简化动作或换更匹配的姿势模板。
+3. 环境不自然 → 优先修正人物尺度、透视、接地和光线。
+4. 三视图本身失败 → 回到 `hermes-digital-human-character-card` 的 `ATOMIC FALLBACK`。
 
-Required checks:
-- active skill binding is `hermes-creative-digital-human`
-- `character_id` is resolved
-- requested operation is allowed by `current_step` / `next_allowed_action`
-- every required upstream gate has PASS status
-- `active_identity` resolves to the ACTIVE approved Identity Anchor
-- required master images are actually attached to the current task
-- required BODY master is present when body geometry matters
-- Reference Map exists and every active reference has one declared role
+只有连续失败且原因明确时才升级策略，不建立额外全局状态机。
 
-If all required checks pass, state `PREFLIGHT PASS` and proceed.
-
-If any required check fails, state `PREFLIGHT BLOCKED`, identify the missing or failed prerequisite, update the session state if needed, and restore that prerequisite. **Do not execute an identity-bearing generation** while preflight is blocked.
-
-A non-identity stand-in/pose prototype may still be produced only when the current workflow step explicitly allows it; it must not be promoted into identity authority.
-
-## No Generation Chaining
-Forbidden: `SOURCE → generated A → generated B → generated C`
-
-Required star topology:
-`SOURCE / IDENTITY_MASTER → candidate A`
-`SOURCE / IDENTITY_MASTER → candidate B`
-`SOURCE / IDENTITY_MASTER → candidate C`
-
-Downstream content must not redefine upstream identity.
-
-An eligible `FACE_REPAIR` is not generation chaining: the failed candidate is used only as a composition carrier for a narrow edit, while identity still comes from the ACTIVE approved `IDENTITY_MASTER + FACE_CROP_PACK`. The repaired result remains downstream content.
-
-## Separate Identity From Appearance
-Three-view sheets primarily define height impression, body proportions, silhouette, clothing/PPE, and visible equipment. They are `APPEARANCE/BODY` references unless explicitly validated as identity masters. Do not claim a three-view sheet locks the face merely because it contains a face.
-
-## Pose Prototype Rule
-For complex actions or props, solve pose/prop geometry before final identity integration when practical.
-
-Example: `stand-in → correct walking pose + shoulder load + monopod + camera geometry → identity integration → scene integration`
-
-## Tool Capability Tiers
-### Tier A — Identity-aware
-Explicit identity conditioning such as face embedding, FaceID/InstantID/PuLID/PhotoMaker-class conditioning, or a platform feature documented to preserve character identity.
-
-### Tier B — Multi-reference image generation
-Accepts reference images but has no verified identity-specific conditioning. It may produce strong resemblance, but must not be described as guaranteed identity lock.
-
-### Tier C — Prompt / ordinary generation
-No reliable identity conditioning. Use for scene design, pose prototypes, wardrobe exploration, stand-ins, and composition.
-
-Tier B/C drift should trigger the Identity Recovery Loop. Repeated failure should change strategy or escalate tool capability rather than repeat the same prompt indefinitely.
-
-## Edit-first / Generate-second
-When an approved identity-bearing image already exists and the active tool supports reference-preserving edits, prefer an edit/transform path that preserves the approved person while changing only the requested layer. Use a fresh generation path when edit constraints cannot solve the required composition, pose, geometry, or scene change.
-
-Both paths still require Explicit Master Re-attachment and Generation Preflight. Edit-first is a production preference, not permission to chain from an unapproved or drifted image. Generate-second never weakens the Identity Gate.
-
-The one exception is the explicitly eligible `FACE_REPAIR` recovery operation: a rejected content candidate may be edited only as a base composition while approved upstream identity inputs control the repaired face. This exception never grants the candidate identity authority.
-
-## Final Image Triage
-After an identity-bearing candidate's usable shot layers are visible, classify exactly one result:
-
-- `APPROVED` — identity and the relevant composition/body/pose/prop/scene layers pass.
-- `FACE_REPAIR` — composition, body, pose, prop interaction, scene, and head geometry are worth preserving, while only localized facial identity/age impression needs correction.
-- `REGENERATE` — the failure is broader than the face-only layer or the image is structurally unsafe for local repair.
-
-This triage exists to avoid throwing away a strong shot merely because the face drifted, while also preventing a bad pose/head/scene candidate from being cosmetically patched.
-
-### Face Repair Eligibility
-Choose `FACE_REPAIR` only when:
-- composition and subject placement are already worth preserving
-- body proportions needed by the shot are acceptable
-- pose/anatomy are acceptable
-- prop/camera/monopod/tool geometry is acceptable
-- scene perspective/contact/major lighting are acceptable
-- head angle, head size, neck connection, and gross skull orientation are compatible with the intended identity
-- the remaining failure is localized to face identity, facial structure, or age impression
-
-If head angle, body, pose, prop, composition, scene geometry, or head/body relationship is wrong, choose `REGENERATE`.
-
-### FACE_REPAIR
-A face repair is a narrow identity-recovery edit, not a face-swap subsystem and not a new default production route.
-
-Required identity evidence:
-1. ACTIVE approved `IDENTITY_MASTER`
-2. matching approved `FACE_CROP_PACK` view(s)
-
-Use the current candidate only as a composition carrier. Preserve composition, body, pose, wardrobe, prop geometry, scene, and major lighting structure as far as the active tool supports. Correct only identity-relevant facial structure: face shape, eye shape/spacing, brows, nose, mouth, jaw/chin, visible hairline, and age impression.
-
-After repair:
-- run Identity Gate again
-- verify the preserved non-face layers did not regress
-- run Final Image Triage again
-
-A repaired output may become `CONTENT_APPROVED` after human approval, but it **must not automatically become** an Identity Master, `IDENTITY_MASTER`, Face Crop Pack source, or other upstream identity authority. Any new identity master requires the normal explicit master/version approval lifecycle.
-
-## Candidate Hard Stop
-If an identity-bearing candidate fails Identity Gate, that candidate **must not continue downstream** into wardrobe, scene polishing, action continuity, batch production, or future identity inputs. Mark it `REJECTED` for identity/reference reuse and enter the Identity Recovery Loop from the latest approved upstream master.
-
-If `Final Image Triage = FACE_REPAIR`, the rejected candidate may be retained only as a temporary composition carrier for the narrow repair operation. Its identity remains rejected.
-
-Candidate Hard Stop blocks contamination; it does not terminate the whole production workflow.
-
-## 8-Step Production Flow
-Use this as the user-facing production sequence. Internal gates and prototypes may add checks inside a step, but must not change the order or identity authority.
-
-1. SOURCE INTAKE — register original person references and factual data; assign stable `character_id`.
-2. IDENTITY MASTER — build and human-approve the authoritative face identity set; create/update the per-character Identity Anchor Card and optional FACE_CROP_PACK.
-3. STANDARD THREE-VIEW — build the standard front/side/back body/appearance asset from approved upstream identity and factual body evidence.
-4. IDENTITY VALIDATION — verify the same person across the master set and three-view output; reject drift before downstream production.
-5. WARDROBE — create approved clothing/PPE variants without redefining identity.
-6. ENVIRONMENT — integrate the approved person into real or designed scenes with perspective/light matching.
-7. ACTION — add pose, prop, camera, and interaction complexity while re-running Identity Gate when identity-bearing output changes.
-8. BATCH CONTENT — produce multiple approved outputs from the same ACTIVE anchor and explicit masters; never promote batch content into identity authority.
-
-## Detailed Production Pipeline
-1. SOURCE INTAKE
-2. IDENTITY MASTER Face ID Set
-3. FACE_CROP_PACK when useful
-4. IDENTITY TEST GRID
-5. IDENTITY GATE
-6. IDENTITY ANCHOR CARD
-7. BODY MASTER
-8. BODY GATE
-9. APPEARANCE / WARDROBE
-10. SESSION BOOTSTRAP + SESSION STATE + REFERENCE MAP
-11. GENERATION PREFLIGHT
-12. SHOT DESIGN
-13. POSE + PROP PROTOTYPE when complex
-14. IDENTITY INTEGRATION
-15. IDENTITY GATE again
-16. SCENE INTEGRATION
-17. FINAL IMAGE TRIAGE
-18. FACE_REPAIR when eligible, otherwise REGENERATE
-19. REALISM QC
-20. APPROVED CONTENT
-21. optional image-to-video / reference-to-video continuity
-
-## Identity Test Grid
-Before production, prefer a simple neutral-background validation set: front, left 45°, right 45°, supported near-profiles, slight look down, slight look up, and medium shot. The purpose is to expose identity drift before scene complexity hides it.
-
-## Identity Recovery Loop
-Identity failure rejects the **candidate as identity authority**, not the entire workflow.
-
-1. Mark the failed candidate `REJECTED` and remove it from identity/reference inputs.
-2. Run Final Image Triage.
-3. If eligible for FACE_REPAIR, keep the candidate only as a composition carrier; explicitly re-attach the ACTIVE approved `IDENTITY_MASTER + FACE_CROP_PACK` and perform a narrow repair.
-4. If `REGENERATE`, resolve the ACTIVE Identity Anchor Card and return to its latest approved `IDENTITY_MASTER`.
-5. Return to L0 SOURCE only if the approved master itself is missing, disputed, or invalid.
-6. Diagnose whether drift came from identity conditioning, angle, pose/prop complexity, scene complexity, or conflicting references.
-7. Change strategy: simplify the shot, isolate pose/prop, reduce conflicting references, switch FACE_CROP_PACK angle, or use a stronger identity-aware path.
-8. Explicitly re-attach the approved master and generate/edit a fresh candidate through the permitted recovery path.
-9. Re-run Identity Gate.
-10. PASS → continue downstream. FAIL → remain in recovery mode within a bounded retry budget.
-11. If the retry budget is exhausted without a meaningful strategy change available, escalate the tool/path limitation to the user.
-
-Never repair identity by allowing an already-drifted image to redefine who the person is.
-
-## Video Continuity
-For multi-shot video, preserve the same approved identity asset across shots. Where supported, use reference-to-video or an approved continuity frame, but never promote a drifted video frame into the identity master pool.
-
-## Workflow Routing
-New character: `workflows/create-character.md`
-
-Build reusable asset: `workflows/build-character-asset.md`
-
-Existing character / real-scene content: `workflows/generate-realistic-content.md`
-
-Bad output / identity drift: `workflows/improve-output.md`
-
-## Asset Naming
-Examples: `SOURCE_001`, `@DH001_ID_V1_FRONT`, `@DH001_ID_V1_L45`, `@DH001_ID_V1_R45`, `@DH001_FACE_FRONT_CLOSE`, `@DH001_FACE_L45_CLOSE`, `@DH001_FACE_R45_CLOSE`, `@DH001_BODY_V1_FRONT`, `@DH001_WARDROBE_RIG_01`, `@POSE_CAMERA_MONOPOD_WALK_01`, `@SCENE_DRILLING_SITE_01`, `CONTENT_CANDIDATE_001`, `CONTENT_APPROVED_001`, `CONTENT_REJECTED_001`.
+## Handoff Examples
+- “给这个人物换成这套衣服” → OUTFIT
+- “保持衣服，改成侧身回头” → POSE
+- “用这张咖啡馆照片，把人物放进去” → IDENTITY + SCENE
+- “给我做一组咖啡馆小红书照片” → IDENTITY + OUTFIT + POSE + SHOT + SCENE + Set Mode
+- “这个脸跑了” → LIGHT RECOVERY，重新以原始人物图为身份依据
