@@ -2,6 +2,7 @@ import unittest
 from pathlib import Path
 
 
+# V1.2 regression contract: routing, original-source locking, and identity-failure recovery.
 ROOT = Path(__file__).resolve().parents[1]
 CARD_DIR = ROOT / "plugins" / "hermes-skills" / "skills" / "hermes-digital-human-character-card"
 CARD_SKILL = CARD_DIR / "SKILL.md"
