@@ -188,7 +188,7 @@ Check:
 - visible hairline
 - age impression
 
-If the face is visibly wrong, use a bounded automatic retry with a materially changed strategy. Do not ask the user to say next during an ordinary retry.
+If the face is visibly wrong, use a bounded automatic retry with a materially changed strategy. During automatic retry, do not ask the user to say next.
 
 Default retry budget: up to 2 automatic strategy-changing retries for the face sheet.
 
