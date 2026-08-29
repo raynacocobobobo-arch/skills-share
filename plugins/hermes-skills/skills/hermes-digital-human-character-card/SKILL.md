@@ -1,404 +1,107 @@
 ---
 name: hermes-digital-human-character-card
-description: Use when establishing or rebuilding a reusable digital-human character from real-person full-body photos, face close-ups, and partial or complete factual profile information, especially for 人物卡、数字人建模、人物三视图、面部三视图、锁定人物 or reusable master-asset requests.
-version: 1.2.0
+description: Use when the user wants to establish, review, or rebuild a reusable digital-human identity from real-person face/full-body references, especially for 人物卡、锁定人物、面部三视图、全身三视图 or identity setup before content production.
+version: 1.3.0
 triggers:
   - 人物卡
   - 数字人人物卡
-  - 数字人建模
-  - 建立人物
   - 锁定人物
-  - 人物三视图
   - 面部三视图
+  - 全身三视图
+  - 人物三视图
   - character card
 ---
 
-# Hermes Digital Human Character Card V1.2
+# Hermes Digital Human Character Card V1.3
 
-## Purpose
-Create a small reusable upstream character package from real-person SOURCE evidence before wardrobe, environment, action, or batch content production.
+## Overview
+这是一个轻量身份建立 Skill，不是完整数字人生产系统。
 
-**Core rule: identity first, ATOMIC RENDER second, deterministic assembly last.**
+**原则：先解决“这个人是谁”，需要哪一步就做哪一步。**
 
-This version exists because ChatGPT Web and general image models tend to visually aggregate all visible character information into one poster. The workflow therefore separates image creation from sheet layout.
+`FACTUAL PROFILE` 可选，只记录用户明确提供或从 SOURCE 可安全观察的信息；它不是必交付项，也不应被做成海报。
 
-The skill has exactly three final deliverables:
+原始上传图是第一身份依据。任何 generated output 只能作为辅助参考，不得静默替代 SOURCE。
 
-1. `DH001_PROFILE_CARD` — text / structured information
-2. `DH001_FACE_3VIEW_SHEET` — deterministic assembly of three atomic face views
-3. `DH001_BODY_3VIEW_SHEET` — deterministic assembly of three atomic body views
+## STAGED MODE
+当用户只是说“路由到 Hermes 人物卡技能 / 锁定这个人物 / 做人物卡”，默认半自动分步：
 
-The image model must never create those three deliverables as one combined visual object.
+### Stage 1 — FACE_3VIEW_SHEET
+基于原始面部 SOURCE，生成一张简洁面部三视图：
 
-## Shorthand Invocation
-Treat phrases such as:
-- `路由到 Hermes 人物卡技能`
-- `用 Hermes 人物卡`
-- `建立人物卡`
-- `锁定这个人物`
-- `用 hermes-digital-human-character-card`
-- `做一个人物卡`
-- `数字人人物卡`
+`正脸 / 左45° / 右45°`
 
-as a request to use this skill in `FULL AUTO MODE`.
+目标：同一人物、同年龄感、自然轻表情、统一背景与光线，不添加资料表或全身内容。
 
-Default shorthand behavior:
-- original uploaded photos remain the sole `SOURCE` authority
-- identity consistency has priority over beautification
-- partial factual profile information is allowed
-- do not ask the user to repeat this contract when shorthand intent is clear
-- continue automatically through atomic renders, QC, deterministic assembly, and final delivery unless SOURCE is insufficient
+完成后停止并问：**“是否继续生成全身三视图？”**
 
-Minimum useful SOURCE:
-- at least one usable full-body or near-full-body image
-- at least one usable face or close-up image
+### Stage 2 — BODY_3VIEW_SHEET
+用户确认后，基于原始面部图 + 原始全身图生成：
 
-Missing age, weight, hairstyle, or similar profile fields must not block execution when sufficient visual SOURCE exists.
+`正面 / 侧面 / 背面`
 
-## Required Inputs
+目标：同一人物、相同身高/体型印象、中性站姿、头到脚完整、统一服装与背景。
+
+完成后停止并问：**“是否继续换衣服或生成内容图？”**
+
+如果继续，交给 `hermes-creative-digital-human` 处理换装、姿势、镜头、环境合成或小红书内容。
+
+## DIRECT MODE
+用户可以从任意身份步骤直接开始，不要求补跑前置步骤。
+
+典型直达：
+- `只做面部三视图` → 直接生成 FACE_3VIEW_SHEET
+- `只做全身三视图` → 面部 + 全身 SOURCE 足够时直接生成 BODY_3VIEW_SHEET
+- 已有可信身份素材，只想进入换装/环境/姿势 → 直接路由 `hermes-creative-digital-human`
+
+不要为了流程完整性强迫用户重新做人脸或人物卡。
+
+## SOURCE
+### SOURCE FACE
+优先使用用户原始面部近照；正面和左右 30–45°越完整越好。
 
 ### SOURCE FULL-BODY
-Original full-body or near-full-body photos used for body proportions, silhouette, visible posture, and height impression.
-
-Prefer front and side evidence when available. A genuine back view is useful but not mandatory. Unseen back details may be conservatively inferred for a generated back view, but must not be presented as observed fact.
-
-### SOURCE FACE CLOSE-UP
-Original clear face photos used as primary identity evidence. Prefer:
-- front
-- left 30–45°
-- right 30–45°
-- optional genuine profile views
-
-Use minimally stylized images with visible eyes, nose, mouth, jaw, and hairline when possible.
+用于身高印象、体型、肩胯关系和整体比例。没有真实背面时可以保守推断背面，但不能把推断写成观察事实。
 
 ### FACTUAL PROFILE
-User-provided information may include:
-- `name_or_id`
-- `sex`
-- `age`
-- `height`
-- `weight`
-- `hairstyle`
-- `hair_color`
-- `body_type`
-- `glasses`
-- visible marks or other continuity-critical settings
+年龄、身高、性别、体重、发型等均为可选。用户没有提供的精确信息不要虚构。
 
-All profile fields are optional.
+## NORMAL THREE-VIEW
+正常情况下，一次生成一张三视图 sheet：
+- FACE 任务只包含三张脸部视图
+- BODY 任务只包含三张全身视图
+- 不做 PROFILE + FACE + BODY 综合海报
 
-## Information Confidence
-Use four labels in `PROFILE_CARD`:
-- `USER_CONFIRMED` — explicitly provided by the user
-- `OBSERVED` — directly visible in SOURCE
-- `ESTIMATED` — conservative modeling-oriented estimate
-- `UNKNOWN` — insufficient evidence
+每个阶段只把当前阶段的任务交给图像生成器；不要在 FACE 阶段同时介绍 BODY、人物资料卡或未来内容生产。
 
-Rules:
-- user-confirmed facts override visual estimates
-- never present `ESTIMATED` as fact
-- do not infer sensitive traits such as ethnicity from appearance
-- do not invent exact weight, exact age, hidden measurements, biography, occupation, or personality facts
-- if evidence is weak, use `UNKNOWN`
+## QC
+FACE 重点检查：五官结构、脸型、发际线、年龄感、左右视角是否仍像同一个人。
 
-## PROFILE_CARD
-Build `DH001_PROFILE_CARD` internally from user facts plus visible morphology.
+BODY 重点检查：体型、身高印象、头身比、肩胯关系、正侧背方向和脸部身份。
 
-Suggested structure:
+用户说“脸跑了 / 不是这个人”时，回到原始 SOURCE 重做，不用跑偏的生成图继续套娃。
 
-```yaml
-character_id: DH001
-facts:
-  name_or_id: {value: null, source: UNKNOWN}
-  sex: {value: null, source: UNKNOWN}
-  age: {value: null, source: UNKNOWN}
-  height: {value: null, source: UNKNOWN}
-  weight: {value: null, source: UNKNOWN}
-body:
-  build:
-  shoulder_to_hip_relation:
-  torso_leg_relation:
-  visible_posture:
-face:
-  face_shape:
-  eye_shape_spacing:
-  brow_shape:
-  nose_structure:
-  mouth_lip_structure:
-  jaw_chin:
-  hairline:
-  hairstyle:
-  hair_color:
-  visible_skin_tone:
-identity_marks:
-  - only user-confirmed or visible continuity features
-uncertainty:
-  - unsupported or weakly supported details
-```
+## ATOMIC FALLBACK
+仅在三视图生成失败时启用；不是默认流程。
 
-`PROFILE_CARD is text-only`.
+适用情况：
+- 三视图被模型做成综合人物卡
+- 三个面孔明显不是同一个人
+- 某一视角结构严重错误，整张 sheet 无法使用
 
-Do not pass PROFILE_CARD into any image-generation job.
-
-Do not present the full PROFILE_CARD before the six atomic renders are complete. Build it internally, use only the minimum render-critical facts when needed, and present the full card during `FINAL DELIVERY`.
-
-Render-critical facts may include only user-confirmed facts that materially affect the requested visual asset, such as age impression, height impression, sex/presentation, glasses, or an explicitly required hairstyle. Do not pass biography-style profile text into visual generation.
-
-## ATOMIC RENDER
-Visual creation consists of six separate ATOMIC IMAGE JOBS:
-
-### Face atomic jobs
-1. `FACE_FRONT`
-2. `FACE_LEFT45`
-3. `FACE_RIGHT45`
-
-### Body atomic jobs
-4. `BODY_FRONT`
-5. `BODY_SIDE`
-6. `BODY_BACK`
-
-Hard execution rule: `one view per image-generation call`.
-
-Each atomic render must contain:
-- one person only
-- one requested camera/view orientation only
-- plain neutral background
-- simple even lighting
-- no text
-- no title
-- no labels
-- no grid
-- no extra panels
-- no biography
-- no statistics
-- no reference-image gallery
-- no character-design layout
-
-The image model must never be asked to generate a character card.
-The image model must never be asked to generate a face three-view sheet.
-The image model must never be asked to generate a body three-view sheet.
-The image model must never be asked to generate an infographic.
-
-### ChatGPT Web execution note
-ChatGPT Web image generation may infer intent from the surrounding conversation rather than from a fully isolated API prompt. Before every image-generation call, make the immediately active execution instruction about one atomic view only. Do not restate the total package, future views, PROFILE_CARD, or sheet layout immediately before the call.
-
-Do not ask the image model to add view labels. Labels belong to deterministic assembly.
-
-## Atomic View Targets
-
-### FACE_FRONT
-- head-and-shoulders
-- near-frontal camera
-- neutral or mild expression
-- preserve SOURCE face ratio, eyes, brows, nose, mouth, jaw/chin, hairline, and age impression
-
-### FACE_LEFT45
-- head-and-shoulders
-- approximately left 45°
-- same age and identity as SOURCE
-- preserve visible facial structure without beautification redesign
-
-### FACE_RIGHT45
-- head-and-shoulders
-- approximately right 45°
-- same age and identity as SOURCE
-- preserve visible facial structure without beautification redesign
-
-### BODY_FRONT
-- full body head-to-toe
-- neutral standing pose
-- front orientation
-- simple fitted neutral clothing or source-continuity workwear when identity/presentation requires it
-- preserve height/build impression from SOURCE and user-confirmed facts
-
-### BODY_SIDE
-- full body head-to-toe
-- neutral standing pose
-- close to true 90° side orientation
-- preserve body proportions and same-person identity from SOURCE
-
-### BODY_BACK
-- full body head-to-toe
-- neutral standing pose
-- close to true 180° back orientation
-- infer unseen details conservatively; do not present inferred back details as observed facts
-
-## ATOMIC VIEW QC
-After each atomic render, compare that single image against original SOURCE before rendering the next dependent deliverable stage.
-
-Face checks:
-- recognizability
-- face ratio
-- eye shape and spacing
-- brows
-- nose
-- mouth
-- jaw/chin
-- hairline
-- age impression
-- requested angle
-
-Body checks:
-- height/build impression
-- shoulder/hip relation
-- torso/leg relation
-- neutral pose
-- correct front/side/back orientation
-- same-person appearance
-
-If one atomic view fails, regenerate only that failed view from SOURCE.
-
-Do not regenerate or redesign the whole sheet.
-
-Do not use a failed atomic view as reference evidence for another view.
-
-Default automatic retry budget: up to 2 materially changed retries for the failed atomic view. If identity remains unreliable, stop and report the tool/SOURCE limitation instead of inventing a false master.
-
-## DETERMINISTIC SHEET ASSEMBLY
-After all three face atomic views pass QC, build `DH001_FACE_3VIEW_SHEET` using Python/PIL or an equivalent non-generative compositor.
-
-Assembly input:
+恢复方式：分别生成单视角，再用非生成式拼接组成 sheet：
 
 ```text
-FACE_FRONT + FACE_LEFT45 + FACE_RIGHT45
+FACE_FRONT + FACE_LEFT45 + FACE_RIGHT45 → FACE_3VIEW_SHEET
+BODY_FRONT + BODY_SIDE + BODY_BACK → BODY_3VIEW_SHEET
 ```
 
-Assembly rules:
-- three equal panels
-- order: FRONT | LEFT45 | RIGHT45
-- consistent canvas height and visual scale
-- neutral outer margin
-- optional simple labels applied by the compositor only
-- no biography or statistics
-- no decorative character-card design
+单视角仍直接回挂原始 SOURCE；不要让一个 generated output 生成下一个角度。
 
-After all three body atomic views pass QC, build `DH001_BODY_3VIEW_SHEET` using Python/PIL or an equivalent non-generative compositor.
-
-Assembly input:
-
-```text
-BODY_FRONT + BODY_SIDE + BODY_BACK
-```
-
-Assembly rules:
-- three equal panels
-- order: FRONT | SIDE | BACK
-- full body must remain head-to-toe in every panel
-- consistent canvas height and visual scale
-- neutral outer margin
-- optional simple labels applied by the compositor only
-- no biography or statistics
-
-Do not call image generation during sheet assembly.
-
-The compositor may crop, pad, resize, align, and label. It must not synthesize new facial features, body geometry, clothing, background content, or missing anatomy.
-
-## FULL AUTO MODE
-FULL AUTO means automatic orchestration, not visual aggregation.
-
-Required sequence:
-
-```text
-SOURCE INTAKE
-→ PROFILE BUILD (internal)
-→ 6 ATOMIC RENDERS
-→ ATOMIC VIEW QC / targeted retries
-→ 2 DETERMINISTIC ASSEMBLIES
-→ FINAL DELIVERY
-```
-
-No intermediate user reply is required during a normal successful run.
-
-The user may interrupt or reject any result at any time.
-
-## STAR TOPOLOGY
-Every atomic view is generated directly from original SOURCE evidence.
-
-Required pattern:
-
-```text
-SOURCE → FACE_FRONT
-SOURCE → FACE_LEFT45
-SOURCE → FACE_RIGHT45
-SOURCE → BODY_FRONT
-SOURCE → BODY_SIDE
-SOURCE → BODY_BACK
-```
-
-A generated atomic view must never become SOURCE.
-
-Forbidden:
-
-```text
-FACE_FRONT → FACE_LEFT45
-FACE_3VIEW_SHEET → BODY_FRONT
-BODY_FRONT → BODY_SIDE
-failed candidate → next candidate
-```
-
-The assembled sheets are downstream review assets. They do not create or redefine the six atomic views.
-
-## FINAL DELIVERY
-Present exactly these three final deliverables:
-
-```text
-DH001_PROFILE_CARD
-DH001_FACE_3VIEW_SHEET
-DH001_BODY_3VIEW_SHEET
-```
-
-Keep them separate:
-- PROFILE_CARD as text / structured content
-- FACE sheet as one assembled image file
-- BODY sheet as another assembled image file
-
-Do not create a fourth combined poster.
-
-## Approval and Master Promotion
-All generated atomic views and assembled sheets begin as `CANDIDATE`.
-
-After final human approval:
-- approved face atomic set + `DH001_FACE_3VIEW_SHEET` may be promoted to `IDENTITY_MASTER V1`
-- approved body atomic set + `DH001_BODY_3VIEW_SHEET` may be promoted to `BODY_MASTER V1`
-
-There is no automatic promotion; `no automatic promotion` is allowed.
-
-If the user rejects likeness, mark the affected atomic view(s) rejected and regenerate from SOURCE only.
-
-After final human approval:
-
-```yaml
-character_id: DH001
-status: CHARACTER_CARD_READY
-profile_card: DH001_PROFILE_CARD
-identity_master: IDENTITY_MASTER V1
-body_master: BODY_MASTER V1
-face_sheet: DH001_FACE_3VIEW_SHEET
-body_sheet: DH001_BODY_3VIEW_SHEET
-next_skill: hermes-creative-digital-human
-```
-
-## MANUAL REGRESSION CASE
-Use this real failure pattern when validating the skill in ChatGPT Web.
-
-Input:
-
-```text
-SOURCE: multiple person photos
-height: 180cm
-sex: 男
-age: 40岁
-instruction: 路由到 Hermes 人物卡技能
-```
-
-PASS:
-- six image-generation calls, each containing one requested view only
-- no image-generation call creates a multi-panel character sheet
-- FACE sheet is assembled non-generatively from three passed face views
-- BODY sheet is assembled non-generatively from three passed body views
-- PROFILE_CARD is delivered as text after the atomic renders
-
-FAIL / `ARCHITECTURE FAIL`:
-- any image-generation call produces `PROFILE + FACE + BODY` in one visual
-- any image-generation call invents biography/statistics because it was prompted as a character card
-- a combined failed poster is cropped and promoted as the formal FACE or BODY deliverable
-- one generated view becomes the identity source for another generated view
+## Handoff
+身份建立不是终点。用户要继续时，进入 `hermes-creative-digital-human`：
+- 换装
+- 改姿势
+- 环境合成
+- 特定角度内容图
+- 小红书成组内容
