@@ -1,7 +1,7 @@
 ---
 name: hermes-digital-human-character-card
 description: Use when the user wants to establish, review, or rebuild a reusable digital-human identity from real-person face/full-body references, especially for 人物卡、锁定人物、面部三视图、全身三视图 or identity setup before content production.
-version: 1.3.0
+version: 1.3.1
 triggers:
   - 人物卡
   - 数字人人物卡
@@ -12,7 +12,7 @@ triggers:
   - character card
 ---
 
-# Hermes Digital Human Character Card V1.3
+# Hermes Digital Human Character Card V1.3.1
 
 ## Overview
 这是一个轻量身份建立 Skill，不是完整数字人生产系统。
@@ -42,9 +42,26 @@ triggers:
 
 目标：同一人物、相同身高/体型印象、中性站姿、头到脚完整、统一服装与背景。
 
-完成后停止并问：**“是否继续换衣服或生成内容图？”**
+完成后必须停止，不自动进入下一次图像生成。固定询问：
+
+**“全身三视图已完成。下一步要换衣服吗？如果要换，请上传服装参考图或描述穿搭；如果不换，也可以直接给环境、姿势或镜头要求。”**
 
 如果继续，交给 `hermes-creative-digital-human` 处理换装、姿势、镜头、环境合成或小红书内容。
+
+## NEXT TURN GATE
+Stage 2 完成后，下一次生成必须有明确目标。
+
+**“下一步”不等于自动换装。** 用户只说“下一步 / 继续 / 然后呢”时，只询问选择，不生成图片。
+
+允许继续生成的条件：
+- 用户上传服装参考图；或
+- 用户明确描述穿搭；或
+- 用户明确授权“你来搭 / 随便穿 / 你决定服装”；或
+- 用户明确要求环境、姿势、镜头或其他内容任务，并且该任务不需要改变现有服装。
+
+用户说“换衣服”但没有提供服装目标时，先问服装参考图或穿搭描述，**不得自行决定穿搭并生成**。
+
+用户直接给环境/姿势/镜头而未要求换装时，默认保留当前服装，不擅自改衣服。
 
 ## DIRECT MODE
 用户可以从任意身份步骤直接开始，不要求补跑前置步骤。
