@@ -1,7 +1,7 @@
 ---
 name: hermes-digital-human-character-card
 description: Use when establishing or rebuilding a reusable digital-human character from real-person full-body photos, face close-ups, and partial or complete profile information, especially for 人物卡、数字人建模、人物三视图、面部三视图、锁定人物 or reusable master-asset requests.
-version: 1.1.0
+version: 1.1.1
 triggers:
   - 人物卡
   - 数字人人物卡
@@ -27,6 +27,41 @@ The skill has exactly three core deliverables:
 3. `DH001_BODY_3VIEW_SHEET`
 
 Keep the workflow practical. Do not add extra deliverables, complex scoring systems, or unnecessary engineering unless the user explicitly asks.
+
+## Shorthand Invocation
+The user should not need to repeat the long character-card prompt every time.
+
+Treat phrases such as:
+- `路由到 Hermes 人物卡技能`
+- `用 Hermes 人物卡`
+- `建立人物卡`
+- `锁定这个人物`
+- `用 hermes-digital-human-character-card`
+- `做一个人物卡`
+- `数字人人物卡`
+
+as a request to use this skill in `FULL AUTO MODE` and produce exactly:
+
+1. `PROFILE_CARD`
+2. `FACE_3VIEW_SHEET`
+3. `BODY_3VIEW_SHEET`
+
+Default shorthand behavior:
+- identity consistency is the first priority
+- original uploaded photos remain the sole `SOURCE` authority
+- partial factual profile information is allowed
+- missing useful information may be supplemented as `OBSERVED`, `ESTIMATED`, or `UNKNOWN`
+- keep `USER_CONFIRMED / OBSERVED / ESTIMATED / UNKNOWN` distinct
+- keep the three deliverables separate
+- never combine PROFILE + FACE + BODY into one poster
+- generate FACE and BODY directly from original SOURCE, not from prior generated outputs
+- do not ask the user to repeat this contract if the shorthand intent is clear
+
+Minimum source requirement:
+- at least one usable full-body or near-full-body image
+- at least one usable face or close-up image
+
+Only ask for more input when one of those minimum source requirements is missing or the SOURCE is too weak to preserve identity reliably. Missing age, weight, hairstyle, or similar profile fields must not block normal execution.
 
 ## Required Inputs
 The user may provide as much or as little factual information as they know. Do not block normal execution just because some profile fields are missing.
