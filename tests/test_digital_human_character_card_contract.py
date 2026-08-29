@@ -16,7 +16,6 @@ class DigitalHumanCharacterCardContractTests(unittest.TestCase):
         self.assertTrue(CARD_SKILL.exists(), "character-card skill must exist")
         self.assertIn("name: hermes-digital-human-character-card", self.card)
         self.assertIn("version: 1.0.0", self.card)
-        self.assertIn("CHARACTER_CARD_READY", self.card)
 
     def test_inputs_are_source_full_body_close_face_and_factual_profile(self):
         self.assertIn("SOURCE FULL-BODY", self.card)
@@ -26,40 +25,48 @@ class DigitalHumanCharacterCardContractTests(unittest.TestCase):
         self.assertIn("height", self.card)
         self.assertIn("weight", self.card)
 
-    def test_output_is_one_quant_profile_and_exactly_six_standard_assets(self):
-        self.assertIn("QUANTITATIVE PROFILE CARD", self.card)
-        for asset in [
-            "BODY_FRONT",
-            "BODY_SIDE",
-            "BODY_BACK",
-            "FACE_FRONT",
-            "FACE_LEFT45",
-            "FACE_RIGHT45",
-        ]:
-            self.assertIn(asset, self.card)
-        self.assertIn("exactly six standard image assets", self.card)
+    def test_output_is_exactly_three_deliverables(self):
+        self.assertIn("exactly three deliverables", self.card)
+        self.assertIn("DH001_PROFILE_CARD", self.card)
+        self.assertIn("DH001_FACE_3VIEW_SHEET", self.card)
+        self.assertIn("DH001_BODY_3VIEW_SHEET", self.card)
+        self.assertNotIn("exactly six standard image assets", self.card)
 
-    def test_face_set_is_three_identity_useful_views_not_a_back_of_face(self):
+    def test_face_sheet_contains_three_identity_useful_views(self):
         self.assertIn("FACE_FRONT", self.card)
         self.assertIn("FACE_LEFT45", self.card)
         self.assertIn("FACE_RIGHT45", self.card)
+        self.assertIn("one face three-view sheet", self.card)
         self.assertIn("Do not substitute a face-back view", self.card)
 
-    def test_identity_lock_happens_before_standard_asset_generation(self):
-        self.assertIn("IDENTITY LOCK", self.card)
-        self.assertIn("Identity Lock = APPROVED", self.card)
-        self.assertIn("Do not generate the six standard assets before Identity Lock is approved", self.card)
+    def test_body_sheet_contains_front_side_back(self):
+        self.assertIn("BODY_FRONT", self.card)
+        self.assertIn("BODY_SIDE", self.card)
+        self.assertIn("BODY_BACK", self.card)
+        self.assertIn("one full-body three-view sheet", self.card)
 
-    def test_each_standard_view_uses_star_topology_not_generation_chaining(self):
+    def test_full_auto_mode_requires_no_intermediate_reply(self):
+        self.assertIn("FULL AUTO MODE", self.card)
+        self.assertIn("No intermediate user reply is required", self.card)
+        self.assertIn("PROFILE_CARD → FACE_3VIEW_SHEET → BODY_3VIEW_SHEET", self.card)
+
+    def test_internal_identity_qc_retries_without_user_prompt(self):
+        self.assertIn("INTERNAL IDENTITY QC", self.card)
+        self.assertIn("bounded automatic retry", self.card)
+        self.assertIn("do not ask the user to say next", self.card)
+        self.assertIn("stop only when SOURCE is insufficient", self.card)
+
+    def test_two_sheets_are_generated_from_source_not_from_each_other(self):
         self.assertIn("STAR TOPOLOGY", self.card)
-        self.assertIn("Never use BODY_FRONT to generate BODY_SIDE", self.card)
-        self.assertIn("Never use FACE_FRONT to generate FACE_LEFT45", self.card)
+        self.assertIn("SOURCE → FACE_3VIEW_SHEET", self.card)
+        self.assertIn("SOURCE → BODY_3VIEW_SHEET", self.card)
+        self.assertIn("Never use FACE_3VIEW_SHEET to generate BODY_3VIEW_SHEET", self.card)
         self.assertIn("generated candidate cannot become SOURCE", self.card)
 
-    def test_approved_face_and_body_sets_map_cleanly_to_downstream_masters(self):
+    def test_final_approval_can_promote_validated_sheets_to_masters(self):
         self.assertIn("IDENTITY_MASTER V1", self.card)
         self.assertIn("BODY_MASTER V1", self.card)
-        self.assertIn("explicit human approval", self.card)
+        self.assertIn("final human approval", self.card)
         self.assertIn("no automatic promotion", self.card)
 
     def test_scope_stops_before_wardrobe_scene_action_and_batch_content(self):
@@ -71,11 +78,6 @@ class DigitalHumanCharacterCardContractTests(unittest.TestCase):
         ]:
             self.assertIn(phrase, self.card)
         self.assertIn("hand off to hermes-creative-digital-human", self.card)
-
-    def test_character_card_handoff_is_explicit_but_does_not_rewrite_production_skill(self):
-        self.assertIn("hermes-creative-digital-human", self.card)
-        self.assertIn("CHARACTER_CARD_READY", self.card)
-        self.assertIn("resume production", self.card)
 
 
 if __name__ == "__main__":
