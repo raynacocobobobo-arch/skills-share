@@ -15,7 +15,7 @@ class DigitalHumanXhsWorkflowContractTests(unittest.TestCase):
 
     def test_skill_is_xhs_content_production_v3(self):
         self.assertTrue(SKILL.exists())
-        self.assertIn("version: 3.0.0", self.skill)
+        self.assertIn("version: 3.0.1", self.skill)
         self.assertIn("小红书", self.skill)
         self.assertIn("真人感内容生产", self.skill)
 
@@ -29,6 +29,14 @@ class DigitalHumanXhsWorkflowContractTests(unittest.TestCase):
         for module in ["IDENTITY", "OUTFIT", "POSE", "SHOT", "SCENE"]:
             self.assertIn(module, self.skill)
         self.assertIn("按当前请求组合需要的模块", self.skill)
+
+    def test_ambiguous_next_step_does_not_invent_outfit_or_content(self):
+        self.assertIn("AMBIGUOUS NEXT-STEP GATE", self.skill)
+        self.assertIn("下一步", self.skill)
+        self.assertIn("不得自行选择 OUTFIT", self.skill)
+        self.assertIn("不得直接生成内容图", self.skill)
+        self.assertIn("服装参考图或穿搭描述", self.skill)
+        self.assertIn("环境 / 姿势 / 镜头", self.skill)
 
     def test_direct_scene_composite_accepts_face_body_and_environment(self):
         self.assertIn("人物面部图 + 人物全身图 + 环境照片", self.skill)
