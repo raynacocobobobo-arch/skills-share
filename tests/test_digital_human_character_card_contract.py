@@ -5,21 +5,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CARD_DIR = ROOT / "plugins" / "hermes-skills" / "skills" / "hermes-digital-human-character-card"
 CARD_SKILL = CARD_DIR / "SKILL.md"
-PRODUCTION_SKILL = (
-    ROOT
-    / "plugins"
-    / "hermes-skills"
-    / "skills"
-    / "hermes-creative-digital-human"
-    / "SKILL.md"
-)
 
 
 class DigitalHumanCharacterCardContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.card = CARD_SKILL.read_text(encoding="utf-8") if CARD_SKILL.exists() else ""
-        cls.production = PRODUCTION_SKILL.read_text(encoding="utf-8")
 
     def test_character_card_is_a_separate_upstream_skill(self):
         self.assertTrue(CARD_SKILL.exists(), "character-card skill must exist")
@@ -81,10 +72,10 @@ class DigitalHumanCharacterCardContractTests(unittest.TestCase):
             self.assertIn(phrase, self.card)
         self.assertIn("hand off to hermes-creative-digital-human", self.card)
 
-    def test_existing_production_skill_delegates_missing_character_card_upstream(self):
-        self.assertIn("hermes-digital-human-character-card", self.production)
-        self.assertIn("CHARACTER_CARD_READY", self.production)
-        self.assertIn("resume production", self.production)
+    def test_character_card_handoff_is_explicit_but_does_not_rewrite_production_skill(self):
+        self.assertIn("hermes-creative-digital-human", self.card)
+        self.assertIn("CHARACTER_CARD_READY", self.card)
+        self.assertIn("resume production", self.card)
 
 
 if __name__ == "__main__":
