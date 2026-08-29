@@ -16,12 +16,16 @@ triggers:
 # Hermes Digital Human Character Card V1
 
 ## Purpose
-Turn real-person source evidence into a small, reusable upstream character package before wardrobe, environment, action, or content production.
+Create the smallest useful reusable character package from real-person source evidence before wardrobe, environment, action, or content production.
 
-**Core rule: establish who the person is first, then generate six separate standard assets. Identity accuracy is more important than beautification.**
+**Core rule: preserve identity first. The character card is a compact source-derived asset, not a beauty redesign.**
 
 ## Scope
-This skill starts from original person evidence and ends at `CHARACTER_CARD_READY`.
+This skill starts from original person evidence and produces exactly three deliverables:
+
+1. `DH001_PROFILE_CARD`
+2. `DH001_FACE_3VIEW_SHEET`
+3. `DH001_BODY_3VIEW_SHEET`
 
 It does not perform:
 - wardrobe production
@@ -29,15 +33,15 @@ It does not perform:
 - action production
 - batch content production
 
-After the card is ready, hand off to hermes-creative-digital-human and resume production there.
+After final approval, hand off to hermes-creative-digital-human and resume production there.
 
 ## Required Inputs
-Register inputs by role. Do not let a visually similar generated image silently become source evidence.
+Classify original inputs by role.
 
 ### SOURCE FULL-BODY
-Original full-body or near-full-body photos used for height impression, body proportions, silhouette, posture, and visible physical geometry.
+Original full-body or near-full-body photos used for height impression, body proportions, silhouette, posture, and visible body geometry.
 
-Prefer front and side evidence when available. A genuine back view is useful but not mandatory; unseen back details must be treated as inferred rather than factual.
+Prefer front and side evidence when available. A genuine back view is useful but not mandatory; unseen details must remain inferred rather than factual.
 
 ### SOURCE FACE CLOSE-UP
 Original high-quality face photos used for identity. Prefer:
@@ -49,41 +53,20 @@ Original high-quality face photos used for identity. Prefer:
 Use minimally stylized images with visible eyes, nose, mouth, jaw, hairline, and age impression.
 
 ### FACTUAL PROFILE
-User-provided facts and character settings. Record facts separately from visual observations.
+User-provided facts and settings. Record facts separately from visual observations.
 
 Minimum useful fields when known:
 - `age`
 - `height`
 - `weight`
-- sex/gender presentation when explicitly provided and relevant to the requested asset
-- hairstyle or other continuity-critical settings explicitly provided by the user
+- explicitly provided hairstyle or other continuity-critical settings
 
-Do not invent missing facts. Do not infer ethnicity, health status, personality, or other sensitive traits from appearance.
+Do not invent missing facts. Do not infer sensitive traits from appearance.
 
 ## Output Contract
-Produce:
 
-1. one `QUANTITATIVE PROFILE CARD`
-2. exactly six standard image assets
-
-The six images are separate outputs, not one combined sheet:
-
-### Face Standard Set
-- `DH001_FACE_FRONT`
-- `DH001_FACE_LEFT45`
-- `DH001_FACE_RIGHT45`
-
-Do not substitute a face-back view for an identity-useful angle. A back-of-head image may be created later when a project specifically needs hairstyle continuity, but it is not part of this six-image V1 card.
-
-### Body Standard Set
-- `DH001_BODY_FRONT`
-- `DH001_BODY_SIDE`
-- `DH001_BODY_BACK`
-
-Replace `DH001` with the active `character_id`.
-
-## QUANTITATIVE PROFILE CARD
-Create a concise character description that can be checked against the images. Prefer reproducible observations over decorative prose.
+### 1. DH001_PROFILE_CARD
+Create a concise quantitative profile card from user facts plus visible morphology.
 
 Suggested fields:
 
@@ -107,153 +90,177 @@ face:
   jaw_chin:
   hairline:
   hairstyle:
-  skin_tone_visible:
+  visible_skin_tone:
 identity_marks:
   - only visible or user-provided continuity features
 uncertainty:
   - anything not supported by SOURCE
 ```
 
-Do not invent fake millimeter precision or numeric face weights. If a measurement is not known, describe the visible proportion or mark it unknown.
+Do not invent fake millimeter precision, numeric face weights, or unsupported measurements.
+
+### 2. DH001_FACE_3VIEW_SHEET
+Generate one face three-view sheet containing exactly:
+- `FACE_FRONT`
+- `FACE_LEFT45`
+- `FACE_RIGHT45`
+
+Do not substitute a face-back view. A back-of-head reference is optional later, but is not part of this V1 character card.
+
+Sheet target:
+- same person across all three panels
+- same age impression
+- neutral or mild expression
+- plain neutral background
+- even soft lighting
+- minimal beautification or stylization
+- consistent crop, scale, and camera feel
+- clearly visible hairline and facial structure
+- no decorative layout that reduces useful face size
+
+### 3. DH001_BODY_3VIEW_SHEET
+Generate one full-body three-view sheet containing exactly:
+- `BODY_FRONT`
+- `BODY_SIDE`
+- `BODY_BACK`
+
+Sheet target:
+- full body visible head-to-toe
+- same height/build impression across all panels
+- neutral standing pose
+- simple fitted neutral clothing that does not redefine body shape
+- consistent camera height, focal-length feel, scale, background, and lighting
+- side view close to true 90°
+- back view close to true 180°
+
+Replace `DH001` with the active `character_id`.
+
+## FULL AUTO MODE
+A normal character-card request runs continuously after the user supplies sufficient SOURCE and factual profile information.
+
+No intermediate user reply is required.
+
+Default sequence:
+
+```text
+PROFILE_CARD → FACE_3VIEW_SHEET → BODY_3VIEW_SHEET
+```
+
+Do not ask the user to say next between these three deliverables.
+
+The user may still interrupt, reject, or revise any result at any time.
 
 ## Workflow
 
 ### Step 1 — SOURCE INTAKE
 1. Assign or confirm `character_id`.
-2. Classify every original input as `SOURCE FULL-BODY`, `SOURCE FACE CLOSE-UP`, or `FACTUAL PROFILE`.
-3. Identify the strongest source face views and strongest body evidence.
-4. If the supplied evidence is too weak to recognize the person reliably, stop and ask for better source photos instead of guessing.
+2. Classify original images as `SOURCE FULL-BODY` or `SOURCE FACE CLOSE-UP`.
+3. Record `FACTUAL PROFILE` separately.
+4. Identify the strongest identity and body evidence.
+5. If SOURCE is too weak to identify the person reliably, stop rather than guess.
 
-### Step 2 — PROFILE EXTRACTION
-Build the `QUANTITATIVE PROFILE CARD` from user facts plus visible morphology.
+### Step 2 — PROFILE CARD
+Create `DH001_PROFILE_CARD`.
 
 Separate:
 - confirmed facts
-- visual observations
-- uncertain/inferred details
+- visible observations
+- uncertainty
 
-The profile card guides consistency but never overrides actual SOURCE images.
+The profile card supports consistency but never overrides SOURCE images.
 
-### Step 3 — IDENTITY LOCK
-Create an identity evidence set from the strongest original `SOURCE FACE CLOSE-UP` images. This is a source-selection step, not a generated new face.
+### Step 3 — FACE THREE-VIEW SHEET
+Generate `DH001_FACE_3VIEW_SHEET` directly from original SOURCE FACE CLOSE-UP evidence.
 
-Ask the user to confirm that the selected evidence represents the intended person. Record:
+Do not derive one panel from another generated panel. Treat the sheet as one controlled multi-view output whose identity authority still comes from SOURCE.
 
-`Identity Lock = APPROVED`
+### Step 4 — INTERNAL IDENTITY QC
+Compare the generated face sheet against SOURCE before continuing.
 
-or
+Check:
+- overall recognizability
+- face ratio
+- eye shape and spacing
+- brows
+- nose
+- mouth
+- jaw/chin
+- visible hairline
+- age impression
 
-`Identity Lock = REJECTED`
+If the face is visibly wrong, use a bounded automatic retry with a materially changed strategy. Do not ask the user to say next during an ordinary retry.
 
-**Do not generate the six standard assets before Identity Lock is approved.**
+Default retry budget: up to 2 automatic strategy-changing retries for the face sheet.
 
-If rejected, return to SOURCE selection or request better source images.
+If identity remains unreliable after the retry budget, stop only when SOURCE is insufficient or the active image tool cannot preserve identity reliably enough. State the limitation instead of silently producing a false master.
 
-### Step 4 — FACE STANDARD SET
-Generate each face view independently from approved SOURCE identity evidence:
+### Step 5 — BODY THREE-VIEW SHEET
+Generate `DH001_BODY_3VIEW_SHEET` from:
+- original SOURCE FULL-BODY evidence for body geometry
+- original SOURCE FACE CLOSE-UP evidence for identity
+- `DH001_PROFILE_CARD` only as supporting text
 
-1. `FACE_FRONT`
-2. `FACE_LEFT45`
-3. `FACE_RIGHT45`
+The face sheet is not required as upstream identity authority.
 
-Standardization target:
-- same person and age impression
-- neutral or very mild expression
-- plain neutral background
-- simple even lighting
-- minimal beautification or stylization
-- consistent crop and camera feel
-- hairline and facial structure clearly visible
+### Step 6 — INTERNAL BODY QC
+Check:
+- height/build impression
+- shoulder/hip relation
+- torso/leg relation
+- neutral pose
+- front/side/back orientation
+- same-person appearance
 
-Review each view against SOURCE. If the user says “不像”“不是这个人”“脸跑了”, mark that candidate `REJECTED` and regenerate from the approved SOURCE evidence, not from the failed generated view.
+A visibly wrong body sheet may receive up to 2 automatic strategy-changing retries from SOURCE.
 
-After all three face views receive explicit human approval, the approved set may be recorded as `IDENTITY_MASTER V1`.
+### Step 7 — PRESENT CHARACTER CARD
+Present all three deliverables together as the character-card package:
 
-There is **no automatic promotion** from generated face candidate to identity master.
+```text
+DH001_PROFILE_CARD
+DH001_FACE_3VIEW_SHEET
+DH001_BODY_3VIEW_SHEET
+```
 
-### Step 5 — BODY STANDARD SET
-After `IDENTITY_MASTER V1` is approved, generate each body view independently using:
-- original `SOURCE FULL-BODY` evidence for body geometry
-- approved identity evidence / `IDENTITY_MASTER V1` for identity continuity
-- the quantitative profile only as supporting description
-
-Generate:
-1. `BODY_FRONT`
-2. `BODY_SIDE`
-3. `BODY_BACK`
-
-Standardization target:
-- full body visible head-to-toe
-- same height/build impression across all views
-- neutral standing pose
-- simple fitted neutral clothing that does not redefine body shape
-- consistent camera height, focal-length feel, scale, background, and lighting
-- side view close to true 90°; back view close to true 180°
-
-After all three body views receive explicit human approval, record the set as `BODY_MASTER V1`.
-
-There is **no automatic promotion** from generated body candidate to body master.
-
-### Step 6 — CHARACTER CARD APPROVAL
-Set `CHARACTER_CARD_READY` only when all are true:
-- Identity Lock = APPROVED
-- Quantitative Profile Card reviewed
-- FACE_FRONT = APPROVED
-- FACE_LEFT45 = APPROVED
-- FACE_RIGHT45 = APPROVED
-- BODY_FRONT = APPROVED
-- BODY_SIDE = APPROVED
-- BODY_BACK = APPROVED
-- `IDENTITY_MASTER V1` resolved
-- `BODY_MASTER V1` resolved
-
-Then hand off to `hermes-creative-digital-human` and resume production for wardrobe, environment, action, or batch content.
+No mid-process confirmation is required. The user can review the completed package once all three are available.
 
 ## STAR TOPOLOGY
-Every standard image is generated from approved upstream evidence, never from another generated standard view.
+Generated character-card assets do not generate each other.
 
 Required pattern:
 
 ```text
-SOURCE + approved identity evidence → FACE_FRONT
-SOURCE + approved identity evidence → FACE_LEFT45
-SOURCE + approved identity evidence → FACE_RIGHT45
-
-SOURCE + IDENTITY_MASTER V1 → BODY_FRONT
-SOURCE + IDENTITY_MASTER V1 → BODY_SIDE
-SOURCE + IDENTITY_MASTER V1 → BODY_BACK
+SOURCE → PROFILE_CARD
+SOURCE → FACE_3VIEW_SHEET
+SOURCE → BODY_3VIEW_SHEET
 ```
 
-Never use BODY_FRONT to generate BODY_SIDE.
-Never use FACE_FRONT to generate FACE_LEFT45.
+Never use FACE_3VIEW_SHEET to generate BODY_3VIEW_SHEET.
 
-A generated candidate cannot become SOURCE. Failed or rejected candidates must not be reused as identity evidence.
+A generated candidate cannot become SOURCE.
 
-## Approval Rules
-- SOURCE is ground-truth evidence.
-- A generated image begins as `CANDIDATE`.
-- User rejection means `REJECTED`; do not reuse it as a reference.
-- `IDENTITY_MASTER V1` requires explicit human approval of the face standard set.
-- `BODY_MASTER V1` requires explicit human approval of the body standard set.
-- No generated output gains upstream authority through visual similarity alone.
-- A contact sheet may be used for review, but it does not replace the six separate approved assets.
+If an output is rejected, regenerate from SOURCE rather than from the rejected output.
 
-## Completion Record
-Use a compact handoff card:
+## Approval and Master Promotion
+Every generated sheet begins as `CANDIDATE`.
+
+After the three deliverables are shown, final human approval may promote validated assets:
+- approved `DH001_FACE_3VIEW_SHEET` → `IDENTITY_MASTER V1`
+- approved `DH001_BODY_3VIEW_SHEET` → `BODY_MASTER V1`
+
+There is no automatic promotion. A generated sheet does not become upstream identity authority merely because it looks plausible.
+
+If the user rejects likeness, treat identity as failed and regenerate from SOURCE.
+
+After final human approval:
 
 ```yaml
 character_id: DH001
 status: CHARACTER_CARD_READY
-quantitative_profile: APPROVED
-identity_master: V1
-body_master: V1
-face_assets:
-  - DH001_FACE_FRONT
-  - DH001_FACE_LEFT45
-  - DH001_FACE_RIGHT45
-body_assets:
-  - DH001_BODY_FRONT
-  - DH001_BODY_SIDE
-  - DH001_BODY_BACK
+profile_card: DH001_PROFILE_CARD
+identity_master: IDENTITY_MASTER V1
+body_master: BODY_MASTER V1
+face_sheet: DH001_FACE_3VIEW_SHEET
+body_sheet: DH001_BODY_3VIEW_SHEET
 next_skill: hermes-creative-digital-human
 ```
