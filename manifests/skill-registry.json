@@ -410,8 +410,8 @@
     },
     {
       "name": "hermes-digital-human-character-card",
-      "description": "Use when establishing or rebuilding a reusable digital-human character from real-person full-body photos, face close-ups, and partial or complete profile information, especially for 人物卡、数字人建模、人物三视图、面部三视图、锁定人物 or reusable master-asset requests.",
-      "version": "1.1.1",
+      "description": "Use when establishing or rebuilding a reusable digital-human character from real-person full-body photos, face close-ups, and partial or complete factual profile information, especially for 人物卡、数字人建模、人物三视图、面部三视图、锁定人物 or reusable master-asset requests.",
+      "version": "1.2.0",
       "category": "hermes-digital-human-character-card",
       "skill_dir": "hermes-digital-human-character-card",
       "skill_path": "plugins/hermes-skills/skills/hermes-digital-human-character-card/SKILL.md",
