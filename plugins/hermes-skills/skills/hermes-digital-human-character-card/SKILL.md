@@ -29,7 +29,7 @@ It does not perform:
 - action production
 - batch content production
 
-After the card is ready, hand off to `hermes-creative-digital-human` and resume production there.
+After the card is ready, hand off to hermes-creative-digital-human and resume production there.
 
 ## Required Inputs
 Register inputs by role. Do not let a visually similar generated image silently become source evidence.
@@ -224,8 +224,8 @@ SOURCE + IDENTITY_MASTER V1 → BODY_SIDE
 SOURCE + IDENTITY_MASTER V1 → BODY_BACK
 ```
 
-Never use `BODY_FRONT` to generate `BODY_SIDE`.
-Never use `FACE_FRONT` to generate `FACE_LEFT45`.
+Never use BODY_FRONT to generate BODY_SIDE.
+Never use FACE_FRONT to generate FACE_LEFT45.
 
 A generated candidate cannot become SOURCE. Failed or rejected candidates must not be reused as identity evidence.
 
