@@ -1,7 +1,7 @@
 ---
 name: hermes-creative-digital-human
 description: Use when creating realistic Xiaohongshu-style digital-human photos, virtual creator content, outfit/pose variants, real-scene composites, or multi-image lifestyle sets where the same person's identity should remain consistent.
-version: 3.0.0
+version: 3.0.1
 triggers:
   - 数字人
   - 虚拟博主
@@ -16,7 +16,7 @@ triggers:
   - 人物一致性
 ---
 
-# Hermes Creative Digital Human V3
+# Hermes Creative Digital Human V3.0.1
 
 ## Overview
 面向**小红书真人感内容生产**。目标不是维护一套复杂的人物数据库，而是用已有的人物素材快速生成像真人博主拍出来的照片。
@@ -46,6 +46,21 @@ triggers:
 - 人物图 + 环境 + 穿搭 + 动作要求 → 直接生成最终内容图。
 - 已有可信人物图，只想换衣服或改姿势 → **无需重新建立人物卡**。
 
+## AMBIGUOUS NEXT-STEP GATE
+当上一阶段已经完成，而用户只说“下一步 / 继续 / 然后呢”时，这不是一个可执行的内容生成目标。
+
+此时：
+- **不得自行选择 OUTFIT**
+- **不得直接生成内容图**
+- 不猜用户想换衣服、换姿势还是进场景
+
+应先问用户下一步要做哪一类：
+- 换衣服 → 请给**服装参考图或穿搭描述**；只有用户明确说“你来搭 / 随便穿 / 你决定”时才可自行搭配
+- 进环境 → 请给环境图或明确场景
+- 改姿势 / 镜头 → 请给自然语言要求、参考图，或从模板中选择
+
+如果用户明确给了**环境 / 姿势 / 镜头**但没有要求换装，默认保留当前服装，不顺带改衣服。
+
 ## IDENTITY
 原始人物照片优先：
 - 面部近照负责“是谁”
@@ -67,6 +82,8 @@ triggers:
 - 保留现有某些单品，只替换指定部分
 
 换装时只改用户要求的服装层，保持人物身份和体型、发型（除非要求修改）、动作和环境中不需要改变的部分。
+
+没有服装参考或穿搭描述时，不自行发明一套新衣服；除非用户明确授权自由搭配。
 
 ## POSE
 支持姿势参考图，也支持自然语言：
