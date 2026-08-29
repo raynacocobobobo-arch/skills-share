@@ -136,8 +136,8 @@
     },
     {
       "name": "hermes-creative-digital-human",
-      "description": "Use when creating or maintaining a realistic digital human, virtual creator, AI blogger, outfit variant, pose variant, or real-scene composite where identity consistency across generations matters.",
-      "version": "2.4.0",
+      "description": "Use when creating realistic Xiaohongshu-style digital-human photos, virtual creator content, outfit/pose variants, real-scene composites, or multi-image lifestyle sets where the same person's identity should remain consistent.",
+      "version": "3.0.0",
       "category": "hermes-creative-digital-human",
       "skill_dir": "hermes-creative-digital-human",
       "skill_path": "plugins/hermes-skills/skills/hermes-creative-digital-human/SKILL.md",
@@ -147,13 +147,19 @@
         "AI博主",
         "真人数字人",
         "小红书数字人",
+        "小红书博主",
+        "换装",
+        "改姿势",
         "实景融合",
-        "人物一致性",
-        "锁脸",
-        "人脸跑偏"
+        "环境合成",
+        "人物一致性"
       ],
-      "references": [],
-      "missing_references": []
+      "references": [
+        "references/xhs-pose-shot-library.md"
+      ],
+      "missing_references": [
+        "references/xhs-pose-shot-library.md"
+      ]
     },
     {
       "name": "gdevelop5-click-adventure-director",
