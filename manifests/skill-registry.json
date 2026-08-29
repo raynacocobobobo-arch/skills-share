@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "plugins/hermes-skills/skills",
-  "skill_count": 36,
+  "skill_count": 37,
   "skills": [
     {
       "name": "doc-reviewer",
@@ -406,6 +406,26 @@
         "references/swift-deepseek-direct.md",
         "templates/ai_bridge.py"
       ],
+      "missing_references": []
+    },
+    {
+      "name": "hermes-digital-human-character-card",
+      "description": "Use when establishing or rebuilding a reusable digital-human character from real-person full-body photos, face close-ups, and factual profile data, especially for 人物卡、数字人建模、人物三视图、面部三视图、锁定人物 or reusable master-asset requests.",
+      "version": "1.0.0",
+      "category": "hermes-digital-human-character-card",
+      "skill_dir": "hermes-digital-human-character-card",
+      "skill_path": "plugins/hermes-skills/skills/hermes-digital-human-character-card/SKILL.md",
+      "triggers": [
+        "人物卡",
+        "数字人人物卡",
+        "数字人建模",
+        "建立人物",
+        "锁定人物",
+        "人物三视图",
+        "面部三视图",
+        "character card"
+      ],
+      "references": [],
       "missing_references": []
     },
     {
