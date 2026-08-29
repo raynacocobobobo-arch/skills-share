@@ -15,7 +15,16 @@ class DigitalHumanCharacterCardContractTests(unittest.TestCase):
     def test_character_card_is_a_separate_upstream_skill(self):
         self.assertTrue(CARD_SKILL.exists(), "character-card skill must exist")
         self.assertIn("name: hermes-digital-human-character-card", self.card)
-        self.assertIn("version: 1.1.0", self.card)
+        self.assertIn("version: 1.1.1", self.card)
+
+    def test_shorthand_invocation_defaults_to_full_auto_three_outputs(self):
+        self.assertIn("Shorthand Invocation", self.card)
+        self.assertIn("路由到 Hermes 人物卡技能", self.card)
+        self.assertIn("FULL AUTO MODE", self.card)
+        self.assertIn("do not ask the user to repeat this contract", self.card)
+        self.assertIn("at least one usable full-body or near-full-body image", self.card)
+        self.assertIn("at least one usable face or close-up image", self.card)
+        self.assertIn("Missing age, weight, hairstyle, or similar profile fields must not block normal execution", self.card)
 
     def test_inputs_allow_partial_factual_profile(self):
         self.assertIn("SOURCE FULL-BODY", self.card)
