@@ -1,0 +1,27 @@
+{
+  "patch_id": "RETAKE_EP02_SG04_01",
+  "shot_or_segment_id": "EP02-SC01-SG04",
+  "previous_take_id": "TAKE_EP02_SG04_01",
+  "severity": "P0",
+  "preserve": [
+    "CHAR_LIN and CHAR_ZHAO identity",
+    "both costumes",
+    "LOC_REPAIR_SHOP counter axis",
+    "Zhao step-aside performance",
+    "dialogue: key belonged to Lin's mother",
+    "EP02-SC01-SG01 through SG03",
+    "EP02-SC01-SG05 and SG06 plans"
+  ],
+  "fix": [
+    "Keep PROP_KEY visibly inserted in the drawer lock under CHAR_LIN's right hand for the entire segment"
+  ],
+  "reason": "Simulated take drops PROP_KEY before SH05, breaking the inherited prop state and the causal drawer-opening action.",
+  "acceptance_criteria": [
+    "PROP_KEY remains visible and unchanged",
+    "CHAR_LIN remains its handler",
+    "drawer remains closed throughout SG04",
+    "all preserve fields match the accepted surrounding work"
+  ],
+  "retry_count": 1,
+  "status": "READY"
+}

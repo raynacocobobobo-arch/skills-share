@@ -1,0 +1,244 @@
+{
+  "schema_version": "1.0",
+  "benchmark_fixture": true,
+  "episode": {
+    "episode_id": "EP02",
+    "target_duration_sec": 60,
+    "inherits": "EP01 approved State Delta + Continuation Capsule"
+  },
+  "asset_status": [
+    {
+      "asset_id": "CHAR_LIN",
+      "status": "approved",
+      "uri": "fixture://CHAR_LIN"
+    },
+    {
+      "asset_id": "CHAR_ZHAO",
+      "status": "approved",
+      "uri": "fixture://CHAR_ZHAO"
+    },
+    {
+      "asset_id": "LOC_REPAIR_SHOP",
+      "status": "approved",
+      "uri": "fixture://LOC_REPAIR_SHOP"
+    },
+    {
+      "asset_id": "PROP_KEY",
+      "status": "approved",
+      "uri": "fixture://PROP_KEY"
+    },
+    {
+      "asset_id": "PROP_CASSETTE",
+      "status": "approved",
+      "uri": "fixture://PROP_CASSETTE"
+    }
+  ],
+  "generation_segments": [
+    {
+      "segment_id": "EP02-SC01-SG01",
+      "shot_ids": [
+        "EP02-SC01-SH01"
+      ],
+      "target_duration_sec": 10,
+      "generation_mode": "reference_images",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_LIN",
+        "CHAR_ZHAO",
+        "LOC_REPAIR_SHOP",
+        "PROP_KEY"
+      ],
+      "continuity_priority": [
+        "EP01 closed drawer",
+        "key with Lin",
+        "axis"
+      ],
+      "motion_priority": "hold key at lock",
+      "prompt": "Reconnect on Lin holding the blue-thread key beside the still-closed drawer; Zhao remains right.",
+      "not_constraints": [
+        "no state reset",
+        "no key disappearance"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP02-SC01-SH01 start_state in storyboard.json.",
+      "ending_state": "See EP02-SC01-SH01 end_state in storyboard.json.",
+      "camera_behavior": "Use EP02-SC01-SH01 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP02-SC01-SG02",
+      "shot_ids": [
+        "EP02-SC01-SH02"
+      ],
+      "target_duration_sec": 10,
+      "generation_mode": "first_frame",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_LIN",
+        "CHAR_ZHAO",
+        "PROP_KEY"
+      ],
+      "continuity_priority": [
+        "key with Lin",
+        "drawer closed"
+      ],
+      "motion_priority": "Zhao hand stops short",
+      "prompt": "Zhao reaches toward the lock but stops before touching Lin or the key.",
+      "not_constraints": [
+        "no key transfer",
+        "drawer closed"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP02-SC01-SH02 start_state in storyboard.json.",
+      "ending_state": "See EP02-SC01-SH02 end_state in storyboard.json.",
+      "camera_behavior": "Use EP02-SC01-SH02 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP02-SC01-SG03",
+      "shot_ids": [
+        "EP02-SC01-SH03"
+      ],
+      "target_duration_sec": 9,
+      "generation_mode": "reference_images",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_LIN",
+        "LOC_REPAIR_SHOP",
+        "PROP_KEY"
+      ],
+      "continuity_priority": [
+        "key identity",
+        "right-hand handler"
+      ],
+      "motion_priority": "insert key",
+      "prompt": "Lin inserts the same blue-thread key into the drawer lock with her right hand.",
+      "not_constraints": [
+        "key must remain visible",
+        "drawer stays closed",
+        "no hand swap"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP02-SC01-SH03 start_state in storyboard.json.",
+      "ending_state": "See EP02-SC01-SH03 end_state in storyboard.json.",
+      "camera_behavior": "Use EP02-SC01-SH03 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP02-SC01-SG04",
+      "shot_ids": [
+        "EP02-SC01-SH04"
+      ],
+      "target_duration_sec": 9,
+      "generation_mode": "reference_images",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_LIN",
+        "CHAR_ZHAO",
+        "LOC_REPAIR_SHOP",
+        "PROP_KEY"
+      ],
+      "continuity_priority": [
+        "inserted key",
+        "identity",
+        "axis"
+      ],
+      "motion_priority": "Zhao steps aside",
+      "prompt": "Zhao steps right to clear the drawer and says the key belonged to Lin's mother; Lin keeps her hand on it.",
+      "not_constraints": [
+        "key cannot disappear",
+        "drawer still closed",
+        "no axis reversal"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP02-SC01-SH04 start_state in storyboard.json.",
+      "ending_state": "See EP02-SC01-SH04 end_state in storyboard.json.",
+      "camera_behavior": "Use EP02-SC01-SH04 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP02-SC01-SG05",
+      "shot_ids": [
+        "EP02-SC01-SH05"
+      ],
+      "target_duration_sec": 10,
+      "generation_mode": "first_last_frame",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_LIN",
+        "LOC_REPAIR_SHOP",
+        "PROP_KEY",
+        "PROP_CASSETTE"
+      ],
+      "continuity_priority": [
+        "key remains in lock",
+        "drawer closed-to-open",
+        "cassette reveal"
+      ],
+      "motion_priority": "turn key once",
+      "prompt": "From closed to open state, Lin turns the visible key once; the drawer opens to reveal the cassette.",
+      "not_constraints": [
+        "no key disappearance",
+        "no extra prop",
+        "cassette intact"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP02-SC01-SH05 start_state in storyboard.json.",
+      "ending_state": "See EP02-SC01-SH05 end_state in storyboard.json.",
+      "camera_behavior": "Use EP02-SC01-SH05 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP02-SC01-SG06",
+      "shot_ids": [
+        "EP02-SC01-SH06"
+      ],
+      "target_duration_sec": 12,
+      "generation_mode": "reference_images",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_LIN",
+        "CHAR_ZHAO",
+        "PROP_KEY",
+        "PROP_CASSETTE"
+      ],
+      "continuity_priority": [
+        "drawer open",
+        "key right hand",
+        "cassette left hand"
+      ],
+      "motion_priority": "lift cassette",
+      "prompt": "Lin lifts the cassette with her left hand while retaining the key in her right; keep the label blank for post overlay.",
+      "not_constraints": [
+        "no key reset",
+        "no readable generated text",
+        "drawer remains open"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP02-SC01-SH06 start_state in storyboard.json.",
+      "ending_state": "See EP02-SC01-SH06 end_state in storyboard.json.",
+      "camera_behavior": "Use EP02-SC01-SH06 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    }
+  ],
+  "generation_take_log": [
+    {
+      "take_id": "TAKE_EP02_SG04_01",
+      "segment_id": "EP02-SC01-SG04",
+      "status": "rejected",
+      "qa": "P0: PROP_KEY disappears before drawer opening; see ../../qa/retake-patch-EP02-SG04.json"
+    }
+  ],
+  "blocked_reasons": [],
+  "handoff": {
+    "status": "NEEDS_REVIEW",
+    "media_verified": false,
+    "notes": "Structural pack is ready; simulated P0 evidence requires targeted retake before PASS."
+  }
+}

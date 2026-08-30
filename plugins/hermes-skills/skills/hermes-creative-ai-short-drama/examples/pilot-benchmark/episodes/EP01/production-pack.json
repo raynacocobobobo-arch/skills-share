@@ -1,0 +1,221 @@
+{
+  "schema_version": "1.0",
+  "benchmark_fixture": true,
+  "episode": {
+    "episode_id": "EP01",
+    "target_duration_sec": 60
+  },
+  "asset_status": [
+    {
+      "asset_id": "CHAR_LIN",
+      "status": "approved",
+      "uri": "fixture://CHAR_LIN"
+    },
+    {
+      "asset_id": "CHAR_ZHAO",
+      "status": "approved",
+      "uri": "fixture://CHAR_ZHAO"
+    },
+    {
+      "asset_id": "LOC_REPAIR_SHOP",
+      "status": "approved",
+      "uri": "fixture://LOC_REPAIR_SHOP"
+    },
+    {
+      "asset_id": "PROP_KEY",
+      "status": "approved",
+      "uri": "fixture://PROP_KEY"
+    }
+  ],
+  "generation_segments": [
+    {
+      "segment_id": "EP01-SC01-SG01",
+      "shot_ids": [
+        "EP01-SC01-SH01"
+      ],
+      "target_duration_sec": 10,
+      "generation_mode": "reference_images",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_LIN",
+        "CHAR_ZHAO",
+        "LOC_REPAIR_SHOP",
+        "PROP_KEY"
+      ],
+      "continuity_priority": [
+        "identity",
+        "axis",
+        "key"
+      ],
+      "motion_priority": "key slips once",
+      "prompt": "At the locked repair-shop counter axis, the blue-thread key slips from Lin's parcel; Zhao freezes.",
+      "not_constraints": [
+        "no identity drift",
+        "no key disappearance",
+        "no axis reversal"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP01-SC01-SH01 start_state in storyboard.json.",
+      "ending_state": "See EP01-SC01-SH01 end_state in storyboard.json.",
+      "camera_behavior": "Use EP01-SC01-SH01 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP01-SC01-SG02",
+      "shot_ids": [
+        "EP01-SC01-SH02"
+      ],
+      "target_duration_sec": 9,
+      "generation_mode": "first_frame",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_ZHAO",
+        "LOC_REPAIR_SHOP",
+        "PROP_KEY"
+      ],
+      "continuity_priority": [
+        "Zhao right",
+        "key counter"
+      ],
+      "motion_priority": "turn label once",
+      "prompt": "Zhao hides recognition by turning the parcel label face-down; the key stays visible.",
+      "not_constraints": [
+        "no key movement",
+        "no camera crossing"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP01-SC01-SH02 start_state in storyboard.json.",
+      "ending_state": "See EP01-SC01-SH02 end_state in storyboard.json.",
+      "camera_behavior": "Use EP01-SC01-SH02 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP01-SC01-SG03",
+      "shot_ids": [
+        "EP01-SC01-SH03"
+      ],
+      "target_duration_sec": 10,
+      "generation_mode": "reference_images",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_LIN",
+        "CHAR_ZHAO",
+        "PROP_KEY"
+      ],
+      "continuity_priority": [
+        "identity",
+        "key handler"
+      ],
+      "motion_priority": "Lin raises key",
+      "prompt": "Lin raises the same key between them and challenges Zhao without changing the axis.",
+      "not_constraints": [
+        "key stays in Lin hand",
+        "no costume change"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP01-SC01-SH03 start_state in storyboard.json.",
+      "ending_state": "See EP01-SC01-SH03 end_state in storyboard.json.",
+      "camera_behavior": "Use EP01-SC01-SH03 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP01-SC01-SG04",
+      "shot_ids": [
+        "EP01-SC01-SH04"
+      ],
+      "target_duration_sec": 9,
+      "generation_mode": "first_frame",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_ZHAO",
+        "LOC_REPAIR_SHOP"
+      ],
+      "continuity_priority": [
+        "eyeline",
+        "Zhao position"
+      ],
+      "motion_priority": "eyes shift only",
+      "prompt": "Zhao remains screen-right and shifts only his eyes toward the hidden drawer.",
+      "not_constraints": [
+        "no head turn",
+        "no axis reversal"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP01-SC01-SH04 start_state in storyboard.json.",
+      "ending_state": "See EP01-SC01-SH04 end_state in storyboard.json.",
+      "camera_behavior": "Use EP01-SC01-SH04 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP01-SC01-SG05",
+      "shot_ids": [
+        "EP01-SC01-SH05"
+      ],
+      "target_duration_sec": 10,
+      "generation_mode": "reference_images",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_LIN",
+        "LOC_REPAIR_SHOP",
+        "PROP_KEY"
+      ],
+      "continuity_priority": [
+        "drawer closed",
+        "key with Lin"
+      ],
+      "motion_priority": "Lin follows eyeline",
+      "prompt": "Lin follows Zhao's eyeline to the closed drawer while keeping the key.",
+      "not_constraints": [
+        "drawer does not open",
+        "key does not move"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP01-SC01-SH05 start_state in storyboard.json.",
+      "ending_state": "See EP01-SC01-SH05 end_state in storyboard.json.",
+      "camera_behavior": "Use EP01-SC01-SH05 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP01-SC01-SG06",
+      "shot_ids": [
+        "EP01-SC01-SH06"
+      ],
+      "target_duration_sec": 12,
+      "generation_mode": "first_frame",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "LOC_REPAIR_SHOP",
+        "PROP_KEY"
+      ],
+      "continuity_priority": [
+        "drawer closed",
+        "matching blue thread"
+      ],
+      "motion_priority": "thread moves in draft",
+      "prompt": "Locked insert: the blue thread on the closed drawer handle moves once, matching Lin's key.",
+      "not_constraints": [
+        "drawer stays closed",
+        "no hand enters",
+        "no generated text"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP01-SC01-SH06 start_state in storyboard.json.",
+      "ending_state": "See EP01-SC01-SH06 end_state in storyboard.json.",
+      "camera_behavior": "Use EP01-SC01-SH06 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    }
+  ],
+  "generation_take_log": [],
+  "blocked_reasons": [],
+  "handoff": {
+    "status": "READY",
+    "media_verified": false,
+    "notes": "Fixture Production Pack only; downstream executor has not run."
+  }
+}
