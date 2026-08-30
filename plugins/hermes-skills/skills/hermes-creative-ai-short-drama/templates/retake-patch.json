@@ -1,0 +1,25 @@
+{
+  "patch_id": "RETAKE_EP01_SG02_01",
+  "shot_or_segment_id": "EP01-SC01-SG02",
+  "previous_take_id": "TAKE_EP01_SG02_01",
+  "severity": "P0",
+  "preserve": [
+    "character_identity",
+    "costume",
+    "repair_shop_geography",
+    "dialogue",
+    "camera_framing",
+    "accepted_EP01-SC01-SG01"
+  ],
+  "fix": [
+    "PROP_KEY remains in CHAR_LIN right hand and must not disappear before the drawer reveal"
+  ],
+  "reason": "The critical blue-thread key disappears before the reveal insert, breaking prop state and action causality.",
+  "acceptance_criteria": [
+    "PROP_KEY is visible with CHAR_LIN at the end of the preceding shot",
+    "the insert does not imply that the key moved or changed hands",
+    "all preserve fields match the accepted take"
+  ],
+  "retry_count": 1,
+  "status": "READY"
+}
