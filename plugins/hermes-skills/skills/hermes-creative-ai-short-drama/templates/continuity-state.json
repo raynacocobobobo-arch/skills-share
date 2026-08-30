@@ -1,0 +1,56 @@
+{
+  "episode_id": "EP01",
+  "canonical_input": "series-bible-v1",
+  "scene_id": "EP01-SC01",
+  "status": "READY",
+  "characters": {
+    "CHAR_LIN": {
+      "position": "screen_left_of_counter",
+      "facing": "screen_right",
+      "costume": "dark_delivery_jacket",
+      "injury": "none",
+      "goal": "recover_the_brass_key",
+      "knowledge": ["PROP_KEY opens a hidden drawer"],
+      "relationship_state": {"CHAR_ZHAO": "distrusts"}
+    },
+    "CHAR_ZHAO": {
+      "position": "screen_right_behind_counter",
+      "facing": "screen_left",
+      "costume": "grey_shop_apron",
+      "injury": "none",
+      "goal": "hide_the_drawer",
+      "knowledge": ["PROP_KEY belongs to the missing owner"],
+      "relationship_state": {"CHAR_LIN": "suspects"}
+    }
+  },
+  "locations": {
+    "LOC_REPAIR_SHOP": {
+      "geography": "front_door west; counter center; hidden_drawer behind counter east",
+      "screen_axis": "CHAR_LIN screen_left faces CHAR_ZHAO screen_right",
+      "entrances_exits": ["front_door_screen_left_background"],
+      "fixed_anchors": ["counter", "red_tool_wall", "hidden_drawer"]
+    }
+  },
+  "props_and_clues": {
+    "PROP_KEY": {
+      "owner": "unknown",
+      "handler": "CHAR_LIN",
+      "location": "CHAR_LIN right_hand",
+      "condition": "intact_with_blue_thread",
+      "visibility": "visible_to_audience",
+      "reveal_state": ["known_to:CHAR_LIN", "known_to:CHAR_ZHAO"]
+    }
+  },
+  "causality": [
+    {
+      "dependency_id": "CAUSE_01",
+      "requires": "CHAR_LIN shows PROP_KEY",
+      "enables": "CHAR_ZHAO looks toward hidden_drawer"
+    }
+  ],
+  "transition": {
+    "incoming": "door_bell motivates both characters' eyeline",
+    "outgoing": "CHAR_ZHAO eyeline reveals hidden_drawer location"
+  },
+  "blocked_reasons": []
+}
