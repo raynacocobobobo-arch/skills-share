@@ -131,6 +131,14 @@ Routing note: prefer `transcript-cleanup` for recorded-video/audio word-strippin
 
 ### 3. Film / video creation
 
+#### Pure-AI serialized short drama
+Use for AI短剧、连载短剧、AI爽剧、一分钟短剧、分集短剧、剧本转分镜, or a short-drama Seedance Production Pack that must preserve story and production state across episodes.
+
+- Skill: `hermes-creative-ai-short-drama`
+- Path: `plugins/hermes-skills/skills/hermes-creative-ai-short-drama/SKILL.md`
+
+Routing note: use this Skill for serialized pure-AI drama and its Episode Card, continuity-first Shot Specs, Generation Segments, QA, and targeted retakes. Do not route digital-human portraits, talking avatars, LoRA training, face compositing, or ordinary identity-asset work here; use `hermes-creative-digital-human` or the more specific identity skill instead.
+
 #### AI story short film workflow
 Use when the user wants to make an AI story short, AI microfilm, AI film experiment, or to turn one idea into a short narrative video production pipeline.
 
