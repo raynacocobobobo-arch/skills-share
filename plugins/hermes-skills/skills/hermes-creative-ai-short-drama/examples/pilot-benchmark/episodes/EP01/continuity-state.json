@@ -1,0 +1,23 @@
+{
+  "episode_id": "EP01",
+  "inherited_from": "series-bible benchmark-v1 / EP00",
+  "status": "READY",
+  "characters": {
+    "CHAR_LIN": {"position": "screen_left_at_counter", "facing": "screen_right", "costume": "dark_delivery_jacket", "knowledge": ["mother left PROP_KEY"], "relationship": {"CHAR_ZHAO": "distrusts"}},
+    "CHAR_ZHAO": {"position": "screen_right_behind_counter", "facing": "screen_left", "costume": "grey_shop_apron", "knowledge": ["PROP_KEY opens hidden drawer"], "relationship": {"CHAR_LIN": "protective_but_evasive"}}
+  },
+  "locations": {
+    "LOC_REPAIR_SHOP": {"geography": "front door west; counter center; hidden drawer east behind counter", "screen_axis": "LIN left faces ZHAO right", "drawer_state": "closed"}
+  },
+  "props_and_clues": {
+    "PROP_KEY": {"handler": "CHAR_LIN", "location": "right_hand_then_jacket_pocket", "condition": "brass_with_blue_thread", "reveal_state": ["visible_to_audience", "known_to:CHAR_LIN", "known_to:CHAR_ZHAO"]},
+    "PROP_CASSETTE": {"handler": null, "location": "inside_hidden_drawer", "condition": "intact", "reveal_state": ["hidden"]}
+  },
+  "episode_end_state": {
+    "drawer_state": "closed",
+    "PROP_KEY_handler": "CHAR_LIN",
+    "knowledge_change": "CHAR_LIN knows drawer is linked to PROP_KEY; CHAR_ZHAO knows Lin has it",
+    "open_debts": ["DEBT_KEY_ORIGIN", "DEBT_ZHAO_ROLE"]
+  },
+  "blocked_reasons": []
+}

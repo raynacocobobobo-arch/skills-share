@@ -1,0 +1,241 @@
+{
+  "schema_version": "1.0",
+  "benchmark_fixture": true,
+  "episode": {
+    "episode_id": "EP03",
+    "target_duration_sec": 60,
+    "inherits": "EP02 approved State Delta + Continuation Capsule"
+  },
+  "asset_status": [
+    {
+      "asset_id": "CHAR_LIN",
+      "status": "approved",
+      "uri": "fixture://CHAR_LIN"
+    },
+    {
+      "asset_id": "CHAR_ZHAO",
+      "status": "approved",
+      "uri": "fixture://CHAR_ZHAO"
+    },
+    {
+      "asset_id": "LOC_REPAIR_SHOP",
+      "status": "approved",
+      "uri": "fixture://LOC_REPAIR_SHOP"
+    },
+    {
+      "asset_id": "PROP_KEY",
+      "status": "approved",
+      "uri": "fixture://PROP_KEY"
+    },
+    {
+      "asset_id": "PROP_CASSETTE",
+      "status": "approved",
+      "uri": "fixture://PROP_CASSETTE"
+    },
+    {
+      "asset_id": "ASSET_MOTHER_PORTRAIT",
+      "status": "missing",
+      "uri": null
+    }
+  ],
+  "generation_segments": [
+    {
+      "segment_id": "EP03-SC01-SG01",
+      "shot_ids": [
+        "EP03-SC01-SH01"
+      ],
+      "target_duration_sec": 10,
+      "generation_mode": "reference_images",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_LIN",
+        "CHAR_ZHAO",
+        "LOC_REPAIR_SHOP",
+        "PROP_KEY",
+        "PROP_CASSETTE"
+      ],
+      "continuity_priority": [
+        "EP02 open drawer",
+        "key and cassette with Lin"
+      ],
+      "motion_priority": "press play",
+      "prompt": "Reconnect beside the open drawer as Lin presses play on the cassette while keeping the key.",
+      "not_constraints": [
+        "no state reset",
+        "no prop disappearance"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP03-SC01-SH01 start_state in storyboard.json.",
+      "ending_state": "See EP03-SC01-SH01 end_state in storyboard.json.",
+      "camera_behavior": "Use EP03-SC01-SH01 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP03-SC01-SG02",
+      "shot_ids": [
+        "EP03-SC01-SH02"
+      ],
+      "target_duration_sec": 10,
+      "generation_mode": "first_frame",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_ZHAO",
+        "PROP_CASSETTE",
+        "LOC_REPAIR_SHOP"
+      ],
+      "continuity_priority": [
+        "Zhao position",
+        "cassette playing"
+      ],
+      "motion_priority": "close eyes",
+      "prompt": "Zhao remains right and closes his eyes at the recorded voice; preserve the playing cassette.",
+      "not_constraints": [
+        "no position change",
+        "no new prop"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP03-SC01-SH02 start_state in storyboard.json.",
+      "ending_state": "See EP03-SC01-SH02 end_state in storyboard.json.",
+      "camera_behavior": "Use EP03-SC01-SH02 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP03-SC01-SG03",
+      "shot_ids": [
+        "EP03-SC01-SH03"
+      ],
+      "target_duration_sec": 10,
+      "generation_mode": "reference_images",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "ASSET_MOTHER_PORTRAIT",
+        "CHAR_ZHAO",
+        "PROP_KEY"
+      ],
+      "continuity_priority": [
+        "mother identity",
+        "key handoff",
+        "blue thread"
+      ],
+      "motion_priority": "mother places key in Zhao palm",
+      "prompt": "Memory insert: Lin's mother places the blue-thread key into Zhao's open palm.",
+      "not_constraints": [
+        "no identity invention",
+        "no extra character",
+        "key remains exact"
+      ],
+      "status": "BLOCKED",
+      "blocked_reasons": [
+        "ASSET_MOTHER_PORTRAIT is missing; do not generate or claim media"
+      ],
+      "scene_snapshot": "See EP03-SC01-SH03 start_state in storyboard.json.",
+      "ending_state": "See EP03-SC01-SH03 end_state in storyboard.json.",
+      "camera_behavior": "Use EP03-SC01-SH03 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP03-SC01-SG04",
+      "shot_ids": [
+        "EP03-SC01-SH04"
+      ],
+      "target_duration_sec": 10,
+      "generation_mode": "reference_images",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_LIN",
+        "CHAR_ZHAO",
+        "PROP_KEY",
+        "PROP_CASSETTE"
+      ],
+      "continuity_priority": [
+        "axis",
+        "props with Lin",
+        "relationship turn"
+      ],
+      "motion_priority": "lower cassette",
+      "prompt": "Lin lowers the cassette, keeps the key, and makes eye contact with Zhao across the established axis.",
+      "not_constraints": [
+        "no prop transfer",
+        "no costume change"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP03-SC01-SH04 start_state in storyboard.json.",
+      "ending_state": "See EP03-SC01-SH04 end_state in storyboard.json.",
+      "camera_behavior": "Use EP03-SC01-SH04 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP03-SC01-SG05",
+      "shot_ids": [
+        "EP03-SC01-SH05"
+      ],
+      "target_duration_sec": 9,
+      "generation_mode": "first_last_frame",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "CHAR_ZHAO",
+        "CHAR_LIN",
+        "LOC_REPAIR_SHOP"
+      ],
+      "continuity_priority": [
+        "positions",
+        "open drawer",
+        "lamp on-to-off"
+      ],
+      "motion_priority": "switch lamp off",
+      "prompt": "Zhao switches off the counter lamp once; both characters stay in position and the drawer remains open.",
+      "not_constraints": [
+        "no character movement",
+        "no drawer reset"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP03-SC01-SH05 start_state in storyboard.json.",
+      "ending_state": "See EP03-SC01-SH05 end_state in storyboard.json.",
+      "camera_behavior": "Use EP03-SC01-SH05 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    },
+    {
+      "segment_id": "EP03-SC01-SG06",
+      "shot_ids": [
+        "EP03-SC01-SH06"
+      ],
+      "target_duration_sec": 11,
+      "generation_mode": "first_frame",
+      "target_model": "Seedance 2.0",
+      "references": [
+        "LOC_REPAIR_SHOP",
+        "PROP_KEY"
+      ],
+      "continuity_priority": [
+        "door closed",
+        "matching blue thread"
+      ],
+      "motion_priority": "handle turns once",
+      "prompt": "In dim light, the outside door handle turns once; matching blue thread is visible while the door stays closed.",
+      "not_constraints": [
+        "do not reveal watcher identity",
+        "door stays closed",
+        "no text"
+      ],
+      "status": "READY",
+      "blocked_reasons": [],
+      "scene_snapshot": "See EP03-SC01-SH06 start_state in storyboard.json.",
+      "ending_state": "See EP03-SC01-SH06 end_state in storyboard.json.",
+      "camera_behavior": "Use EP03-SC01-SH06 camera_intent from storyboard.json.",
+      "sound_dialogue_policy": "Preserve screenplay dialogue/sound timing; use post-production when the selected route cannot reproduce it reliably."
+    }
+  ],
+  "generation_take_log": [],
+  "blocked_reasons": [
+    "EP03-SC01-SG03 requires missing ASSET_MOTHER_PORTRAIT"
+  ],
+  "handoff": {
+    "status": "BLOCKED",
+    "media_verified": false,
+    "notes": "Only SG03 is blocked; no generated media or final State Delta is claimed."
+  }
+}

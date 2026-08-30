@@ -1,0 +1,32 @@
+{
+  "episode_id": "EP03",
+  "inherited_from": "EP02 approved State Delta + Continuation Capsule",
+  "inherited_state": {
+    "drawer_state": "open",
+    "PROP_KEY_handler": "CHAR_LIN",
+    "PROP_CASSETTE_handler": "CHAR_LIN",
+    "knowledge": ["key belonged to Lin's mother", "both know cassette exists"],
+    "open_debts": ["DEBT_ZHAO_ROLE"]
+  },
+  "status": "BLOCKED",
+  "characters": {
+    "CHAR_LIN": {"position": "screen_left_beside_open_drawer", "facing": "screen_right", "costume": "dark_delivery_jacket", "knowledge": ["key belonged to mother"], "relationship": {"CHAR_ZHAO": "distrusts_until_recording"}},
+    "CHAR_ZHAO": {"position": "screen_right_behind_counter", "facing": "screen_left", "costume": "grey_shop_apron", "knowledge": ["mother may be alive", "watcher is outside"], "relationship": {"CHAR_LIN": "protector"}}
+  },
+  "locations": {
+    "LOC_REPAIR_SHOP": {"geography": "unchanged: front door west; counter center; hidden drawer east", "screen_axis": "LIN left faces ZHAO right", "drawer_state": "open"}
+  },
+  "props_and_clues": {
+    "PROP_KEY": {"handler": "CHAR_LIN", "location": "right_hand", "condition": "brass_with_blue_thread", "reveal_state": ["known_to:CHAR_LIN", "known_to:CHAR_ZHAO"]},
+    "PROP_CASSETTE": {"handler": "CHAR_LIN", "location": "left_hand_then_counter_player", "condition": "playing", "reveal_state": ["public_to_scene"]}
+  },
+  "draft_episode_end_state": {
+    "drawer_state": "open",
+    "PROP_KEY_handler": "CHAR_LIN",
+    "PROP_CASSETTE_handler": "CHAR_LIN",
+    "relationship_change": "CHAR_LIN provisionally trusts CHAR_ZHAO",
+    "paid_debts": ["DEBT_ZHAO_ROLE"],
+    "open_debts": ["DEBT_MOTHER_ALIVE"]
+  },
+  "blocked_reasons": ["ASSET_MOTHER_PORTRAIT is missing; EP03-SC01-SH03 and its segment cannot be generated or passed"]
+}

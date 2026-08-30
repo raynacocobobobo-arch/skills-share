@@ -1,0 +1,73 @@
+{
+  "episode_id": "EP01",
+  "scene_id": "EP01-SC01",
+  "status": "READY",
+  "shots": [
+    {
+      "shot_id": "EP01-SC01-SH01",
+      "scene_id": "EP01-SC01",
+      "duration_target_sec": 3.0,
+      "framing": "medium_two_shot",
+      "camera_intent": "establish the counter axis",
+      "start_state": {
+        "CHAR_LIN": "screen_left, right hand closed",
+        "CHAR_ZHAO": "screen_right behind counter",
+        "PROP_KEY": "hidden in CHAR_LIN right hand"
+      },
+      "visible_action": "CHAR_LIN opens her right hand to reveal PROP_KEY.",
+      "end_state": {
+        "CHAR_LIN": "screen_left, open palm extended",
+        "CHAR_ZHAO": "screen_right, sees PROP_KEY",
+        "PROP_KEY": "visible in CHAR_LIN open right palm"
+      },
+      "next_shot_connection": "Cut on CHAR_ZHAO's gaze dropping to PROP_KEY.",
+      "reference_assets": ["CHAR_LIN", "CHAR_ZHAO", "LOC_REPAIR_SHOP", "PROP_KEY"],
+      "tail_frame_need": true,
+      "prohibited_changes": ["character_identity", "costume", "screen_axis", "PROP_KEY blue thread"],
+      "information_gain": "The audience and CHAR_ZHAO see the blue-thread brass key."
+    },
+    {
+      "shot_id": "EP01-SC01-SH02",
+      "scene_id": "EP01-SC01",
+      "duration_target_sec": 2.5,
+      "framing": "close_up",
+      "camera_intent": "bind the clue to CHAR_ZHAO's recognition",
+      "start_state": {
+        "CHAR_ZHAO": "screen_right, gaze on PROP_KEY",
+        "PROP_KEY": "visible in CHAR_LIN open right palm"
+      },
+      "visible_action": "CHAR_ZHAO's eyes shift from PROP_KEY toward the hidden drawer.",
+      "end_state": {
+        "CHAR_ZHAO": "screen_right, gaze toward hidden_drawer",
+        "PROP_KEY": "still in CHAR_LIN open right palm"
+      },
+      "next_shot_connection": "Match CHAR_ZHAO's eyeline to the drawer handle.",
+      "reference_assets": ["CHAR_ZHAO", "LOC_REPAIR_SHOP", "PROP_KEY"],
+      "tail_frame_need": true,
+      "prohibited_changes": ["CHAR_ZHAO position", "screen_axis", "PROP_KEY ownership or condition"],
+      "information_gain": "CHAR_ZHAO's reaction links the key to the hidden drawer."
+    },
+    {
+      "shot_id": "EP01-SC01-SH03",
+      "scene_id": "EP01-SC01",
+      "duration_target_sec": 3.0,
+      "framing": "insert",
+      "camera_intent": "reveal the drawer without opening it",
+      "start_state": {
+        "camera": "follows CHAR_ZHAO eyeline",
+        "hidden_drawer": "closed behind counter",
+        "PROP_KEY": "offscreen, still held by CHAR_LIN"
+      },
+      "visible_action": "A loose receipt beside the closed drawer flutters from the door draft.",
+      "end_state": {
+        "hidden_drawer": "closed and visible behind counter",
+        "PROP_KEY": "offscreen, still held by CHAR_LIN"
+      },
+      "next_shot_connection": "Episode handoff: the next beat returns to CHAR_LIN noticing the drawer.",
+      "reference_assets": ["LOC_REPAIR_SHOP"],
+      "tail_frame_need": false,
+      "prohibited_changes": ["drawer remains closed", "counter geography", "PROP_KEY does not move"],
+      "information_gain": "The audience learns the hidden drawer's location."
+    }
+  ]
+}

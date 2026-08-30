@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "episode": {
+    "episode_id": "EP01",
+    "title": "The Blue-Thread Key",
+    "target_duration_sec": 60,
+    "canonical_input": "series-bible-v1"
+  },
+  "capability_check": {
+    "target_model": "Seedance 2.0",
+    "route": "downstream_executor_to_confirm",
+    "verified_on": "2026-08-30",
+    "supported_segment_duration_sec": {"min": 4, "max": 15},
+    "notes": "Re-check exact provider/version before submission; override only with recorded evidence."
+  },
+  "asset_status": [
+    {"asset_id": "CHAR_LIN", "type": "character", "status": "approved", "uri": "assets/CHAR_LIN.png"},
+    {"asset_id": "CHAR_ZHAO", "type": "character", "status": "approved", "uri": "assets/CHAR_ZHAO.png"},
+    {"asset_id": "LOC_REPAIR_SHOP", "type": "location", "status": "approved", "uri": "assets/LOC_REPAIR_SHOP.png"},
+    {"asset_id": "PROP_KEY", "type": "prop_clue", "status": "approved", "uri": "assets/PROP_KEY.png"}
+  ],
+  "keyframe_requirements": [
+    {
+      "keyframe_id": "KF_EP01_SC01_OPEN",
+      "role": "first_frame",
+      "shot_ids": ["EP01-SC01-SH01"],
+      "status": "approved",
+      "uri": "keyframes/KF_EP01_SC01_OPEN.png"
+    }
+  ],
+  "generation_segments": [
+    {
+      "segment_id": "EP01-SC01-SG01",
+      "shot_ids": ["EP01-SC01-SH01", "EP01-SC01-SH02"],
+      "target_duration_sec": 6,
+      "generation_mode": "reference_images",
+      "target_model": "Seedance 2.0",
+      "references": [
+        {"asset_id": "CHAR_LIN", "role": "character_identity"},
+        {"asset_id": "CHAR_ZHAO", "role": "character_identity"},
+        {"asset_id": "LOC_REPAIR_SHOP", "role": "scene"},
+        {"asset_id": "PROP_KEY", "role": "prop"}
+      ],
+      "continuity_priority": ["identity", "costume", "counter_axis", "PROP_KEY blue thread"],
+      "motion_priority": "LIN reveals key; ZHAO shifts gaze to drawer",
+      "scene_snapshot": "Repair shop counter; LIN screen-left faces ZHAO screen-right.",
+      "ending_state": "ZHAO looks toward the hidden drawer; LIN still holds the key.",
+      "camera_behavior": "Established two-shot, then controlled close reaction without crossing the axis.",
+      "prompt": "Use the bound character, shop, and brass-key references. At the repair-shop counter, Lin remains screen-left in her dark delivery jacket and opens her right hand once to reveal the blue-thread brass key. Zhao remains screen-right in his grey apron; he recognizes it and shifts only his eyes toward the hidden drawer. Preserve the counter axis and end with Zhao's gaze clearly aimed at the drawer.",
+      "not_constraints": ["no identity drift", "no costume change", "no screen-axis reversal", "key does not disappear or change hands", "drawer stays closed"],
+      "status": "READY",
+      "blocked_reasons": []
+    },
+    {
+      "segment_id": "EP01-SC01-SG02",
+      "shot_ids": ["EP01-SC01-SH03"],
+      "target_duration_sec": 4,
+      "generation_mode": "first_frame",
+      "target_model": "Seedance 2.0",
+      "references": [
+        {"asset_id": "LOC_REPAIR_SHOP", "role": "scene"},
+        {"asset_id": "KF_EP01_SC01_OPEN", "role": "first_frame"}
+      ],
+      "continuity_priority": ["drawer location", "counter geography", "drawer remains closed"],
+      "motion_priority": "one loose receipt flutters once in the door draft",
+      "scene_snapshot": "Insert behind the same counter, following Zhao's eyeline to the closed hidden drawer.",
+      "ending_state": "The closed hidden drawer is visible; the key remains offscreen with Lin.",
+      "camera_behavior": "Locked insert with no reframing.",
+      "prompt": "From the approved first frame, hold a locked insert behind the repair-shop counter. A single loose receipt beside the closed hidden drawer flutters in the door draft. Keep the drawer closed and preserve the established counter materials and lighting. End on the drawer handle.",
+      "not_constraints": ["drawer does not open", "no hand enters frame", "no geography change", "no readable generated text"],
+      "status": "READY",
+      "blocked_reasons": []
+    }
+  ],
+  "generation_take_log": [],
+  "blocked_reasons": [],
+  "handoff": {
+    "status": "READY",
+    "executor": "unassigned",
+    "media_verified": false,
+    "notes": "Planning pack only; no generated media is claimed."
+  },
+  "allowed_statuses": ["READY", "BLOCKED", "NEEDS_REVIEW", "PASS"]
+}
