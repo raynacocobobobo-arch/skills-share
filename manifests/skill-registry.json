@@ -136,8 +136,8 @@
     },
     {
       "name": "hermes-creative-ai-short-drama",
-      "description": "Plan and direct pure-AI serialized short dramas from concept through Series Bible, Episode Card, continuity-first Shot Specs, Seedance-oriented Production Pack, QA, targeted retakes, and next-episode state. Use for AI短剧、连载短剧、AI爽剧、一分钟/分集短剧、剧本转分镜或短剧 Seedance 生产包; do not use for digital-human portraits, LoRA training, face compositing, or ordinary talking-avatar work.",
-      "version": "1.0.0",
+      "description": "Use when developing, revising, continuing, storyboarding, producing, or reviewing a pure-AI serialized short drama / AI短剧 / 连载短剧 / AI爽剧 / 一分钟或分集短剧, especially when canon, episode differentiation, continuity, recurring payoffs, or Seedance-oriented production state must persist across episodes.",
+      "version": "1.1.0",
       "category": "hermes-creative-ai-short-drama",
       "skill_dir": "hermes-creative-ai-short-drama",
       "skill_path": "plugins/hermes-skills/skills/hermes-creative-ai-short-drama/SKILL.md",
