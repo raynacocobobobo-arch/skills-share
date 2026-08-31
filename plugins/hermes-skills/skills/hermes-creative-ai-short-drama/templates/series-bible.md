@@ -3,52 +3,71 @@
 - Version: [v1]
 - Updated: [YYYY-MM-DD]
 - Canonical through: [EP00]
+- Canonical entrypoint/read order: [CURRENT/index if applicable]
 
 ## Premise
 
 - Logline:
 - Audience promise:
+- Repeatable episode grammar:
 - Core pressure/injustice:
 - Distinctive mechanism:
 - Protagonist's irreversible goal:
-- Cost/constraint:
+- Central cost/constraint:
+- Escalation runway:
 - Pilot success/stop condition:
 
 ## Characters
 
-| Character ID | Name/role | Want | False belief/cost | Leverage/ability | Relationship state | Production anchor |
-| --- | --- | --- | --- | --- | --- | --- |
-| `CHAR_A` | | | | | | |
+| Character ID | Name/role | Want | False belief/systemic constraint | Leverage/ability | Authority boundary | Relationship state | Production anchor |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `CHAR_A` | | | | | | | |
 
 ## World and System Rules
 
-| Rule ID | Rule | Limit/cost | Established evidence | Revision status |
-| --- | --- | --- | --- | --- |
-| `RULE_01` | | | | approved |
+| Rule ID | Rule | Limit/cost | Established evidence | Decision state | Supersedes |
+| --- | --- | --- | --- | --- | --- |
+| `RULE_01` | | | | `LOCKED` | |
 
 ## Recurring Locations
 
-| Location ID | Function | Fixed geography | Recurring anchors |
-| --- | --- | --- | --- |
-| `LOC_MAIN` | | | |
+| Location ID | Function | Fixed geography | Recurring anchors | How meaning can change later |
+| --- | --- | --- | --- | --- |
+| `LOC_MAIN` | | | | |
 
 ## Entity Registry
 
-| Entity ID | Type | Canonical label | Persistent state | Production relevance |
-| --- | --- | --- | --- | --- |
-| `PROP_CLUE_01` | prop/clue | | | |
+| Entity ID | Type | Canonical label | Persistent state | Production relevance | Decision state |
+| --- | --- | --- | --- | --- | --- |
+| `PROP_CLUE_01` | prop/clue | | | | `LOCKED` |
 
-## Reveal Ladder
+## Progression Tracks
 
-| Reveal ID | Truth/evidence | Current knowers | Earliest episode | Effect when revealed | Status |
+Create only the tracks the series needs.
+
+### Reveal / Knowledge Ladder
+
+| Step | Signal/evidence | Old explanation | What makes it fail | New actionable understanding | Status |
 | --- | --- | --- | --- | --- | --- |
 | `REV_01` | | | | | planted |
 
-## Antagonist Ladder
+### Pressure / Public-Action Ladder
 
-| Level | Antagonist/pressure | Leverage | How it learns/adapts | Required protagonist cost | Status |
+| Step | New kind of burden | Who carries it | Why prior method is insufficient | Required cost/choice | Status |
 | --- | --- | --- | --- | --- | --- |
-| 1 | | | | | active |
+| `P01` | | | | | planned |
+
+### Relationship / Capability Ladder
+
+| Step | Relationship/access/authority change | Observable behavior | What it enables/removes | Status |
+| --- | --- | --- | --- | --- |
+| `REL_01` | | | | planned |
+
+## Recurring Pressure Carriers / Moral Mirrors
+
+| Entity ID | Early relationship | Later changed interest | Pressure carried | Not-a-villain guardrail |
+| --- | --- | --- | --- | --- |
+| | | | | |
 
 ## Payoff Debt Ledger
 
@@ -58,18 +77,37 @@
 
 ## Pilot Outline (3–5 Episodes)
 
-| Episode | Opening hook | Dominant turn | Payoff/progress | Cliffhanger | Intended State Delta | Test |
-| --- | --- | --- | --- | --- | --- | --- |
-| EP01 | | | | | | premise clarity |
-| EP02 | | | | | | repeatable payoff |
-| EP03 | | | | | | continuation pull |
+| Episode | Episode function | Opening hook | Dominant turn | Conflict grammar | Progression step | Payoff/callback | Cost after solution | End image/cliffhanger | Intended State Delta | Test |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| EP01 | | | | | | | | | | premise clarity |
+| EP02 | | | | | | | | | | differentiated repeatability |
+| EP03 | | | | | | | | | | escalation/change of burden |
+
+## Pilot Function Audit
+
+- Repeated grammar risks:
+- Surface variety that is actually functional repetition:
+- Distinct question each episode asks:
+- Recurring callback whose meaning changes:
+- Any third path with missing cost:
 
 ## Current Canonical State
 
-- Character/relationship state:
+- Character/relationship/capability state:
 - Knowledge/reveal state:
+- Pressure/public-action state:
 - Prop/clue ownership and condition:
 - Active locations/time constraints:
 - Open debts:
 - Last approved State Delta:
-- Next allowed reveal:
+- Next allowed progression:
+
+## Unresolved / Decision Scope
+
+| Item | Scope | State | Why unresolved | Next decision needed |
+| --- | --- | --- | --- | --- |
+| | dialogue/mechanism/name/etc. | `TBD` | | |
+
+## Superseded / Provenance Notes
+
+Record only old material that future writers might otherwise accidentally revive or that explains why a current rule exists.
