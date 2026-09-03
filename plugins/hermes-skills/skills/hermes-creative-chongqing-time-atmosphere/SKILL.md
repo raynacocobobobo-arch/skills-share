@@ -35,7 +35,7 @@ Always start from:
 
 Then read only the active files required by the current task. Read [the source map](references/chongqing-time-source-map.md) for the repository contract.
 
-**Do not rely on an embedded stale canon summary.** If GitHub or the current project repository cannot be read, report the missing source instead of silently reconstructing Canon from memory.
+Rule: **do not rely on an embedded stale canon summary.** If GitHub or the current project repository cannot be read, report the missing source instead of silently reconstructing Canon from memory.
 
 ## Core workflow
 
