@@ -23,6 +23,8 @@ When a resolved task object has already been routed to a workflow skill, keep an
 
 For `hermes-creative-digital-human`, keep the binding while the conversation concerns the **same digital-human task object**, including likeness corrections, wardrobe notes, environment changes, pose/action changes, prop/camera fixes, continuity, review, or batch outputs for that character.
 
+For `hermes-creative-chongqing-time-atmosphere`, keep the binding while the conversation concerns the **same 《重庆时间》 environment/episode visual task object**, including atmosphere-master revisions, composition changes, lighting notes, Seedance simplification, prompt revisions, scene QC, or follow-up images for that same space.
+
 Release or re-route the binding only when the user explicitly ends or switches the workflow, the task object changes, or the request materially becomes a different primary task. A supporting skill may be added without silently dropping the existing primary skill when the same task object still depends on it.
 
 Sticky binding preserves workflow continuity; it does not override the task-object ambiguity guard below and it does not allow a skill to skip its own gates or required assets.
@@ -131,6 +133,17 @@ Routing note: prefer `transcript-cleanup` for recorded-video/audio word-strippin
 
 ### 3. Film / video creation
 
+#### 《重庆时间》 environment atmosphere / setting masters
+Use when the user names 《重庆时间》 and asks to visualize an episode environment, create/revise a `核心空间`, `核心剧情空间`, `场景气氛图`, `环境母图`, `大场景`, Seedance-ready environment source, or says **“重庆时间，按设定出图”**.
+
+- Skill: `hermes-creative-chongqing-time-atmosphere`
+- Path: `plugins/hermes-skills/skills/hermes-creative-chongqing-time-atmosphere/SKILL.md`
+- Live project repository: `raynacocobobobo-arch/lora`
+- Live project root: `重庆时间/`
+- Required live entrypoint: `重庆时间/ACTIVE-DOCS-INDEX.md`
+
+Routing note: this skill is primary for 《重庆时间》 environment atmosphere/master-image work and must resolve the latest project Canon/workflow from the live `lora` repository rather than from a frozen summary inside Hermes. If the user changes episode story, Canon, character arc, or screenplay structure, add or route to `hermes-creative-ai-short-drama`. Generic image-prompt skills may support wording but may not override the live project Canon or atmosphere workflow.
+
 #### Pure-AI serialized short drama
 Use for AI短剧、连载短剧、AI爽剧、一分钟短剧、分集短剧、剧本转分镜, or a short-drama Seedance Production Pack that must preserve story and production state across episodes.
 
@@ -215,6 +228,7 @@ Use when extracting standardized `#` tags from promotional-film copy, scripts, s
 
 Common film chaining:
 
+- 《重庆时间》环境母图 / 场景气氛图: `hermes-creative-chongqing-time-atmosphere`; add `hermes-creative-ai-short-drama` only when story/Canon itself must change.
 - Promotional film: `宣传片创作` → `影视分镜` when detailed shots are required → `AI绘画提示词` when visual-generation prompts are required → `内容标签` when archiving/tagging is required.
 - Promotional-film existing Word revision: `宣传片创作` (content) + `doc-reviewer` (preserve/edit the original Word copy).
 - Narrative film: `故事片创作` → `中文剧本格式` for formal screenplay layout → `影视分镜` for shot design → `AI绘画提示词` for visual prompts.
@@ -339,6 +353,7 @@ Do not replace the domain skill merely because a Word file appears. Add the arti
 
 Examples:
 
+- “重庆时间，按设定出图，EP01 的核心空间” → `hermes-creative-chongqing-time-atmosphere`; read the live 《重庆时间》 project index/episode files before visual execution.
 - “写企业宣传片并做分镜” → `宣传片创作` first, then `影视分镜`.
 - “宣传片先给修改方向，后来上传Word说在这个版本上改” → keep `宣传片创作`, add `doc-reviewer`.
 - “把故事大纲优化成完整短片剧本” → `故事片创作` first; load `中文剧本格式` only when formal script layout is needed.
