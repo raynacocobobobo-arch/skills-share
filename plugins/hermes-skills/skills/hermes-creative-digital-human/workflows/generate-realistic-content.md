@@ -1,181 +1,282 @@
-# Generate Realistic Content Workflow V2.4
+# Generate Realistic Content Workflow V2.5
 
 ## Preconditions
 Required:
 - L0 SOURCE
 - approved IDENTITY MASTER
-- Identity Gate = PASS
+- Identity Gate = PASS for an existing production identity
 - approved BODY MASTER when full body matters
 - per-character Identity Anchor Card
 - current Digital Human Session State
 
-Optional identity-support asset: approved `FACE_CROP_PACK`.
+Optional identity support: approved `FACE_CROP_PACK`.
 
 Optional presentation assets: APPEARANCE, POSE/PROP, SCENE.
 
 ## 0. Production State / Identity Session Bootstrap
-Before every new production chat and every identity-critical generation, resolve the current Digital Human Session State and the character's Identity Anchor Card.
+Before every new production chat and every identity-critical image operation, resolve the Digital Human Session State and Identity Anchor Card.
 
 Confirm:
 - active skill binding = `hermes-creative-digital-human`
 - `character_id` is resolved
 - `current_step` and `next_allowed_action` are known
 - ACTIVE identity version is known
+- exact approved IDENTITY MASTER visual input is available
+- BODY MASTER is available when body geometry matters
 
-A tag such as `@DH001_ID_V1_FRONT` is a stable alias, not a magic lookup. Tags are stable aliases, not image payloads, and tag alone does not satisfy Explicit Master Re-attachment.
+A tag is an address, not a visual payload. Conversation history and previous generated images are not identity sources.
 
-Verify that the exact approved `IDENTITY_MASTER` referenced by the ACTIVE anchor is physically attached to the current task. Re-attach the approved `BODY_MASTER` as well when full-body geometry matters.
+If the ACTIVE identity master is actually available, declare `IDENTITY ANCHOR READY`.
 
-If the exact ACTIVE master is present and its status is APPROVED, declare:
+If it is absent, unresolved, disputed, rejected, or only referenced by chat history/tag, declare `IDENTITY ANCHOR MISSING` and stop identity-bearing generation until it is restored.
 
-`IDENTITY ANCHOR READY`
+## 1. Natural-Language Reference Resolution
+The user is not required to write REF syntax or role labels.
 
-If the master is absent, unresolved, disputed, rejected, or only mentioned by tag/history without the actual required image input, declare:
+Resolve roles automatically from the user's current wording and attached images.
 
-`IDENTITY ANCHOR MISSING`
+Examples:
 
-Do not generate an identity-bearing candidate while the anchor is MISSING. Restore the exact approved master from the project/library/saved-reference system available in the active tool.
+```text
+"图1锁脸 / 面部特征为图1"
+=> image 1 | IDENTITY ONLY | CRITICAL
 
-Do not rely on a long chat, a previous generation, or instructions such as “same person as before” to recover identity. Project/chat history may carry task context, but conversation history is not an identity source.
+"图2作为身体三视图 / 保持图2体型"
+=> image 2 | BODY ONLY | HIGH
 
-If the user mentions a later-stage request while the current workflow step has not passed its required gate, record that request as a deferred requirement. Do not silently skip the current step.
+"图3只参考衣服 / 换图3工装"
+=> image 3 | WARDROBE ONLY | NORMAL
 
-## Reference Map
-Before generation, number every active reference. Every reference image has **one declared role**; bind each numbered reference to that one role. Use symbolic priority `CRITICAL / HIGH / NORMAL`. Do not invent numeric reference weights unless the active tool exposes a real documented weight control.
+"只参考这个动作"
+=> POSE ONLY | NORMAL
+
+"只参考这个环境"
+=> SCENE ONLY | NORMAL
+```
+
+When the intended roles are clear, infer them and continue. Ask the user only when identity authority or another required role is genuinely ambiguous.
+
+Do not ask the user to restate internal control syntax such as `REF01 = ...`.
+
+## 2. Internal Reference Map
+Build the execution map automatically after resolving roles.
 
 Example:
 
 ```text
-REF01 = @DH001_ID_V1_FRONT
-ROLE = IDENTITY ONLY
-PRIORITY = CRITICAL
-
-REF02 = @DH001_BODY_V1_FRONT
-ROLE = BODY ONLY
-PRIORITY = HIGH
-
-REF03 = @DH001_WARDROBE_RIG_01
-ROLE = WARDROBE ONLY
-PRIORITY = NORMAL
-
-REF04 = @POSE_PHOTOGRAPHER_MONOPOD_03
-ROLE = POSE ONLY
-PRIORITY = NORMAL
-
-REF05 = @SCENE_RIG_RAIN_02
-ROLE = SCENE ONLY
-PRIORITY = NORMAL
+REF01 = attached image 1 | IDENTITY ONLY | CRITICAL
+REF02 = attached image 2 | BODY ONLY | HIGH
+REF03 = attached image 3 | WARDROBE ONLY | NORMAL
 ```
 
-Allowed roles:
+Allowed control roles:
 - `IDENTITY ONLY` — face identity and age impression
-- `BODY ONLY` — body geometry and proportions
-- `WARDROBE ONLY` — clothing, PPE, accessories, footwear
+- `BODY ONLY` — height impression, body geometry, proportions, silhouette
+- `WARDROBE ONLY` — clothing, PPE, explicitly requested accessories, footwear
 - `POSE ONLY` — pose, hands, action, prop interaction
 - `SCENE ONLY` — environment, camera geometry, lighting, perspective
 
-If a reference has no clear role, resolve its role or remove it. A BODY/WARDROBE/POSE/SCENE reference must not redefine identity.
+Every active reference gets exactly one control role for the operation. A non-identity reference cannot redefine identity.
 
-During an eligible `FACE_REPAIR`, add the matching approved FACE_CROP_PACK view(s) as additional `IDENTITY ONLY | CRITICAL` references. They support the ACTIVE Identity Master; they do not replace it as identity authority.
+During eligible FACE_REPAIR, add the matching approved FACE_CROP_PACK view(s) as `IDENTITY ONLY | CRITICAL`. They support, not replace, the ACTIVE Identity Master.
 
-## Generation Preflight
-Before any identity-bearing generation or identity-bearing edit, verify:
+## 3. Reference Contamination Firewall
+Role assignment is not only descriptive; it is an exclusion rule.
 
+### WARDROBE ONLY
+Read:
+- garment cut and fit
+- color and paneling
+- reflective strips
+- pockets, closures, patches/logos where permitted
+- PPE style
+- footwear
+- accessories explicitly requested by the user
+
+Ignore by default:
+- the reference person's face
+- age impression
+- glasses unless explicitly requested
+- hairstyle/hairline
+- head/skull shape
+- facial hair
+- skin identity cues
+- ethnicity/identity cues
+- unrelated pose/body identity
+
+If a workwear reference contains a different person, that person's face must not influence the target identity.
+
+### BODY ONLY
+Read body geometry and proportions. Ignore visible facial identity, facial age, and hairstyle. When an IDENTITY ONLY reference exists, the target face comes from it.
+
+### POSE ONLY
+Read pose, hands, weight distribution, action, and prop interaction. Ignore face identity, age, wardrobe identity, and unrelated scene identity.
+
+### SCENE ONLY
+Read environment, camera geometry, perspective, light, atmosphere, and depth. Ignore identities of people visible in the scene.
+
+## 4. Operation Classification
+Classify the user's requested change before choosing an image path.
+
+### `APPEARANCE_EDIT`
+Use when the user says things like:
+- 换衣 / 换工装 / 换穿搭
+- 保持人物不变
+- 脸不要变
+- 图1锁脸，把图3衣服换到图2人物上
+
+For `APPEARANCE_EDIT`:
+1. preserve IDENTITY ONLY authority
+2. preserve BODY ONLY geometry when provided
+3. change only the requested wardrobe/PPE layer
+4. prefer Edit-first
+5. never reinterpret the task as "create a new person who resembles the references"
+
+### `POSE_EDIT`, `SCENE_EDIT`, `COMPOSITE`, `FRESH_GENERATION`
+Use the narrowest operation that satisfies the request. Fresh generation is a fallback, not the default for a simple layer replacement.
+
+## 5. Generation Preflight
+Before any identity-bearing generation/edit, verify:
 - active skill binding is still `hermes-creative-digital-human`
-- requested action is allowed by `current_step` / `next_allowed_action`
-- required upstream gates are PASS
+- task object/character is resolved
+- requested operation type is resolved
+- required upstream gates are satisfied for the current workflow step
 - ACTIVE Identity Anchor is resolved
-- required identity master image is actually attached
+- required identity master image is actually attached/selected
 - BODY master is attached when body geometry matters
-- Reference Map is complete and role-bound
+- internal Reference Map is complete
+- every reference has one control role
+- contamination firewall exclusions are active
+- edit/generate strategy is intentional
 
-If all required checks pass, declare `PREFLIGHT PASS` and continue.
+If all pass: `PREFLIGHT PASS` and proceed.
 
-If any required check fails, declare `PREFLIGHT BLOCKED`, name the missing/failed prerequisite, restore it, and update the Session State if needed. **Do not execute an identity-bearing generation** while preflight is blocked.
+If any fail: `PREFLIGHT BLOCKED`, identify the missing prerequisite, restore it, and do not perform identity-bearing generation.
 
-A non-identity stand-in or pose/prop prototype may proceed only when the current workflow step explicitly allows it and it must never be promoted into identity authority.
+## 6. Capability Check
+Classify the active image path:
+- Tier A — identity-aware conditioning
+- Tier B — multi-reference but not identity-specific
+- Tier C — ordinary generation
 
-## 1. Capability Check
-Classify the active image path as Tier A identity-aware, Tier B multi-reference, or Tier C ordinary generation. Tier B/C must not be described as guaranteed face lock.
+Tier B/C output must not be described as guaranteed face lock.
 
-## 2. Edit-first / Generate-second Decision
-When a valid approved identity-bearing image and a reference-preserving edit path are available, prefer Edit-first: preserve the approved person and change only the requested layer.
+## 7. Edit-first / Generate-second
+When a valid identity/body-bearing base image exists and the active tool supports a reference-preserving edit, prefer Edit-first and modify only the requested layer.
 
-Use Generate-second when edit constraints cannot solve the required composition, pose, prop geometry, view change, or scene transformation. A generated candidate still starts from an `IDENTITY ANCHOR READY` + `PREFLIGHT PASS` state and must pass Identity Gate before downstream approval.
+Use Generate-second only when the required view, composition, pose, prop geometry, or scene cannot be achieved by preserving edit.
 
-Never use Edit-first as permission to edit from a drifted or rejected candidate, except for the narrowly scoped eligible `FACE_REPAIR` path below where the candidate is used only as a composition carrier and never as identity authority.
+### Runtime truth
+Do not infer success from prompt wording. If the runtime cannot confirm a preserving edit path, or metadata shows no edit operation / a null edit operation, classify the result as a fresh candidate generation. Apply the stricter Identity Gate and do not claim that the person was preserved by editing.
 
-## 3. Shot Design
-Analyze camera angle/height, perspective, focal-length impression, subject scale, placement, light direction, color temperature, depth of field, and noise/sharpness.
+Never use Edit-first from a drifted/rejected candidate except for narrowly eligible FACE_REPAIR, where the candidate is only a composition carrier.
 
-## 4. Pose / Prop Prototype
-If action or equipment is complex, solve geometry before final identity integration. Use a stand-in if needed to validate pose, hands, weight distribution, camera/monopod/tool geometry, and interaction with the environment.
+## 8. Shot / Geometry Design
+Analyze only what the operation requires: camera angle/height, perspective, focal-length impression, subject scale, placement, pose, hand geometry, props, ground contact, light direction, color temperature, depth of field, and integration.
 
-## 5. Identity Integration
-Use REF01 / the explicitly re-attached approved IDENTITY MASTER as identity authority. SOURCE may support genuine identity evidence where needed. BODY/APPEARANCE/POSE/SCENE assets guide only their declared layers and must not redefine the face.
+For complex actions or equipment, solve pose/prop geometry with a stand-in before identity integration when practical.
 
-Do not use previous L3 content as the main identity reference for the next shot.
+## 9. Identity Integration
+Identity comes from the explicitly re-attached ACTIVE approved IDENTITY MASTER and matching FACE_CROP_PACK when used.
 
-## 6. Identity Gate / Candidate Hard Stop
+BODY/WARDROBE/POSE/SCENE references guide only their declared layers.
+
+Do not use the most recent L3 output as the next shot's main identity reference.
+
+## 10. Identity Gate / Candidate Hard Stop
 Verify same person and same age impression.
 
 If identity fails:
-- mark the current candidate `REJECTED` for identity/reference reuse
-- remove it from future identity/reference inputs
-- route recovery into `improve-output.md`
-- run `Final Image Triage` before deciding whether the whole image must be discarded
-- update the Digital Human Session State; do not advance `current_step`
+- mark candidate `REJECTED` for identity/reference reuse
+- exclude it from automatic reference selection in subsequent attempts
+- do not advance `current_step`
+- run Final Image Triage
+- route recovery through `improve-output.md`
 
-The failed candidate must never become identity authority. It may remain only as a temporary composition carrier when `Final Image Triage = FACE_REPAIR` and Face Repair Eligibility passes.
+The failed image may remain only as a temporary composition carrier if `Final Image Triage = FACE_REPAIR` and eligibility passes.
 
-This Candidate Hard Stop blocks contamination of later identity lineage; it does not require throwing away good composition/pose/scene work when the failure is genuinely face-only.
+A recently generated wrong face must never be reused merely because it is the latest image in the chat.
 
-## 7. Scene Integration
-For candidates whose identity is usable enough to continue the current shot path, optimize perspective/scale, ground contact, lighting/shadow, color, depth of field, sharpness/noise, skin texture, rain/mud/contact effects, and edge integration.
+## 11. Scene / Realism Integration
+For an identity-valid candidate, refine perspective/scale, ground contact, shadows, color, depth of field, sharpness/noise, skin texture, rain/mud/contact effects, and edges.
 
-Do not use scene polish to hide an identity failure. Final approval still requires Identity Gate PASS after any repair.
+Do not use scene polish to hide an identity failure.
 
-## 8. Final Image Triage
-After the candidate's overall shot layers are visible, classify exactly one outcome:
+## 12. Final Image Triage
+Classify exactly one:
+- `APPROVED` — identity plus relevant composition/body/pose/prop/scene layers pass
+- `FACE_REPAIR` — shot structure is worth preserving and only localized face identity/age drift remains
+- `REGENERATE` — head angle, body, pose, prop, composition, scene geometry, or other structural conflict makes local face repair unsafe
 
-- `APPROVED` — identity plus composition/body/pose/prop/scene pass.
-- `FACE_REPAIR` — the shot is worth preserving and only localized facial identity/age drift remains.
-- `REGENERATE` — the failure involves head angle, body, pose, prop, composition, scene geometry, or any larger structural conflict that makes local face repair unsafe.
+### FACE_REPAIR eligibility
+All of these must already be acceptable:
+- composition/placement
+- body/pose
+- prop interaction
+- scene perspective/contact/major lighting
+- head angle and head size
+- neck connection and gross skull orientation
 
-### Face Repair Eligibility
-Before choosing `FACE_REPAIR`, confirm:
-- composition and subject placement are good enough to preserve
-- body and pose are good enough to preserve
-- prop/camera/monopod/tool interaction is good enough to preserve
-- scene perspective/contact/major lighting are good enough to preserve
-- head angle, head size, neck connection, and gross skull orientation are compatible with the intended face
-- the failure is localized to face identity, facial structure, or age impression
+If not, use `REGENERATE`.
 
-If any of those structural conditions fail, choose `REGENERATE`.
+## 13. FACE_REPAIR
+Use rejected candidate only as base composition, never as identity source.
 
-## 9. FACE_REPAIR Pass
-When eligible, use the current candidate only as the base composition. It is not an identity source.
+Required:
+- ACTIVE approved IDENTITY MASTER
+- matching approved FACE_CROP_PACK view(s)
 
-Required repair inputs:
-- ACTIVE approved `IDENTITY_MASTER`
-- matching approved `FACE_CROP_PACK` view(s), such as `@DH001_FACE_FRONT_CLOSE`, `@DH001_FACE_L45_CLOSE`, or `@DH001_FACE_R45_CLOSE`
+Preserve non-face layers. Correct face shape, eye structure/spacing, brows, nose, mouth, jaw/chin, visible hairline, and age impression.
 
-Prefer the narrowest reference-preserving edit supported by the active tool. Preserve composition, body, pose, wardrobe, prop geometry, scene, and major lighting structure. Correct only the face-identity layer: face shape, eye structure/spacing, brows, nose, mouth, jaw/chin, visible hairline, and age impression.
-
-After the edit:
+After repair:
 1. run Identity Gate again
-2. verify the preserved non-face layers did not regress
+2. verify preserved layers did not regress
 3. run Final Image Triage again
 
-A repaired output may become `CONTENT_APPROVED` after human approval, but it **must not automatically become** an Identity Master or `IDENTITY_MASTER`. It must never enter upstream identity authority unless the user explicitly approves a new master version through the normal Identity Master lifecycle.
+A repaired result may become `CONTENT_APPROVED` after human approval but does not automatically become an Identity Master or upstream reference.
 
-## 10. Output State / State Checkpoint
-New scene output begins as `CONTENT_CANDIDATE`. Human-approved output may become `CONTENT_APPROVED`. Failed identity becomes `CONTENT_REJECTED` for identity/reference reuse and must never feed the identity reference pool.
+## 14. No Generation Chaining
+Forbidden:
 
-An eligible FACE_REPAIR candidate may remain temporarily available only as a composition carrier until repair completes; its identity is still rejected.
+`SOURCE -> generated A -> generated B -> generated C`
 
-After every state-changing action, checkpoint the Digital Human Session State: approval/rejection, triage result, gate result, step completion, step transition, master-version change, or next-action change.
+Required:
 
-For batch production, bootstrap each identity-critical shot from the ACTIVE anchor and explicit approved masters rather than chaining from the prior content image.
+`SOURCE / IDENTITY_MASTER -> candidate A`
+`SOURCE / IDENTITY_MASTER -> candidate B`
+`SOURCE / IDENTITY_MASTER -> candidate C`
 
-Goal: preserve the approved person first, preserve good composition/pose/scene work when the failure is truly face-only, and use full regeneration only when the broader image structure actually requires it.
+A failed output is removed from the next attempt's identity/reference set. FACE_REPAIR is the only narrow exception and uses the failed output only as composition carrier.
+
+## 15. Output State / Checkpoint
+New output begins as `CONTENT_CANDIDATE`.
+
+Human-approved output may become `CONTENT_APPROVED`.
+
+Identity-failed output becomes `CONTENT_REJECTED` for reference reuse.
+
+After every state-changing action, checkpoint approval/rejection, triage result, gate result, step transition, master-version change, or next action.
+
+For batch production, bootstrap every identity-critical shot from ACTIVE approved masters rather than chaining from prior content.
+
+## Common wardrobe-change example
+User says:
+
+```text
+按 Hermes 路由。图1锁定面部身份，图2作为身体三视图，把图3工装换到图2人物上。
+```
+
+Resolve automatically:
+
+```text
+operation = APPEARANCE_EDIT
+REF01 = 图1 | IDENTITY ONLY | CRITICAL
+REF02 = 图2 | BODY ONLY | HIGH
+REF03 = 图3 | WARDROBE ONLY | NORMAL
+firewall = ignore REF03 face/age/glasses/hair/head identity
+strategy = EDIT-FIRST when supported
+```
+
+The user does not need to type the internal map or firewall text.
+
+Goal: preserve the approved person first, isolate reference roles automatically, block cross-reference identity contamination, and only regenerate when a preserving edit cannot satisfy the shot.

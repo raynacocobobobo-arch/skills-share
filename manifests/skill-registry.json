@@ -179,7 +179,7 @@
     {
       "name": "hermes-creative-digital-human",
       "description": "Use when creating or maintaining a realistic digital human, virtual creator, AI blogger, outfit variant, pose variant, or real-scene composite where identity consistency across generations matters.",
-      "version": "2.4.0",
+      "version": "2.5.0",
       "category": "hermes-creative-digital-human",
       "skill_dir": "hermes-creative-digital-human",
       "skill_path": "plugins/hermes-skills/skills/hermes-creative-digital-human/SKILL.md",
@@ -192,7 +192,9 @@
         "实景融合",
         "人物一致性",
         "锁脸",
-        "人脸跑偏"
+        "人脸跑偏",
+        "换衣",
+        "换工装"
       ],
       "references": [],
       "missing_references": []
