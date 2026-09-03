@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "plugins/hermes-skills/skills",
-  "skill_count": 38,
+  "skill_count": 39,
   "skills": [
     {
       "name": "doc-reviewer",
@@ -149,6 +149,29 @@
         "分集短剧",
         "剧本转分镜",
         "短剧Seedance生产包"
+      ],
+      "references": [],
+      "missing_references": []
+    },
+    {
+      "name": "hermes-creative-chongqing-time-atmosphere",
+      "description": "Use when creating, revising, or reviewing environment atmosphere images, core episode spaces, environment masters, setting visualizations, or Seedance-ready environment prompts for 《重庆时间》, especially when the request says “重庆时间，按设定出图”, “核心空间”, “场景气氛图”, “环境母图”, or names an EP01–EP10 environment.",
+      "version": "1.0.0",
+      "category": "hermes-creative-chongqing-time-atmosphere",
+      "skill_dir": "hermes-creative-chongqing-time-atmosphere",
+      "skill_path": "plugins/hermes-skills/skills/hermes-creative-chongqing-time-atmosphere/SKILL.md",
+      "triggers": [
+        "重庆时间，按设定出图",
+        "重庆时间场景",
+        "重庆时间环境图",
+        "按设定出图",
+        "核心空间",
+        "核心剧情空间",
+        "场景气氛图",
+        "环境母图",
+        "大场景",
+        "Seedance场景母图",
+        "Seedance环境母图"
       ],
       "references": [],
       "missing_references": []
