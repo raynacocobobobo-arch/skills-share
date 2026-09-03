@@ -1,26 +1,18 @@
 ---
 name: hermes-creative-chongqing-time-atmosphere
-description: Use when creating, revising, or reviewing environment atmosphere images, core episode spaces, environment masters, setting visualizations, or Seedance-ready environment prompts for 《重庆时间》, especially when the request says “重庆时间，按设定出图”, “核心空间”, “场景气氛图”, “环境母图”, or references EP01–EP10.
+description: Use when creating, revising, or reviewing environment atmosphere images, core episode spaces, environment masters, setting visualizations, or Seedance-ready environment prompts for 《重庆时间》, especially when the request says “重庆时间，按设定出图”, “核心空间”, “场景气氛图”, “环境母图”, or names an EP01–EP10 environment.
 version: 1.0.0
 triggers:
   - 重庆时间，按设定出图
-  - 重庆时间
+  - 重庆时间场景
   - 按设定出图
   - 核心空间
   - 核心剧情空间
   - 场景气氛图
   - 环境母图
   - 大场景
-  - EP01
-  - EP02
-  - EP03
-  - EP04
-  - EP05
-  - EP06
-  - EP07
-  - EP08
-  - EP09
-  - EP10
+  - Seedance场景母图
+  - Seedance环境母图
 ---
 
 # Hermes Creative — Chongqing Time Atmosphere
@@ -31,7 +23,7 @@ Use the live 《重庆时间》 project repository as the authority for scene fa
 
 Project repository:
 
-> `raynacocobobo-arch/lora`
+> `raynacocobobobo-arch/lora`
 
 Project root:
 
@@ -47,7 +39,7 @@ Then read only the active files required by the current task. Read [the source m
 
 ## Core workflow
 
-For major environment work, follow the live `重庆时间/SCENE-PROMPT-TEMPLATE-V3.md`.
+For major environment work, follow the live `重庆时间/SCENE-PROMPT-TEMPLATE-V3.md` or the current successor named by the active project index.
 
 The production sequence is:
 
