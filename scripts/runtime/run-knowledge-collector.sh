@@ -101,20 +101,23 @@ fi
 done
 
 # Generate index.json
+# Pass entries via a temp file (--slurpfile) instead of --argjson: a single
+# >128KB command-line argument trips Linux's MAX_ARG_STRLEN limit and fails
+# with "Argument list too long" once the library grows past ~400 entries.
+ENTRIES_TMP=$(mktemp)
+trap 'rm -f "$ENTRIES_TMP"' EXIT
 if [[ ${#INDEX_ENTRIES[@]} -gt 0 ]]; then
-  ENTRIES_JSON=$(printf '%s\n' "${INDEX_ENTRIES[@]}" | jq -s 'sort_by(.source)')
-else
-  ENTRIES_JSON='[]'
+  printf '%s\n' "${INDEX_ENTRIES[@]}" > "$ENTRIES_TMP"
 fi
 
 jq -n \
+  --slurpfile entries "$ENTRIES_TMP" \
   --arg schema_version "2.1" \
   --arg date "$TODAY" \
   --arg generated_at "$(date -Iseconds)" \
   --arg source_directory "subtitles/$TODAY" \
   --argjson total "$SUB_ADDED" \
   --argjson rejected 0 \
-  --argjson entries "$ENTRIES_JSON" \
   '{
     schema_version: $schema_version,
     date: $date,
@@ -122,7 +125,7 @@ jq -n \
     total: $total,
     rejected: $rejected,
     source_directory: $source_directory,
-    entries: $entries
+    entries: ($entries | sort_by(.source))
   }' > "$SUBTITLE_DIR/index.json"
 
 echo "  index.json: $SUB_ADDED entries"
